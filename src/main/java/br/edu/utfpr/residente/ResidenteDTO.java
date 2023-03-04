@@ -3,7 +3,6 @@ package br.edu.utfpr.residente;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.enums.Situacao;
 import br.edu.utfpr.enums.TipoEstadia;
-import br.edu.utfpr.validators.Enums;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
