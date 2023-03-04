@@ -59,9 +59,8 @@ public class AtividadeLudicaResource {
 
         AtividadeLudicaModel model = new AtividadeLudicaModel();
         model.setNome(atividadeLudicaDTO.getNome());
-        model.setData(atividadeLudicaDTO.getData());
+        model.setDataHora(atividadeLudicaDTO.getDataHora());
         model.setSituacao(atividadeLudicaDTO.getSituacao());
-        model.setHora(atividadeLudicaDTO.getHora());
 
         try{
             repository.persist(model);
@@ -83,9 +82,8 @@ public class AtividadeLudicaResource {
         AtividadeLudicaModel model = repository.findById(id);
         if(model != null){
             model.setNome(atividadeLudicaDTO.getNome());
-            model.setData(atividadeLudicaDTO.getData());
+            model.setDataHora(atividadeLudicaDTO.getDataHora());
             model.setSituacao(atividadeLudicaDTO.getSituacao());
-            model.setHora(atividadeLudicaDTO.getHora());
 
             return Response.status(201, model.toString()).build();
         }

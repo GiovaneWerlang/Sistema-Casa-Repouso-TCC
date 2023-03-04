@@ -9,7 +9,7 @@ public enum Funcao {
     ENFERMEIRO("Enfermeiro"),
     FUNCIONARIO("Funcionário"),
     MEDICO("Médico"),
-    VOLUTARIO("Volutário");
+    VOLUNTARIO("Voluntário");
 
     private String descricao;
 

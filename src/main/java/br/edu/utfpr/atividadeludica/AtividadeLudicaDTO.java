@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 
 @Data
 public class AtividadeLudicaDTO {
@@ -19,12 +20,9 @@ public class AtividadeLudicaDTO {
     private String nome;
 
     @NotNull(message = "Não pode ser nulo")
-    private LocalDate data;
+    private OffsetDateTime dataHora;
 
     @NotNull(message = "Não pode ser nulo")
     private Situacao situacao;
-
-    @NotNull(message = "Não pode ser nulo")
-    private LocalTime hora;
 
 }

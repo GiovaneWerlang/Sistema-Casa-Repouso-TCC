@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 
 @Data
 @Entity
@@ -22,13 +23,11 @@ public class AtividadeLudicaModel {
     @Size(max = 255, min = 0)
     private String nome;
 
-    @Column(name = "data")
-    private LocalDate data;
+    @Column(name = "datahora")
+    private OffsetDateTime dataHora;
 
     @Column(name = "situacao")
     @Enumerated(EnumType.STRING)
     private Situacao situacao;
 
-    @Column(name = "hora")
-    private LocalTime hora;
 }
