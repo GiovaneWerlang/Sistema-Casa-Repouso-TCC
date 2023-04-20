@@ -4,7 +4,7 @@ import br.edu.utfpr.residente.ResidenteModel;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -17,10 +17,10 @@ public class EntradaSaidaModel {
     private long id;
 
     @Column(name = "datahorasaida")
-    private OffsetDateTime dataHoraSaida;
+    private LocalDateTime dataHoraSaida;
 
     @Column(name = "datahoraentrada")
-    private OffsetDateTime dataHoraEntrada;
+    private LocalDateTime dataHoraEntrada;
 
     @Column(name = "descricao")
     private String descricao;

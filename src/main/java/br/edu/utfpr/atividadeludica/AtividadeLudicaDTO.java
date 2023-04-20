@@ -3,13 +3,10 @@ package br.edu.utfpr.atividadeludica;
 import br.edu.utfpr.enums.Situacao;
 import lombok.Data;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 public class AtividadeLudicaDTO {
@@ -20,7 +17,7 @@ public class AtividadeLudicaDTO {
     private String nome;
 
     @NotNull(message = "Não pode ser nulo")
-    private OffsetDateTime dataHora;
+    private LocalDateTime dataHora;
 
     @NotNull(message = "Não pode ser nulo")
     private Situacao situacao;

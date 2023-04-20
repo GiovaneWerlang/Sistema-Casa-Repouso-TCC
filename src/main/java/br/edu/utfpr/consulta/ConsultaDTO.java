@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 public class ConsultaDTO {
@@ -16,7 +16,7 @@ public class ConsultaDTO {
     private String descricao;
 
     @NotNull(message = "Não pode ser nulo")
-    private OffsetDateTime dataHora;
+    private LocalDateTime dataHora;
 
     @NotNull(message = "Não pode ser nulo")
     @NotBlank(message = "Não pode ser vazio")

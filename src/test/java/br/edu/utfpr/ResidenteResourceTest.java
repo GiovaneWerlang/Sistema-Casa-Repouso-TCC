@@ -1,6 +1,5 @@
 package br.edu.utfpr;
 
-import br.edu.utfpr.endereco.EnderecoDTO;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.enums.Situacao;
 import br.edu.utfpr.enums.TipoEstadia;
@@ -16,7 +15,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static io.restassured.RestAssured.given;
@@ -42,12 +41,12 @@ public class ResidenteResourceTest {
         ResidenteDTO residenteDTO = new ResidenteDTO();
         residenteDTO.setNome("Teste");
         residenteDTO.setIdade(45);
-        residenteDTO.setCpf("123.123.132-12");
-        residenteDTO.setTelefone("(12)23345-6278");
+        residenteDTO.setCpf("90874109051");
+        residenteDTO.setTelefone("12233456278");
         residenteDTO.setEmail("teste@teste.com");
         residenteDTO.setSituacao(Situacao.ATIVO);
         residenteDTO.setTipoEstadia(TipoEstadia.PADRAO);
-        residenteDTO.setDataHoraIngresso(OffsetDateTime.parse("1980-04-09T08:20:45+07:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        residenteDTO.setDataHoraIngresso(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
 
         EnderecoModel enderecoModel = new EnderecoModel();
         enderecoModel.setLogradouro("Teste");
@@ -115,12 +114,12 @@ public class ResidenteResourceTest {
         ResidenteDTO residenteDTO = new ResidenteDTO();
         residenteDTO.setNome("Teste");
         residenteDTO.setIdade(45);
-        residenteDTO.setCpf("123.123.132-12");
-        residenteDTO.setTelefone("(12)23345-6278");
+        residenteDTO.setCpf("90874109051");
+        residenteDTO.setTelefone("12233456278");
         residenteDTO.setEmail("teste@teste.com");
         residenteDTO.setSituacao(Situacao.ATIVO);
         residenteDTO.setTipoEstadia(TipoEstadia.PADRAO);
-        residenteDTO.setDataHoraIngresso(OffsetDateTime.parse("1980-04-09T08:20:45+07:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        residenteDTO.setDataHoraIngresso(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
 
         EnderecoModel enderecoModel = new EnderecoModel();
         enderecoModel.setLogradouro("Teste");

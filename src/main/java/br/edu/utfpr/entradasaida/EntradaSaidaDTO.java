@@ -5,14 +5,14 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 public class EntradaSaidaDTO {
 
-    private OffsetDateTime dataHoraSaida;
+    private LocalDateTime dataHoraSaida;
 
-    private OffsetDateTime dataHoraEntrada;
+    private LocalDateTime dataHoraEntrada;
 
     @NotNull(message = "Não pode ser nulo")
     @NotBlank(message = "Não pode ser vazio")

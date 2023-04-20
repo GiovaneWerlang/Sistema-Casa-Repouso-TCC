@@ -6,7 +6,7 @@ import br.edu.utfpr.residente.ResidenteModel;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -22,7 +22,7 @@ public class ConsultaModel {
     private String descricao;
 
     @Column(name = "datahora")
-    private OffsetDateTime dataHora;
+    private LocalDateTime dataHora;
 
     @Column(name = "local")
     private String local;

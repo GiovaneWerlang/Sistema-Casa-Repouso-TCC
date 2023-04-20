@@ -5,7 +5,7 @@ import br.edu.utfpr.enums.SituacaoAtividade;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -21,7 +21,7 @@ public class AtividadeConsultaResidenteModel {
     private String descricao;
 
     @Column(name = "datahora")
-    private OffsetDateTime dataHora;
+    private LocalDateTime dataHora;
 
     @Column(name = "situacaoatividade")
     @Enumerated(EnumType.STRING)

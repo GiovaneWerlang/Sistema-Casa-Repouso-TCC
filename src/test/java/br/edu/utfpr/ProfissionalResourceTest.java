@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.enums.Funcao;
 import br.edu.utfpr.enums.Situacao;
+import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.profissional.ProfissionalDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
@@ -36,17 +37,30 @@ public class ProfissionalResourceTest {
     @Test
     @Order(1)
     @DisplayName("Deve criar profissional com sucesso.")
-    public void createProfissionalTest(){
+    public void createProfissionalTest() throws SQLException {
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
         profissionalDTO.setNome("Teste");
         profissionalDTO.setIdade(45);
-        profissionalDTO.setCpf("123.123.132-12");
-        profissionalDTO.setTelefone("(12)23345-6278");
+        profissionalDTO.setCpf("97610046000");
+        profissionalDTO.setTelefone("12233456278");
         profissionalDTO.setEmail("teste@teste.com");
         profissionalDTO.setDataAdmissao(LocalDate.now());
         profissionalDTO.setSalario(123F);
         profissionalDTO.setSituacao(Situacao.ATIVO);
         profissionalDTO.setFuncao(Funcao.CUIDADOR);
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt2 = c2.prepareStatement("INSERT INTO ESPECIALIDADE (" +
+                "\tNOME)\n" +
+                "VALUES (" +
+                "'teste'\n" +
+                ");");
+        stmt2.execute();
+        stmt2.close();
+        c2.close();
+
+        profissionalDTO.setEspecialidade(1L);
 
 
         EnderecoModel enderecoModel = new EnderecoModel();
@@ -117,14 +131,15 @@ public class ProfissionalResourceTest {
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
         profissionalDTO.setNome("Teste");
         profissionalDTO.setIdade(45);
-        profissionalDTO.setCpf("123.123.132-12");
-        profissionalDTO.setTelefone("(12)23345-6278");
+        profissionalDTO.setCpf("97610046000");
+        profissionalDTO.setTelefone("12233456278");
         profissionalDTO.setEmail("teste@teste.com");
         profissionalDTO.setSituacao(Situacao.ATIVO);
         profissionalDTO.setDataAdmissao(LocalDate.now());
         profissionalDTO.setSalario(123F);
         profissionalDTO.setSituacao(Situacao.ATIVO);
         profissionalDTO.setFuncao(Funcao.CUIDADOR);
+        profissionalDTO.setEspecialidade(1L);
 
         EnderecoModel enderecoModel = new EnderecoModel();
         enderecoModel.setLogradouro("Teste");

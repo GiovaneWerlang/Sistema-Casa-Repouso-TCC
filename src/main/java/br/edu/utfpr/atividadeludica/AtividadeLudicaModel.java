@@ -5,9 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -24,7 +22,7 @@ public class AtividadeLudicaModel {
     private String nome;
 
     @Column(name = "datahora")
-    private OffsetDateTime dataHora;
+    private LocalDateTime dataHora;
 
     @Column(name = "situacao")
     @Enumerated(EnumType.STRING)

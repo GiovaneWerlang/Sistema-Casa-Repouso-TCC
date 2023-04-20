@@ -7,7 +7,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.*;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 public class ResidenteDTO {
@@ -43,9 +43,9 @@ public class ResidenteDTO {
     private TipoEstadia tipoEstadia;
 
     @NotNull(message = "Não pode ser nulo")
-    private OffsetDateTime dataHoraIngresso;
+    private LocalDateTime dataHoraIngresso;
 
-    private OffsetDateTime dataHoraPrevisaoSaida;
+    private LocalDateTime dataHoraPrevisaoSaida;
 
     @NotNull(message = "Não pode ser nulo")
     private EnderecoModel endereco;

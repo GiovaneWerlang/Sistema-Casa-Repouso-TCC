@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static io.restassured.RestAssured.given;
@@ -36,8 +36,8 @@ public class EntradaSaidaResourceTest {
     @DisplayName("Deve criar usuário com sucesso.")
     public void createEntradaSaidaTest() throws SQLException {
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
-        entradasaidaDTO.setDataHoraEntrada(OffsetDateTime.parse("1980-04-09T08:20:45+07:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        entradasaidaDTO.setDataHoraSaida(OffsetDateTime.parse("1980-04-09T08:20:45+07:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        entradasaidaDTO.setDataHoraEntrada(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
+        entradasaidaDTO.setDataHoraSaida(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         entradasaidaDTO.setDescricao("Teste");
         entradasaidaDTO.setResidente(1L);
 
@@ -108,8 +108,8 @@ public class EntradaSaidaResourceTest {
     public void updateEntradaSaidaTest(){
 
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
-        entradasaidaDTO.setDataHoraEntrada(OffsetDateTime.parse("1980-04-09T08:20:45+07:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        entradasaidaDTO.setDataHoraSaida(OffsetDateTime.parse("1980-04-09T08:20:45+07:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        entradasaidaDTO.setDataHoraEntrada(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
+        entradasaidaDTO.setDataHoraSaida(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         entradasaidaDTO.setDescricao("Teste");
         entradasaidaDTO.setResidente(1L);
 

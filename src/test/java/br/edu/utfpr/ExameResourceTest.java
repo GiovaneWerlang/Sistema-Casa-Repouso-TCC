@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static io.restassured.RestAssured.given;
@@ -37,7 +37,7 @@ public class ExameResourceTest {
     public void createExameTest() throws SQLException {
         ExameDTO exameDTO = new ExameDTO();
         exameDTO.setNome("Teste");
-        exameDTO.setDataHora(OffsetDateTime.parse("1980-04-09T08:20:45-03:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        exameDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         exameDTO.setLocal("local");
         exameDTO.setLaudo("prescrição");
         exameDTO.setEspecialidade(1L);
@@ -156,7 +156,7 @@ public class ExameResourceTest {
 
         ExameDTO exameDTO = new ExameDTO();
         exameDTO.setNome("Teste");
-        exameDTO.setDataHora(OffsetDateTime.parse("1980-04-09T08:20:45-03:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        exameDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         exameDTO.setLocal("local");
         exameDTO.setLaudo("prescrição");
         exameDTO.setEspecialidade(1L);

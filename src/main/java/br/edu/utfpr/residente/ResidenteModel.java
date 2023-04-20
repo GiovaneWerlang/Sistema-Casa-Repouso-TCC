@@ -1,13 +1,12 @@
 package br.edu.utfpr.residente;
 
-import br.edu.utfpr.pessoa.PessoaModel;
-import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.enums.Situacao;
 import br.edu.utfpr.enums.TipoEstadia;
+import br.edu.utfpr.pessoa.PessoaModel;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -25,10 +24,10 @@ public class ResidenteModel extends PessoaModel {
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss UTC")
     //@JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(name = "datahoraingresso")
-    private OffsetDateTime dataHoraIngresso;
+    private LocalDateTime dataHoraIngresso;
 
     @Column(name = "datahoraprevisaosaida")
-    private OffsetDateTime dataHoraPrevisaoSaida;
+    private LocalDateTime dataHoraPrevisaoSaida;
 
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "idendereco")

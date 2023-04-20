@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static io.restassured.RestAssured.given;
@@ -37,7 +37,7 @@ public class ConsultaResourceTest {
     public void createConsultaTest() throws SQLException {
         ConsultaDTO consultaDTO = new ConsultaDTO();
         consultaDTO.setDescricao("Teste");
-        consultaDTO.setDataHora(OffsetDateTime.parse("1980-04-09T08:20:45-03:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        consultaDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         consultaDTO.setLocal("local");
         consultaDTO.setPrescricao("prescrição");
         consultaDTO.setEspecialidade(1L);
@@ -156,7 +156,7 @@ public class ConsultaResourceTest {
 
         ConsultaDTO consultaDTO = new ConsultaDTO();
         consultaDTO.setDescricao("Teste");
-        consultaDTO.setDataHora(OffsetDateTime.parse("1980-04-09T08:20:45-03:00", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+        consultaDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         consultaDTO.setLocal("local");
         consultaDTO.setPrescricao("prescrição");
         consultaDTO.setEspecialidade(1L);
@@ -352,11 +352,18 @@ public class ConsultaResourceTest {
     @DisplayName("Deve falhar ao buscar todos os consultas.")
     public void getAllConsultaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
+
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from consulta");
+        PreparedStatement stmt = c.prepareStatement("delete from atividadeconsultaresidente");
         stmt.execute();
         stmt.close();
         c.close();
+
+        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt2 = c2.prepareStatement("delete from consulta");
+        stmt2.execute();
+        stmt2.close();
+        c2.close();
 
         Response response = given()
                 .contentType(ContentType.JSON)
