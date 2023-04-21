@@ -20,87 +20,42 @@ import java.util.Set;
 @Tag(name = "Atividade Lúdica")
 public class AtividadeLudicaResource {
 
-    private AtividadeLudicaRepository repository;
-    private Validator validator;
+    private AtividadeLudicaService atividadeLudicaService;
 
     @Inject
-    public AtividadeLudicaResource(AtividadeLudicaRepository repository, Validator validator){
-        this.repository = repository;
-        this.validator = validator;
+    public AtividadeLudicaResource(AtividadeLudicaService atividadeLudicaService){
+        this.atividadeLudicaService = atividadeLudicaService;
     }
 
     @Operation(summary = "Retorna todas")
     @GET
     public Response getAll(){
-        List<AtividadeLudicaModel> lista = repository.listAll();
-        if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok(lista).build();
+        return atividadeLudicaService.getAll();
     }
 
     @GET
     @Path("{id}")
     public Response getAtividadeLudicaById(@PathParam("id") long id){
-        AtividadeLudicaModel model = repository.findById(id);
-        if(model != null){
-            return Response.ok(model).build();
-        }
-
-        return Response.status(Response.Status.NOT_FOUND).build();
+       return atividadeLudicaService.findById(id);
     }
+
     @POST
     @Transactional
     public Response addAtividadeLudica(AtividadeLudicaDTO atividadeLudicaDTO){
-        Set<ConstraintViolation<AtividadeLudicaDTO>> violations = validator.validate(atividadeLudicaDTO);
-        if(!violations.isEmpty()){
-            return ResponseError.createFromViolations(violations).returnWithStatusCode(422);
-        }
-
-        AtividadeLudicaModel model = new AtividadeLudicaModel();
-        model.setNome(atividadeLudicaDTO.getNome());
-        model.setDataHora(atividadeLudicaDTO.getDataHora());
-        model.setSituacao(atividadeLudicaDTO.getSituacao());
-
-        try{
-            repository.persist(model);
-        }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-        return Response.status( Response.Status.CREATED.getStatusCode(),model.toString()).build();
+        return atividadeLudicaService.add(atividadeLudicaDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
     public Response updateAtividadeLudica(@PathParam("id") long id, AtividadeLudicaDTO atividadeLudicaDTO){
-        Set<ConstraintViolation<AtividadeLudicaDTO>> violations = validator.validate(atividadeLudicaDTO);
-        if(!violations.isEmpty()){
-            return ResponseError.createFromViolations(violations).returnWithStatusCode(422);
-        }
-
-        AtividadeLudicaModel model = repository.findById(id);
-        if(model != null){
-            model.setNome(atividadeLudicaDTO.getNome());
-            model.setDataHora(atividadeLudicaDTO.getDataHora());
-            model.setSituacao(atividadeLudicaDTO.getSituacao());
-
-            return Response.status(201, model.toString()).build();
-        }
-
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return atividadeLudicaService.update(id, atividadeLudicaDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public Response deleteAtividadeLudica(@PathParam("id") long id){
-        AtividadeLudicaModel model = repository.findById(id);
-        if(model != null){
-            repository.delete(model);
-            return Response.ok(model).build();
-        }
-
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return atividadeLudicaService.delete(id);
     }
 }
