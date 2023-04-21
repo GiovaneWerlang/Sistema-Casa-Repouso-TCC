@@ -21,15 +21,10 @@ public class ResidenteModel extends PessoaModel {
     @Enumerated(EnumType.STRING)
     private TipoEstadia tipoEstadia;
 
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss UTC")
-    //@JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(name = "datahoraingresso")
     private LocalDateTime dataHoraIngresso;
 
     @Column(name = "datahoraprevisaosaida")
     private LocalDateTime dataHoraPrevisaoSaida;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "idendereco")
-//    private EnderecoModel endereco;
 }

@@ -1,6 +1,7 @@
 package br.edu.utfpr.atividadeludica;
 
 import br.edu.utfpr.erro.ResponseError;
+import br.edu.utfpr.utils.Copy;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -46,9 +47,10 @@ public class AtividadeLudicaService {
         }
 
         AtividadeLudicaModel model = new AtividadeLudicaModel();
-        model.setNome(atividadeLudicaDTO.getNome());
-        model.setDataHora(atividadeLudicaDTO.getDataHora());
-        model.setSituacao(atividadeLudicaDTO.getSituacao());
+
+        if(!Copy.copyProperties(model, atividadeLudicaDTO)){
+            return Response.status(418).build();
+        }
 
         try{
             repository.persist(model);
@@ -66,9 +68,10 @@ public class AtividadeLudicaService {
 
         AtividadeLudicaModel model = repository.findById(id);
         if(model != null){
-            model.setNome(atividadeLudicaDTO.getNome());
-            model.setDataHora(atividadeLudicaDTO.getDataHora());
-            model.setSituacao(atividadeLudicaDTO.getSituacao());
+
+            if(!Copy.copyProperties(model, atividadeLudicaDTO)){
+                return Response.status(418).build();
+            }
 
             return Response.status(201, model.toString()).build();
         }

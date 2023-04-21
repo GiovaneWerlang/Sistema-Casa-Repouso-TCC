@@ -33,7 +33,4 @@ public class ProfissionalModel extends PessoaModel {
     @JoinColumn(name = "idespecialidade")
     private EspecialidadeModel especialidade;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "idendereco")
-//    private EnderecoModel endereco;
 }

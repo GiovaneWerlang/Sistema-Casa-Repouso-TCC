@@ -16,7 +16,6 @@ public class ResponseError {
     private Collection<FieldError> errors;
 
     public Response returnWithStatusCode(int code){
-
         return Response.status(code).entity(this).build();
     }
 
@@ -24,7 +23,6 @@ public class ResponseError {
 
         Collection<FieldError> errors = violations.stream().map(erro ->
                 new FieldError(erro.getMessage(), erro.getPropertyPath().toString())).collect(Collectors.toList());
-
 
         String message = "Erro de validação de campos.";
 
