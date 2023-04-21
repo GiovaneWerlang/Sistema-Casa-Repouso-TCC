@@ -4,6 +4,7 @@ import br.edu.utfpr.endereco.EnderecoDTO;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.endereco.EnderecoRepository;
 import br.edu.utfpr.erro.ResponseError;
+import br.edu.utfpr.utils.Copy;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -52,37 +53,22 @@ public class ResidenteService {
         }
 
         ResidenteModel model = new ResidenteModel();
-        model.setNome(residenteDTO.getNome());
-        model.setIdade(residenteDTO.getIdade());
-        model.setCpf(residenteDTO.getCpf());
-        model.setTelefone(residenteDTO.getTelefone());
-        model.setEmail(residenteDTO.getEmail());
-        model.setSituacao(residenteDTO.getSituacao());
-        model.setTipoEstadia(residenteDTO.getTipoEstadia());
-        model.setDataHoraIngresso(residenteDTO.getDataHoraIngresso());
-        model.setDataHoraPrevisaoSaida(residenteDTO.getDataHoraPrevisaoSaida());
 
         EnderecoDTO enderecoDTO = new EnderecoDTO();
-        enderecoDTO.setLogradouro(residenteDTO.getEndereco().getLogradouro());
-        enderecoDTO.setNumero(residenteDTO.getEndereco().getNumero());
-        enderecoDTO.setBairro(residenteDTO.getEndereco().getBairro());
-        enderecoDTO.setMunicipio(residenteDTO.getEndereco().getMunicipio());
-        enderecoDTO.setCep(residenteDTO.getEndereco().getCep());
-        enderecoDTO.setEstado(residenteDTO.getEndereco().getEstado());
-        enderecoDTO.setPais(residenteDTO.getEndereco().getPais());
+
+        if(!Copy.copyProperties(model, residenteDTO) || !Copy.copyProperties(enderecoDTO, residenteDTO.getEndereco())){
+            return Response.status(418).build();
+        }
 
         Set<ConstraintViolation<EnderecoDTO>> violationsEndereco = validator.validate(enderecoDTO);
         if(!violationsEndereco.isEmpty()){
             return ResponseError.createFromViolations(violationsEndereco).returnWithStatusCode(422);
         }
         EnderecoModel enderecoModel = new EnderecoModel();
-        enderecoModel.setLogradouro(residenteDTO.getEndereco().getLogradouro());
-        enderecoModel.setNumero(residenteDTO.getEndereco().getNumero());
-        enderecoModel.setBairro(residenteDTO.getEndereco().getBairro());
-        enderecoModel.setMunicipio(residenteDTO.getEndereco().getMunicipio());
-        enderecoModel.setCep(residenteDTO.getEndereco().getCep());
-        enderecoModel.setEstado(residenteDTO.getEndereco().getEstado());
-        enderecoModel.setPais(residenteDTO.getEndereco().getPais());
+
+        if(!Copy.copyProperties(enderecoModel, enderecoDTO)){
+            return Response.status(418).build();
+        }
 
         try{
             enderecoRepository.persist(enderecoModel);
@@ -109,24 +95,12 @@ public class ResidenteService {
 
         ResidenteModel model = repository.findById(id);
         if(model != null){
-            model.setNome(residenteDTO.getNome());
-            model.setIdade(residenteDTO.getIdade());
-            model.setCpf(residenteDTO.getCpf());
-            model.setTelefone(residenteDTO.getTelefone());
-            model.setEmail(residenteDTO.getEmail());
-            model.setSituacao(residenteDTO.getSituacao());
-            model.setTipoEstadia(residenteDTO.getTipoEstadia());
-            model.setDataHoraIngresso(residenteDTO.getDataHoraIngresso());
-            model.setDataHoraPrevisaoSaida(residenteDTO.getDataHoraPrevisaoSaida());
 
             EnderecoDTO enderecoDTO = new EnderecoDTO();
-            enderecoDTO.setLogradouro(residenteDTO.getEndereco().getLogradouro());
-            enderecoDTO.setNumero(residenteDTO.getEndereco().getNumero());
-            enderecoDTO.setBairro(residenteDTO.getEndereco().getBairro());
-            enderecoDTO.setMunicipio(residenteDTO.getEndereco().getMunicipio());
-            enderecoDTO.setCep(residenteDTO.getEndereco().getCep());
-            enderecoDTO.setEstado(residenteDTO.getEndereco().getEstado());
-            enderecoDTO.setPais(residenteDTO.getEndereco().getPais());
+
+            if(!Copy.copyProperties(model, residenteDTO) || !Copy.copyProperties(enderecoDTO, residenteDTO.getEndereco())){
+                return Response.status(418).build();
+            }
 
             Set<ConstraintViolation<EnderecoDTO>> violationsEndereco = validator.validate(enderecoDTO);
             if(!violationsEndereco.isEmpty()){
@@ -139,13 +113,9 @@ public class ResidenteService {
                 enderecoModel = new EnderecoModel();
             }
 
-            enderecoModel.setLogradouro(residenteDTO.getEndereco().getLogradouro());
-            enderecoModel.setNumero(residenteDTO.getEndereco().getNumero());
-            enderecoModel.setBairro(residenteDTO.getEndereco().getBairro());
-            enderecoModel.setMunicipio(residenteDTO.getEndereco().getMunicipio());
-            enderecoModel.setCep(residenteDTO.getEndereco().getCep());
-            enderecoModel.setEstado(residenteDTO.getEndereco().getEstado());
-            enderecoModel.setPais(residenteDTO.getEndereco().getPais());
+            if(!Copy.copyProperties(enderecoModel, enderecoDTO)){
+                return Response.status(418).build();
+            }
 
             try{
                 enderecoRepository.persist(enderecoModel);

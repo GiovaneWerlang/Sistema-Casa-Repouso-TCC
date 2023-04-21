@@ -1,6 +1,7 @@
 package br.edu.utfpr.medicamentoestoque;
 
 import br.edu.utfpr.erro.ResponseError;
+import br.edu.utfpr.utils.Copy;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -47,9 +48,9 @@ public class MedicamentoEstoqueService {
         }
 
         MedicamentoEstoqueModel model = new MedicamentoEstoqueModel();
-        model.setNome(medicamentoEstoqueDTO.getNome());
-        model.setPrincipioAtivo(medicamentoEstoqueDTO.getPrincipioAtivo());
-        model.setQtde(medicamentoEstoqueDTO.getQtde());
+        if(!Copy.copyProperties(model, medicamentoEstoqueDTO)){
+            return Response.status(418).build();
+        }
 
         try{
             repository.persist(model);
@@ -68,9 +69,9 @@ public class MedicamentoEstoqueService {
 
         MedicamentoEstoqueModel model = repository.findById(id);
         if(model != null){
-            model.setNome(medicamentoEstoqueDTO.getNome());
-            model.setPrincipioAtivo(medicamentoEstoqueDTO.getPrincipioAtivo());
-            model.setQtde(medicamentoEstoqueDTO.getQtde());
+            if(!Copy.copyProperties(model, medicamentoEstoqueDTO)){
+                return Response.status(418).build();
+            }
 
             return Response.status(201, model.toString()).build();
         }

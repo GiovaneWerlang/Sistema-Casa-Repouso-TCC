@@ -53,7 +53,7 @@ public class EntradaSaidaService {
         }
         if(entradaSaidaDTO.getDataHoraEntrada() == null && entradaSaidaDTO.getDataHoraSaida() == null){
             String message = Json.object().put("message","Data de entrada e data da saída não podem ser ambas nulas.").build();
-            return Response.status( 422).entity(message).type(MediaType.APPLICATION_JSON).build();
+            return Response.status(422).entity(message).type(MediaType.APPLICATION_JSON).build();
         }
 
         EntradaSaidaModel model = new EntradaSaidaModel();
@@ -83,7 +83,7 @@ public class EntradaSaidaService {
         }
         if(entradaSaidaDTO.getDataHoraEntrada() == null && entradaSaidaDTO.getDataHoraSaida() == null){
             String message = Json.object().put("message","Data de entrada e data da saída não podem ser ambas nulas.").build();
-            return Response.status( 422).entity(message).type(MediaType.APPLICATION_JSON).build();
+            return Response.status(422).entity(message).type(MediaType.APPLICATION_JSON).build();
         }
         EntradaSaidaModel model = repository.findById(id);
         if(model != null){

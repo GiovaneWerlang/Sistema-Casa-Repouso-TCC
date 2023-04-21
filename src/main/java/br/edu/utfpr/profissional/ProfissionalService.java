@@ -6,6 +6,7 @@ import br.edu.utfpr.endereco.EnderecoRepository;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
+import br.edu.utfpr.utils.Copy;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -75,26 +76,18 @@ public class ProfissionalService {
         model.setEspecialidade(especialidadeModel);
 
         EnderecoDTO enderecoDTO = new EnderecoDTO();
-        enderecoDTO.setLogradouro(profissionalDTO.getEndereco().getLogradouro());
-        enderecoDTO.setNumero(profissionalDTO.getEndereco().getNumero());
-        enderecoDTO.setBairro(profissionalDTO.getEndereco().getBairro());
-        enderecoDTO.setMunicipio(profissionalDTO.getEndereco().getMunicipio());
-        enderecoDTO.setCep(profissionalDTO.getEndereco().getCep());
-        enderecoDTO.setEstado(profissionalDTO.getEndereco().getEstado());
-        enderecoDTO.setPais(profissionalDTO.getEndereco().getPais());
+        if(!Copy.copyProperties(enderecoDTO, profissionalDTO.getEndereco())){
+            return Response.status(418).build();
+        }
 
         Set<ConstraintViolation<EnderecoDTO>> violationsEndereco = validator.validate(enderecoDTO);
         if(!violationsEndereco.isEmpty()){
             return ResponseError.createFromViolations(violationsEndereco).returnWithStatusCode(422);
         }
         EnderecoModel enderecoModel = new EnderecoModel();
-        enderecoModel.setLogradouro(profissionalDTO.getEndereco().getLogradouro());
-        enderecoModel.setNumero(profissionalDTO.getEndereco().getNumero());
-        enderecoModel.setBairro(profissionalDTO.getEndereco().getBairro());
-        enderecoModel.setMunicipio(profissionalDTO.getEndereco().getMunicipio());
-        enderecoModel.setCep(profissionalDTO.getEndereco().getCep());
-        enderecoModel.setEstado(profissionalDTO.getEndereco().getEstado());
-        enderecoModel.setPais(profissionalDTO.getEndereco().getPais());
+        if(!Copy.copyProperties(enderecoModel, enderecoDTO)){
+            return Response.status(418).build();
+        }
 
         try{
             enderecoRepository.persist(enderecoModel);
@@ -141,13 +134,9 @@ public class ProfissionalService {
             model.setEspecialidade(especialidadeModel);
 
             EnderecoDTO enderecoDTO = new EnderecoDTO();
-            enderecoDTO.setLogradouro(profissionalDTO.getEndereco().getLogradouro());
-            enderecoDTO.setNumero(profissionalDTO.getEndereco().getNumero());
-            enderecoDTO.setBairro(profissionalDTO.getEndereco().getBairro());
-            enderecoDTO.setMunicipio(profissionalDTO.getEndereco().getMunicipio());
-            enderecoDTO.setCep(profissionalDTO.getEndereco().getCep());
-            enderecoDTO.setEstado(profissionalDTO.getEndereco().getEstado());
-            enderecoDTO.setPais(profissionalDTO.getEndereco().getPais());
+            if(!Copy.copyProperties(enderecoDTO, profissionalDTO.getEndereco())){
+                return Response.status(418).build();
+            }
 
             Set<ConstraintViolation<EnderecoDTO>> violationsEndereco = validator.validate(enderecoDTO);
             if(!violationsEndereco.isEmpty()){
@@ -160,13 +149,10 @@ public class ProfissionalService {
                 enderecoModel = new EnderecoModel();
             }
 
-            enderecoModel.setLogradouro(profissionalDTO.getEndereco().getLogradouro());
-            enderecoModel.setNumero(profissionalDTO.getEndereco().getNumero());
-            enderecoModel.setBairro(profissionalDTO.getEndereco().getBairro());
-            enderecoModel.setMunicipio(profissionalDTO.getEndereco().getMunicipio());
-            enderecoModel.setCep(profissionalDTO.getEndereco().getCep());
-            enderecoModel.setEstado(profissionalDTO.getEndereco().getEstado());
-            enderecoModel.setPais(profissionalDTO.getEndereco().getPais());
+            if(!Copy.copyProperties(enderecoModel, profissionalDTO.getEndereco())){
+                return Response.status(418).build();
+            }
+
             try{
                 enderecoRepository.persist(enderecoModel);
             }catch (Exception ex){

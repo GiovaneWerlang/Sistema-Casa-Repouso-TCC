@@ -1,6 +1,7 @@
 package br.edu.utfpr.endereco;
 
 import br.edu.utfpr.erro.ResponseError;
+import br.edu.utfpr.utils.Copy;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -46,13 +47,10 @@ public class EnderecoService {
         }
 
         EnderecoModel model = new EnderecoModel();
-        model.setLogradouro(enderecoDTO.getLogradouro());
-        model.setNumero(enderecoDTO.getNumero());
-        model.setBairro(enderecoDTO.getBairro());
-        model.setMunicipio(enderecoDTO.getMunicipio());
-        model.setCep(enderecoDTO.getCep());
-        model.setEstado(enderecoDTO.getEstado());
-        model.setPais(enderecoDTO.getPais());
+
+        if(!Copy.copyProperties(model, enderecoDTO)){
+            return Response.status(418).build();
+        }
 
         try{
             repository.persist(model);
@@ -71,13 +69,9 @@ public class EnderecoService {
 
         EnderecoModel model = repository.findById(id);
         if(model != null){
-            model.setLogradouro(enderecoDTO.getLogradouro());
-            model.setNumero(enderecoDTO.getNumero());
-            model.setBairro(enderecoDTO.getBairro());
-            model.setMunicipio(enderecoDTO.getMunicipio());
-            model.setCep(enderecoDTO.getCep());
-            model.setEstado(enderecoDTO.getEstado());
-            model.setPais(enderecoDTO.getPais());
+            if(!Copy.copyProperties(model, enderecoDTO)){
+                return Response.status(418).build();
+            }
 
             return Response.status(201, model.toString()).build();
         }
