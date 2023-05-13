@@ -1,5 +1,8 @@
 package br.edu.utfpr.exame;
 
+import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteModel;
+import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteModel;
+import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteRepository;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -24,14 +27,16 @@ public class ExameService {
     private ResidenteRepository residenteRepository;
     private EspecialidadeRepository especialidadeRepository;
     private Validator validator;
+    private AtividadeExameResidenteRepository atividadeExameResidenteRepository;
 
     @Inject
-    public ExameService(ExameRepository repository, ProfissionalRepository profissionalRepository, ResidenteRepository residenteRepository, EspecialidadeRepository especialidadeRepository, Validator validator){
+    public ExameService(ExameRepository repository, ProfissionalRepository profissionalRepository, ResidenteRepository residenteRepository, EspecialidadeRepository especialidadeRepository, Validator validator, AtividadeExameResidenteRepository atividadeExameResidenteRepository){
         this.repository = repository;
         this.profissionalRepository = profissionalRepository;
         this.residenteRepository = residenteRepository;
         this.especialidadeRepository = especialidadeRepository;
         this.validator = validator;
+        this.atividadeExameResidenteRepository = atividadeExameResidenteRepository;
     }
 
     public Response getAll(){
@@ -89,6 +94,11 @@ public class ExameService {
 
         try{
             repository.persist(model);
+            AtividadeExameResidenteModel atividadeExameResidenteModel = new AtividadeExameResidenteModel();
+            atividadeExameResidenteModel.setDescricao(model.getNome());
+            atividadeExameResidenteModel.setDataHora(model.getDataHora());
+            atividadeExameResidenteModel.setExame(model);
+            atividadeExameResidenteRepository.persist(atividadeExameResidenteModel);
         }catch (Exception ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -137,6 +147,22 @@ public class ExameService {
                 repository.persist(model);
             }catch (Exception ex){
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+
+            AtividadeExameResidenteModel atividadeExameResidenteModel = new AtividadeExameResidenteModel();
+            if(atividadeExameResidenteRepository.findByExameId(model.getId()) != null){
+                atividadeExameResidenteModel = atividadeExameResidenteRepository.findByExameId(model.getId());
+                if(atividadeExameResidenteModel.getSituacao() == null) {
+                atividadeExameResidenteModel.setDescricao(model.getNome());
+                atividadeExameResidenteModel.setDataHora(model.getDataHora());
+                atividadeExameResidenteModel.setExame(model);
+
+                    try{
+                        atividadeExameResidenteRepository.persist(atividadeExameResidenteModel);
+                    }catch (Exception ex){
+                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                    }
+                }
             }
 
             return Response.status(201, model.toString()).build();
