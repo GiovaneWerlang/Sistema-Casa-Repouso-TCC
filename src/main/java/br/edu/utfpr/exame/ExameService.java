@@ -152,7 +152,7 @@ public class ExameService {
             AtividadeExameResidenteModel atividadeExameResidenteModel = new AtividadeExameResidenteModel();
             if(atividadeExameResidenteRepository.findByExameId(model.getId()) != null){
                 atividadeExameResidenteModel = atividadeExameResidenteRepository.findByExameId(model.getId());
-                if(atividadeExameResidenteModel.getSituacao() == null) {
+//                if(atividadeExameResidenteModel.getSituacao() == null) {
                 atividadeExameResidenteModel.setDescricao(model.getNome());
                 atividadeExameResidenteModel.setDataHora(model.getDataHora());
                 atividadeExameResidenteModel.setExame(model);
@@ -162,7 +162,7 @@ public class ExameService {
                     }catch (Exception ex){
                         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
                     }
-                }
+//                }
             }
 
             return Response.status(201, model.toString()).build();

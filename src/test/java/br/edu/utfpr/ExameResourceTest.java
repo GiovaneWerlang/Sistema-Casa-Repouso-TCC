@@ -352,11 +352,18 @@ public class ExameResourceTest {
     @DisplayName("Deve falhar ao buscar todos os exames.")
     public void getAllExameErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
+
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from exame");
+        PreparedStatement stmt = c.prepareStatement("delete from atividadeexameresidente");
         stmt.execute();
         stmt.close();
         c.close();
+
+        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt2 = c2.prepareStatement("delete from exame");
+        stmt2.execute();
+        stmt2.close();
+        c2.close();
 
         Response response = given()
                 .contentType(ContentType.JSON)

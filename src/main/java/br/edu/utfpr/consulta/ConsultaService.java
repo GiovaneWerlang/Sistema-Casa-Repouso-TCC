@@ -152,7 +152,7 @@ public class ConsultaService {
             AtividadeConsultaResidenteModel atividadeConsultaResidenteModel = new AtividadeConsultaResidenteModel();
             if(atividadeConsultaResidenteRepository.findByConsultaId(model.getId()) != null){
                 atividadeConsultaResidenteModel = atividadeConsultaResidenteRepository.findByConsultaId(model.getId());
-                if(atividadeConsultaResidenteModel.getSituacao() == null) {
+//                if(atividadeConsultaResidenteModel.getSituacao() == null) {
                     atividadeConsultaResidenteModel.setDescricao(model.getDescricao());
                     atividadeConsultaResidenteModel.setDataHora(model.getDataHora());
                     atividadeConsultaResidenteModel.setConsulta(model);
@@ -162,7 +162,7 @@ public class ConsultaService {
                     }catch (Exception ex){
                         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
                     }
-                }
+//                }
             }
 
             return Response.status(201, model.toString()).build();
