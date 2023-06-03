@@ -17,7 +17,6 @@ public class EntradaSaidaResource {
 
     private EntradaSaidaService service;
 
-
     @Inject
     public EntradaSaidaResource(EntradaSaidaService service){
         this.service = service;

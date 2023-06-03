@@ -35,7 +35,7 @@ public class AtividadeLudicaResourceTest {
     @Test
     @Order(1)
     @DisplayName("Deve criar atividade lúdica com sucesso.")
-    public void createEspecialidadeTest(){
+    public void createAtividadeLudicaTest(){
         AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
         atividadeDTO.setNome("Infantil");
         atividadeDTO.setSituacao(Situacao.ATIVO);
@@ -55,7 +55,7 @@ public class AtividadeLudicaResourceTest {
     @Test
     @Order(2)
     @DisplayName("Deve falhar ao criar atividade.")
-    public void createEspecialidadeValidationErrorTest(){
+    public void createAtividadeLudicaValidationErrorTest(){
         AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
         atividadeDTO.setNome(null);
         atividadeDTO.setSituacao(null);
@@ -78,7 +78,7 @@ public class AtividadeLudicaResourceTest {
     @Order(3)
     @Test
     @DisplayName("Deve atualizar atividade com sucesso.")
-    public void updateEspecialidadeTest(){
+    public void updateAtividadeLudicaTest(){
 
         AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
         atividadeDTO.setNome("Juvenil");
@@ -99,7 +99,7 @@ public class AtividadeLudicaResourceTest {
     @Order(4)
     @Test
     @DisplayName("Deve falhar ao atualizar atividade.")
-    public void updateEspecialidadeValidationErrorTest(){
+    public void updateAtividadeLudicaValidationErrorTest(){
 
         AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
         atividadeDTO.setNome(null);
@@ -122,7 +122,7 @@ public class AtividadeLudicaResourceTest {
     @Order(5)
     @Test
     @DisplayName("Deve buscar atividade por id com sucesso.")
-    public void getByIdEspecialidadeTest(){
+    public void getByIdAtividadeLudicaTest(){
 
 
         Response response = given()
@@ -138,7 +138,7 @@ public class AtividadeLudicaResourceTest {
     @Order(6)
     @Test
     @DisplayName("Deve falhar ao buscar atividade por id.")
-    public void getByIdEspecialidadeValidationErrorTest(){
+    public void getByIdAtividadeLudicaValidationErrorTest(){
 
 
         Response response = given()
@@ -154,7 +154,7 @@ public class AtividadeLudicaResourceTest {
     @Order(7)
     @Test
     @DisplayName("Deve buscar todas as atividades com sucesso.")
-    public void getAllEspecialidadeTest(){
+    public void getAllAtividadeLudicaTest(){
 
 
         Response response = given()
@@ -170,7 +170,7 @@ public class AtividadeLudicaResourceTest {
     @Order(8)
     @Test
     @DisplayName("Deve deletar por id a atividade com sucesso.")
-    public void deleteEspecialidadeTest(){
+    public void deleteAtividadeLudicaTest(){
 
 
         Response response = given()
@@ -186,7 +186,7 @@ public class AtividadeLudicaResourceTest {
     @Order(9)
     @Test
     @DisplayName("Deve falhar ao deletar por id a atividade.")
-    public void deleteEspecialidadeErrorTest(){
+    public void deleteAtividadeLudicaErrorTest(){
 
 
         Response response = given()
@@ -202,7 +202,7 @@ public class AtividadeLudicaResourceTest {
     @Order(10)
     @Test
     @DisplayName("Deve falhar ao buscar todas as atividades.")
-    public void getAllEspecialidadeErrorTest() throws SQLException {
+    public void getAllAtividadeLudicaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from atividadeludica");

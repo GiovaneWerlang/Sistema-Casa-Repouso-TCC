@@ -1,4 +1,4 @@
-package br.edu.utfpr.residente;
+package br.edu.utfpr.movimentacaoestoque;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -9,16 +9,16 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/residente")
+@Path("/movimentacaoestoque")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@Tag(name = "Residente")
-public class ResidenteResource {
+@Tag(name = "Movimentacao Estoque")
+public class MovimentacaoEstoqueResource {
 
-    private ResidenteService service;
+    private MovimentacaoEstoqueService service;
 
     @Inject
-    public ResidenteResource(ResidenteService service){
+    public MovimentacaoEstoqueResource(MovimentacaoEstoqueService service) {
         this.service = service;
     }
 
@@ -30,27 +30,27 @@ public class ResidenteResource {
 
     @GET
     @Path("{id}")
-    public Response getResidenteById(@PathParam("id") long id){
+    public Response getMovimentacaoEstoqueById(@PathParam("id") long id){
         return service.findById(id);
     }
-
     @POST
     @Transactional
-    public Response addResidente(ResidenteDTO residenteDTO){
-        return service.add(residenteDTO);
+    public Response addMovimentacaoEstoque(MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
+        return service.add(movimentacaoEstoqueDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateResidente(@PathParam("id") long id, ResidenteDTO residenteDTO){
-        return service.update(id, residenteDTO);
+    public Response updateMovimentacaoEstoque(@PathParam("id") long id, MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
+        return service.update(id, movimentacaoEstoqueDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteResidente(@PathParam("id") long id){
+    public Response deleteMovimentacaoEstoque(@PathParam("id") long id){
         return service.delete(id);
     }
+
 }

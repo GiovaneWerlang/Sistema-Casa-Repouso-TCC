@@ -1,6 +1,7 @@
 package br.edu.utfpr;
 
-import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueDTO;
+import br.edu.utfpr.enums.TipoMovimentacao;
+import br.edu.utfpr.movimentacaoestoque.MovimentacaoEstoqueDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
@@ -18,29 +19,37 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MedicamentoEstoqueResourceTest {
+public class MovimentacaoEstoqueResourceTest {
 
-    @TestHTTPResource("/medicamentoestoque")
+    @TestHTTPResource("/movimentacaoestoque")
     URL apiURL;
 
-    @TestHTTPResource("/medicamentoestoque/1")
+    @TestHTTPResource("/movimentacaoestoque/1")
     URL idURL;
 
-    @TestHTTPResource("/medicamentoestoque/321")
+    @TestHTTPResource("/movimentacaoestoque/321")
     URL erroURL;
 
     @Test
     @Order(1)
-    @DisplayName("Deve criar medicamentoestoque com sucesso.")
-    public void createMedicamentoEstoqueTest(){
-        MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
-        medicamentoestoqueDTO.setNome("Teste");
-        medicamentoestoqueDTO.setPrincipioAtivo("Teste");
-        medicamentoestoqueDTO.setQtde(123);
+    @DisplayName("Deve criar movimentação de estoque com sucesso.")
+    public void createMovimentacaoEstoqueTest() throws SQLException {
+
+        MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
+        movimentacaoestoqueDTO.setQtde(1);
+        movimentacaoestoqueDTO.setTipo(TipoMovimentacao.ENTRADA);
+        movimentacaoestoqueDTO.setMedicamento(1L);
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("INSERT INTO MEDICAMENTOESTOQUE (QTDE, TIPO, IDMEDICAMENTO) VALUES (20, 'ENTRADA', 1);");
+        stmt.execute();
+        stmt.close();
+        c.close();
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(medicamentoestoqueDTO)
+                .body(movimentacaoestoqueDTO)
                 .when()
                 .post(apiURL)
                 .then()
@@ -51,16 +60,17 @@ public class MedicamentoEstoqueResourceTest {
 
     @Test
     @Order(2)
-    @DisplayName("Deve falhar ao criar medicamentoestoque.")
-    public void createMedicamentoEstoqueValidationErrorTest(){
-        MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
-        medicamentoestoqueDTO.setNome(null);
-        medicamentoestoqueDTO.setPrincipioAtivo(null);
-        medicamentoestoqueDTO.setQtde(null);
+    @DisplayName("Deve falhar ao criar movimentação de estoque.")
+    public void createMovimentacaoEstoqueValidationErrorTest(){
+
+        MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
+        movimentacaoestoqueDTO.setTipo(null);
+        movimentacaoestoqueDTO.setMedicamento(null);
+        movimentacaoestoqueDTO.setQtde(null);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(medicamentoestoqueDTO)
+                .body(movimentacaoestoqueDTO)
                 .when()
                 .post(apiURL)
                 .then()
@@ -73,17 +83,17 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(3)
     @Test
-    @DisplayName("Deve atualizar medicamentoestoque com sucesso.")
-    public void updateMedicamentoEstoqueTest(){
+    @DisplayName("Deve atualizar movimentação de estoque com sucesso.")
+    public void updateMovimentacaoEstoqueTest(){
 
-        MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
-        medicamentoestoqueDTO.setNome("Teste");
-        medicamentoestoqueDTO.setPrincipioAtivo("Teste");
-        medicamentoestoqueDTO.setQtde(123);
+        MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
+        movimentacaoestoqueDTO.setQtde(5);
+        movimentacaoestoqueDTO.setTipo(TipoMovimentacao.SAIDA);
+        movimentacaoestoqueDTO.setMedicamento(1L);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(medicamentoestoqueDTO)
+                .body(movimentacaoestoqueDTO)
                 .when()
                 .put(idURL)
                 .then()
@@ -94,17 +104,17 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(4)
     @Test
-    @DisplayName("Deve falhar ao atualizar medicamentoestoque.")
-    public void updateMedicamentoEstoqueValidationErrorTest(){
+    @DisplayName("Deve falhar ao atualizar movimentação de estoque.")
+    public void updateMovimentacaoEstoqueValidationErrorTest(){
 
-        MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
-        medicamentoestoqueDTO.setNome(null);
-        medicamentoestoqueDTO.setPrincipioAtivo(null);
-        medicamentoestoqueDTO.setQtde(null);
+        MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
+        movimentacaoestoqueDTO.setQtde(null);
+        movimentacaoestoqueDTO.setTipo(null);
+        movimentacaoestoqueDTO.setMedicamento(null);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(medicamentoestoqueDTO)
+                .body(movimentacaoestoqueDTO)
                 .when()
                 .put(idURL)
                 .then()
@@ -117,9 +127,8 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(5)
     @Test
-    @DisplayName("Deve buscar medicamentoestoque por id com sucesso.")
-    public void getByIdMedicamentoEstoqueTest(){
-
+    @DisplayName("Deve buscar movimentação de estoque por id com sucesso.")
+    public void getByIdMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -133,9 +142,8 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(6)
     @Test
-    @DisplayName("Deve falhar ao buscar medicamentoestoque por id.")
-    public void getByIdMedicamentoEstoqueValidationErrorTest(){
-
+    @DisplayName("Deve falhar ao buscar movimentação de estoque por id.")
+    public void getByIdMovimentacaoEstoqueValidationErrorTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -149,9 +157,8 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(7)
     @Test
-    @DisplayName("Deve buscar todas os medicamentoestoques com sucesso.")
-    public void getAllMedicamentoEstoqueTest(){
-
+    @DisplayName("Deve buscar todas os movimentações de estoque com sucesso.")
+    public void getAllMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -165,9 +172,8 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(8)
     @Test
-    @DisplayName("Deve deletar por id o medicamentoestoque com sucesso.")
-    public void deleteMedicamentoEstoqueTest(){
-
+    @DisplayName("Deve deletar por id a movimentação de estoque com sucesso.")
+    public void deleteMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -181,8 +187,8 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(9)
     @Test
-    @DisplayName("Deve falhar ao deletar por id o medicamentoestoque.")
-    public void deleteMedicamentoEstoqueErrorTest(){
+    @DisplayName("Deve falhar ao deletar por id a movimentação de estoque.")
+    public void deleteMovimentacaoEstoqueErrorTest(){
 
 
         Response response = given()
@@ -197,11 +203,11 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(10)
     @Test
-    @DisplayName("Deve falhar ao buscar todas os medicamentoestoques.")
-    public void getAllMedicamentoEstoqueErrorTest() throws SQLException {
+    @DisplayName("Deve falhar ao buscar todas os movimentações de estoque.")
+    public void getAllMovimentacaoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from medicamentoestoque");
+        PreparedStatement stmt = c.prepareStatement("delete from movimentacaoestoque");
         stmt.execute();
         stmt.close();
         c.close();

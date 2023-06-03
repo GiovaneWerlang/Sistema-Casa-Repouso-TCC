@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 public class MedicamentoEstoqueResource {
 
     private MedicamentoEstoqueService service;
-    private Validator validator;
 
     @Inject
     public MedicamentoEstoqueResource(MedicamentoEstoqueService service){

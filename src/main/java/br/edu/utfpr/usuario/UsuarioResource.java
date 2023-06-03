@@ -18,7 +18,6 @@ public class UsuarioResource {
 
     private UsuarioService service;
 
-
     @Inject
     public UsuarioResource(UsuarioService service){
         this.service = service;
