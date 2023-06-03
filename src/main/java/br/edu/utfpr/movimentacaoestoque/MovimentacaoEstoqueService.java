@@ -106,20 +106,23 @@ public class MovimentacaoEstoqueService {
             }else{
                 return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Medicamento não encontrado.").build();
             }
-            model.setMedicamento(medicamentoEstoqueModel);
-            if(qtdeAnterior != movimentacaoEstoqueDTO.getQtde()){
+
+            if(!qtdeAnterior.equals(movimentacaoEstoqueDTO.getQtde())){
+                Integer valorAtualizado = -1;
                 switch (model.getTipo()){
                     case ENTRADA:{
-                        if(medicamentoEstoqueModel.getQtde() >= (qtdeAnterior - model.getQtde())) {
-                            medicamentoEstoqueModel.setQtde(medicamentoEstoqueModel.getQtde() + (qtdeAnterior - model.getQtde()));
+                        valorAtualizado = (geraValorAtualizar(medicamentoEstoqueModel.getQtde(), qtdeAnterior, model.getQtde(), true));
+                        if(valorAtualizado >= 0) {
+                            medicamentoEstoqueModel.setQtde(valorAtualizado);
                         }else{
                             return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), "Quantidade insuficiente.").build();
                         }
                         break;
                     }
                     case SAIDA:{
-                        if(medicamentoEstoqueModel.getQtde() >= (qtdeAnterior - model.getQtde())){
-                            medicamentoEstoqueModel.setQtde(medicamentoEstoqueModel.getQtde() - (qtdeAnterior - model.getQtde()));
+                        valorAtualizado = (geraValorAtualizar(medicamentoEstoqueModel.getQtde(), qtdeAnterior, model.getQtde(), false));
+                        if(valorAtualizado >= 0){
+                            medicamentoEstoqueModel.setQtde(valorAtualizado);
                         }else{
                             return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), "Quantidade insuficiente.").build();
                         }
@@ -130,6 +133,7 @@ public class MovimentacaoEstoqueService {
                     }
                 }
             }
+            model.setMedicamento(medicamentoEstoqueModel);
 
             return Response.status(201, model.toString()).build();
         }
@@ -145,6 +149,28 @@ public class MovimentacaoEstoqueService {
         }
 
         return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    private boolean valorAumentou(Integer valorAnterior, Integer valorNovo){
+        return valorAnterior < valorNovo;
+    }
+
+    private Integer geraValorAtualizar(Integer qtdeEstoque, Integer valorAnterior, Integer valorNovo, boolean entrada){
+        Integer valor = -1;
+        if(entrada){
+            if(valorAumentou(valorAnterior,valorNovo)){
+                valor = qtdeEstoque + (valorNovo - valorAnterior);
+            }else{
+                valor = qtdeEstoque - (valorAnterior - valorNovo);
+            }
+        }else{
+            if(!valorAumentou(valorAnterior,valorNovo)){
+                valor = qtdeEstoque + (valorAnterior - valorNovo);
+            }else{
+                valor = qtdeEstoque - (valorNovo - valorAnterior);
+            }
+        }
+        return valor;
     }
 
 }
