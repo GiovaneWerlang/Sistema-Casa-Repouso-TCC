@@ -14,7 +14,6 @@ public class MovimentacaoEstoqueDTO {
     @NotNull(message = "Não pode ser nulo")
     private Integer qtde;
 
-    @NotBlank(message = "Não pode ser vazio")
     @NotNull(message = "Não pode ser nulo")
     private TipoMovimentacao tipo;
 

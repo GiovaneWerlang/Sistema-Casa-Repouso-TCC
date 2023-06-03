@@ -42,7 +42,7 @@ public class MovimentacaoEstoqueResourceTest {
 
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("INSERT INTO MEDICAMENTOESTOQUE (QTDE, TIPO, IDMEDICAMENTO) VALUES (20, 'ENTRADA', 1);");
+        PreparedStatement stmt = c.prepareStatement("INSERT INTO MEDICAMENTOESTOQUE (NOME, PRINCIPIOATIVO, QTDE) VALUES ('DIPIRONA', 'DIPIRONA 500MG', 20);");
         stmt.execute();
         stmt.close();
         c.close();
