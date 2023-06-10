@@ -1,0 +1,22 @@
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Ações</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let e of especialidade">
+                <td>{{e.id}}</td>
+                <td>{{e.nome}}</td>
+                <td>
+                    <a href="especialidade/editar/{{e.id}}">Editar</a> |
+                    <button (click)="delete(e.id)">Deletar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
