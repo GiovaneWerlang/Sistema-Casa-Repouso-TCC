@@ -15,6 +15,8 @@ import java.util.Set;
 @ApplicationScoped
 public class MovimentacaoEstoqueService {
 
+    private static final String MENSAGEM = "Quantidade insuficiente.";
+
     private MovimentacaoEstoqueRepository repository;
     private MedicamentoEstoqueRepository medicamentoEstoqueRepository;
     private Validator validator;
@@ -73,7 +75,7 @@ public class MovimentacaoEstoqueService {
                     if(medicamentoEstoqueModel.getQtde() >= model.getQtde()){
                         medicamentoEstoqueModel.setQtde(medicamentoEstoqueModel.getQtde() - model.getQtde());
                     }else{
-                        return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), "Quantidade insuficiente.").build();
+                        return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), MENSAGEM).build();
                     }
                     break;
                 }
@@ -115,7 +117,7 @@ public class MovimentacaoEstoqueService {
                         if(valorAtualizado >= 0) {
                             medicamentoEstoqueModel.setQtde(valorAtualizado);
                         }else{
-                            return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), "Quantidade insuficiente.").build();
+                            return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), MENSAGEM).build();
                         }
                         break;
                     }
@@ -124,7 +126,7 @@ public class MovimentacaoEstoqueService {
                         if(valorAtualizado >= 0){
                             medicamentoEstoqueModel.setQtde(valorAtualizado);
                         }else{
-                            return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), "Quantidade insuficiente.").build();
+                            return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), MENSAGEM).build();
                         }
                         break;
                     }
