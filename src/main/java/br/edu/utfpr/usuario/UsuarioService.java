@@ -107,4 +107,13 @@ public class UsuarioService {
 
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+
+    public Response findByLoginAndPassword(String login, String senha){
+        UsuarioModel model = repository.findByLoginAndPasswordId(login, senha);
+        if(model != null){
+            return Response.ok(model).build();
+        }
+
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }

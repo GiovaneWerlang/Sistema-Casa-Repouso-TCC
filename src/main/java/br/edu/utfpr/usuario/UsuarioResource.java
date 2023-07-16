@@ -54,4 +54,10 @@ public class UsuarioResource {
     public Response deleteUsuario(@PathParam("id") long id){
         return service.delete(id);
     }
+    @GET
+    @Path("/login")
+    public Response getUsuarioByLoginAndPasswrod(UsuarioDTO usuarioDTO){
+        return service.findByLoginAndPassword(usuarioDTO.getLogin(), usuarioDTO.getSenha());
+    }
+
 }
