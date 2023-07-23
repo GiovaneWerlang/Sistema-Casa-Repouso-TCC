@@ -1,5 +1,6 @@
 package br.edu.utfpr.movimentacaoestoque;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Movimentacao Estoque")
-public class MovimentacaoEstoqueResource {
+public class MovimentacaoEstoqueResource implements CrudResource<MovimentacaoEstoqueDTO> {
 
     private MovimentacaoEstoqueService service;
 
@@ -30,26 +31,26 @@ public class MovimentacaoEstoqueResource {
 
     @GET
     @Path("{id}")
-    public Response getMovimentacaoEstoqueById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
     @POST
     @Transactional
-    public Response addMovimentacaoEstoque(MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
+    public Response add(MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
         return service.add(movimentacaoEstoqueDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateMovimentacaoEstoque(@PathParam("id") long id, MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
+    public Response update(@PathParam("id") long id, MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
         return service.update(id, movimentacaoEstoqueDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteMovimentacaoEstoque(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
         return service.delete(id);
     }
 

@@ -1,5 +1,6 @@
 package br.edu.utfpr.movimentacaoestoque;
 
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueRepository;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped
-public class MovimentacaoEstoqueService {
+public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoqueDTO> {
 
     private static final String MENSAGEM = "Quantidade insuficiente.";
 

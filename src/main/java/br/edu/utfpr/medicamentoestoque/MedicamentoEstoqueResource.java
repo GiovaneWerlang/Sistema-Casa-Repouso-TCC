@@ -1,11 +1,11 @@
 package br.edu.utfpr.medicamentoestoque;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Medicamento Estoque")
-public class MedicamentoEstoqueResource {
+public class MedicamentoEstoqueResource implements CrudResource<MedicamentoEstoqueDTO> {
 
     private MedicamentoEstoqueService service;
 
@@ -31,26 +31,26 @@ public class MedicamentoEstoqueResource {
 
     @GET
     @Path("{id}")
-    public Response getMedicamentoEstoqueById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
     @POST
     @Transactional
-    public Response addMedicamentoEstoque(MedicamentoEstoqueDTO medicamentoEstoqueDTO){
+    public Response add(MedicamentoEstoqueDTO medicamentoEstoqueDTO){
        return service.add(medicamentoEstoqueDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateMedicamentoEstoque(@PathParam("id") long id, MedicamentoEstoqueDTO medicamentoEstoqueDTO){
+    public Response update(@PathParam("id") long id, MedicamentoEstoqueDTO medicamentoEstoqueDTO){
        return service.update(id, medicamentoEstoqueDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteMedicamentoEstoque(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
        return service.delete(id);
     }
 }

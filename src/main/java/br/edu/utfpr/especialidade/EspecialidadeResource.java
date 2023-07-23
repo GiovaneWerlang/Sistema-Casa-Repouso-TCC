@@ -1,5 +1,6 @@
 package br.edu.utfpr.especialidade;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Especialidade")
-public class EspecialidadeResource {
+public class EspecialidadeResource implements CrudResource<EspecialidadeDTO> {
 
     private EspecialidadeService service;
 
@@ -30,26 +31,26 @@ public class EspecialidadeResource {
 
     @GET
     @Path("{id}")
-    public Response getEspecialidadeById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
        return service.findById(id);
     }
     @POST
     @Transactional
-    public Response addEspecialidade(EspecialidadeDTO especialidadeDTO){
+    public Response add(EspecialidadeDTO especialidadeDTO){
        return service.add(especialidadeDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateEspecialidade(@PathParam("id") long id, EspecialidadeDTO especialidadeDTO){
+    public Response update(@PathParam("id") long id, EspecialidadeDTO especialidadeDTO){
        return service.update(id, especialidadeDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteEspecialidade(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
         return service.delete(id);
     }
 

@@ -1,5 +1,6 @@
 package br.edu.utfpr.entradasaida;
 
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
@@ -16,7 +17,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class EntradaSaidaService {
+public class EntradaSaidaService implements CrudService<EntradaSaidaDTO> {
 
     private EntradaSaidaRepository repository;
     private ResidenteRepository residenteRepository;

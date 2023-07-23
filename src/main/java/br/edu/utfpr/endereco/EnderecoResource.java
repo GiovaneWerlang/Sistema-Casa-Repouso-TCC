@@ -1,5 +1,6 @@
 package br.edu.utfpr.endereco;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Endereço")
-public class EnderecoResource {
+public class EnderecoResource implements CrudResource<EnderecoDTO> {
 
     private EnderecoService service;
 
@@ -30,27 +31,27 @@ public class EnderecoResource {
 
     @GET
     @Path("{id}")
-    public Response getEnderecoById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
     @POST
     @Transactional
-    public Response addEndereco(EnderecoDTO enderecoDTO){
+    public Response add(EnderecoDTO enderecoDTO){
         return service.add(enderecoDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateEndereco(@PathParam("id") long id, EnderecoDTO enderecoDTO){
+    public Response update(@PathParam("id") long id, EnderecoDTO enderecoDTO){
         return service.update(id, enderecoDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteEndereco(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
         return service.delete(id);
     }
 }

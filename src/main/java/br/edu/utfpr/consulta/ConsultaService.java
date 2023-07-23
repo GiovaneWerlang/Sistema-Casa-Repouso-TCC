@@ -2,6 +2,7 @@ package br.edu.utfpr.consulta;
 
 import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteRepository;
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped
-public class ConsultaService {
+public class ConsultaService implements CrudService<ConsultaDTO> {
 
     private ConsultaRepository repository;
     private ProfissionalRepository profissionalRepository;

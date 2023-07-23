@@ -1,5 +1,6 @@
 package br.edu.utfpr.atividadeludica;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Atividade Lúdica")
-public class AtividadeLudicaResource {
+public class AtividadeLudicaResource implements CrudResource<AtividadeLudicaDTO> {
 
     private AtividadeLudicaService atividadeLudicaService;
 
@@ -30,27 +31,27 @@ public class AtividadeLudicaResource {
 
     @GET
     @Path("{id}")
-    public Response getAtividadeLudicaById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
        return atividadeLudicaService.findById(id);
     }
 
     @POST
     @Transactional
-    public Response addAtividadeLudica(AtividadeLudicaDTO atividadeLudicaDTO){
+    public Response add(AtividadeLudicaDTO atividadeLudicaDTO){
         return atividadeLudicaService.add(atividadeLudicaDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateAtividadeLudica(@PathParam("id") long id, AtividadeLudicaDTO atividadeLudicaDTO){
+    public Response update(@PathParam("id") long id, AtividadeLudicaDTO atividadeLudicaDTO){
         return atividadeLudicaService.update(id, atividadeLudicaDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteAtividadeLudica(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
         return atividadeLudicaService.delete(id);
     }
 

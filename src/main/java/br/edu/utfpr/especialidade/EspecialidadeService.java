@@ -1,6 +1,7 @@
 package br.edu.utfpr.especialidade;
 
 import br.edu.utfpr.erro.ResponseError;
+import br.edu.utfpr.crud.CrudService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped
-public class EspecialidadeService {
+public class EspecialidadeService implements CrudService<EspecialidadeDTO> {
 
     private EspecialidadeRepository repository;
     private Validator validator;

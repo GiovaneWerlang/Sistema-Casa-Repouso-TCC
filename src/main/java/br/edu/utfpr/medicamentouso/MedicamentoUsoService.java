@@ -1,5 +1,6 @@
 package br.edu.utfpr.medicamentouso;
 
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueRepository;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @ApplicationScoped
-public class MedicamentoUsoService {
+public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
 
     private MedicamentoUsoRepository repository;
     private ResidenteRepository residenteRepository;

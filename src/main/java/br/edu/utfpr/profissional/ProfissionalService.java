@@ -1,5 +1,6 @@
 package br.edu.utfpr.profissional;
 
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.endereco.EnderecoDTO;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.endereco.EnderecoRepository;
@@ -18,7 +19,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class ProfissionalService {
+public class ProfissionalService implements CrudService<ProfissionalDTO> {
 
     private ProfissionalRepository repository;
     private EnderecoRepository enderecoRepository;

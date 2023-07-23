@@ -1,5 +1,6 @@
 package br.edu.utfpr.usuario;
 
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
@@ -14,7 +15,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class UsuarioService {
+public class UsuarioService implements CrudService<UsuarioDTO> {
 
     private UsuarioRepository repository;
     private ProfissionalRepository profissionalRepository;

@@ -1,5 +1,6 @@
 package br.edu.utfpr.medicamentoestoque;
 
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.Copy;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class MedicamentoEstoqueService {
+public class MedicamentoEstoqueService implements CrudService<MedicamentoEstoqueDTO> {
 
     private MedicamentoEstoqueRepository repository;
     private Validator validator;

@@ -1,5 +1,6 @@
 package br.edu.utfpr.residente;
 
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.endereco.EnderecoDTO;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.endereco.EnderecoRepository;
@@ -16,7 +17,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class ResidenteService {
+public class ResidenteService implements CrudService<ResidenteDTO> {
 
     private ResidenteRepository repository;
     private EnderecoRepository enderecoRepository;

@@ -1,8 +1,8 @@
 package br.edu.utfpr.exame;
 
-import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteRepository;
+import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped
-public class ExameService {
+public class ExameService implements CrudService<ExameDTO> {
 
     private ExameRepository repository;
     private ProfissionalRepository profissionalRepository;

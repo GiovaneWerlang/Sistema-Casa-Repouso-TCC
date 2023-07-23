@@ -1,5 +1,6 @@
 package br.edu.utfpr.residente;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Residente")
-public class ResidenteResource {
+public class ResidenteResource implements CrudResource<ResidenteDTO> {
 
     private ResidenteService service;
 
@@ -30,27 +31,27 @@ public class ResidenteResource {
 
     @GET
     @Path("{id}")
-    public Response getResidenteById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
     @POST
     @Transactional
-    public Response addResidente(ResidenteDTO residenteDTO){
+    public Response add(ResidenteDTO residenteDTO){
         return service.add(residenteDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateResidente(@PathParam("id") long id, ResidenteDTO residenteDTO){
+    public Response update(@PathParam("id") long id, ResidenteDTO residenteDTO){
         return service.update(id, residenteDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteResidente(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
         return service.delete(id);
     }
 }

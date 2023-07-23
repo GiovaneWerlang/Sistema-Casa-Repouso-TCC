@@ -1,5 +1,6 @@
 package br.edu.utfpr.entradasaida;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Entrada Saída")
-public class EntradaSaidaResource {
+public class EntradaSaidaResource implements CrudResource<EntradaSaidaDTO> {
 
     private EntradaSaidaService service;
 
@@ -30,27 +31,27 @@ public class EntradaSaidaResource {
 
     @GET
     @Path("{id}")
-    public Response getEntradaSaidaById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
     @POST
     @Transactional
-    public Response addEntradaSaida(EntradaSaidaDTO entradaSaidaDTO){
+    public Response add(EntradaSaidaDTO entradaSaidaDTO){
        return service.add(entradaSaidaDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateEntradaSaida(@PathParam("id") long id, EntradaSaidaDTO entradaSaidaDTO){
+    public Response update(@PathParam("id") long id, EntradaSaidaDTO entradaSaidaDTO){
         return service.update(id, entradaSaidaDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteEntradaSaida(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
         return service.delete(id);
     }
 }

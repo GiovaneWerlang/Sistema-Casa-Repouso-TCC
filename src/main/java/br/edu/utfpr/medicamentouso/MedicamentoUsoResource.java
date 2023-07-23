@@ -1,5 +1,6 @@
 package br.edu.utfpr.medicamentouso;
 
+import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Medicamento Uso")
-public class MedicamentoUsoResource {
+public class MedicamentoUsoResource implements CrudResource<MedicamentoUsoDTO> {
 
     private MedicamentoUsoService service;
 
@@ -30,27 +31,27 @@ public class MedicamentoUsoResource {
 
     @GET
     @Path("{id}")
-    public Response getExameById(@PathParam("id") long id){
+    public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
     @POST
     @Transactional
-    public Response addExame(MedicamentoUsoDTO medicamentoUsoDTO){
+    public Response add(MedicamentoUsoDTO medicamentoUsoDTO){
         return service.add(medicamentoUsoDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
-    public Response updateExame(@PathParam("id") long id, MedicamentoUsoDTO medicamentoUsoDTO){
+    public Response update(@PathParam("id") long id, MedicamentoUsoDTO medicamentoUsoDTO){
         return service.update(id, medicamentoUsoDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
-    public Response deleteExame(@PathParam("id") long id){
+    public Response delete(@PathParam("id") long id){
         return service.delete(id);
     }
 
