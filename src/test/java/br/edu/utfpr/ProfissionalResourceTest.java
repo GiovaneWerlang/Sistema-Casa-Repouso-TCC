@@ -3,14 +3,15 @@ package br.edu.utfpr;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.enums.Funcao;
 import br.edu.utfpr.enums.Situacao;
-import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.profissional.ProfissionalDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
+import javax.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,17 +23,28 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
+//@TestTransaction
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ProfissionalResourceTest {
 
     @TestHTTPResource("/profissional")
     URL apiURL;
 
-    @TestHTTPResource("/profissional/1")
+    @TestHTTPResource("/profissional/2")
     URL idURL;
 
     @TestHTTPResource("/profissional/321")
     URL erroURL;
+
+    @Inject
+    Flyway flyway;
+
+    @BeforeAll
+    public void cleanUp(){
+        flyway.clean();
+        flyway.migrate();
+    }
 
     @Test
     @Order(1)
@@ -291,9 +303,12 @@ public class ProfissionalResourceTest {
     public void getAllProfissionalErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from profissional");
-        stmt.execute();
-        stmt.close();
+        PreparedStatement stmt1 = c.prepareStatement("delete from usuario");
+        stmt1.execute();
+        stmt1.close();
+        PreparedStatement stmt2 = c.prepareStatement("delete from profissional");
+        stmt2.execute();
+        stmt2.close();
         c.close();
 
         Response response = given()

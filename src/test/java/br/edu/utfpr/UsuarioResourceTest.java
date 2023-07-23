@@ -5,8 +5,10 @@ import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
+import javax.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,6 +19,7 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UsuarioResourceTest {
 
@@ -28,6 +31,15 @@ public class UsuarioResourceTest {
 
     @TestHTTPResource("/usuario/321")
     URL erroURL;
+
+    @Inject
+    Flyway flyway;
+
+    @BeforeAll
+    public void cleanUp(){
+        flyway.clean();
+        flyway.migrate();
+    }
 
     @Test
     @Order(1)
@@ -55,8 +67,8 @@ public class UsuarioResourceTest {
                 "'ATIVO',\n" +
                 "'TYMED',\n" +
                 "0,\n" +
-                "'000.000.000-00',\n" +
-                "'(00)0000-0000',\n" +
+                "'00000000000',\n" +
+                "'0000000000',\n" +
                 "'tymed@gmail.com'\n" +
                 ");");
         stmt.execute();
