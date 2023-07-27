@@ -2,6 +2,7 @@ package br.edu.utfpr.especialidade;
 
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.crud.CrudService;
+import br.edu.utfpr.utils.PageDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -83,4 +84,20 @@ public class EspecialidadeService implements CrudService<EspecialidadeDTO> {
 
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+
+    public Response page(int page, int size){
+        if(page < 0 || size < 1){
+            return Response.status(422).build();
+        }
+        List<EspecialidadeModel> lista = repository.pageList(page,size);
+        if(lista.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        PageDTO<EspecialidadeModel> pageDTO = new PageDTO<>();
+        pageDTO.setLista(lista);
+        pageDTO.setPages(repository.pageCount(page,size));
+        pageDTO.setTotal(repository.pageTotal(page,size));
+        return Response.ok(pageDTO).build();
+    }
+
 }
