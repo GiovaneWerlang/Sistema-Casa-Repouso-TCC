@@ -1,9 +1,9 @@
 package br.edu.utfpr.profissional;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import br.edu.utfpr.crud.CrudRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class ProfissionalRepository implements PanacheRepository<ProfissionalModel> {
+public class ProfissionalRepository extends CrudRepository<ProfissionalModel> {
 }

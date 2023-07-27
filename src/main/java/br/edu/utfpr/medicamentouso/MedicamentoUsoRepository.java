@@ -1,9 +1,9 @@
 package br.edu.utfpr.medicamentouso;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import br.edu.utfpr.crud.CrudRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class MedicamentoUsoRepository implements PanacheRepository<MedicamentoUsoModel> {
+public class MedicamentoUsoRepository extends CrudRepository<MedicamentoUsoModel> {
 }

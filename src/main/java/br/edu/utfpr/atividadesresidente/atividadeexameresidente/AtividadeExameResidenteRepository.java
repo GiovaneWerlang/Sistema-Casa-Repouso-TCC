@@ -1,11 +1,11 @@
 package br.edu.utfpr.atividadesresidente.atividadeexameresidente;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import br.edu.utfpr.crud.CrudRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class AtividadeExameResidenteRepository  implements PanacheRepository<AtividadeExameResidenteModel> {
+public class AtividadeExameResidenteRepository extends CrudRepository<AtividadeExameResidenteModel> {
 
     public AtividadeExameResidenteModel findByExameId(Long id){
         return find("idexame", id).firstResult();

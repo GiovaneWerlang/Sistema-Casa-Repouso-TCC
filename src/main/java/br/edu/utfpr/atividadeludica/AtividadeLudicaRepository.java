@@ -1,9 +1,9 @@
 package br.edu.utfpr.atividadeludica;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import br.edu.utfpr.crud.CrudRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class AtividadeLudicaRepository implements PanacheRepository<AtividadeLudicaModel> {
+public class AtividadeLudicaRepository extends CrudRepository<AtividadeLudicaModel> {
 }

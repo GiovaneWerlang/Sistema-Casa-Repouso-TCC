@@ -1,9 +1,9 @@
 package br.edu.utfpr.especialidade;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import br.edu.utfpr.crud.CrudRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class EspecialidadeRepository implements PanacheRepository<EspecialidadeModel> {
+public class EspecialidadeRepository extends CrudRepository<EspecialidadeModel> {
 }

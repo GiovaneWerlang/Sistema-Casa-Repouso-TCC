@@ -1,9 +1,9 @@
 package br.edu.utfpr.medicamentoestoque;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import br.edu.utfpr.crud.CrudRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class MedicamentoEstoqueRepository implements PanacheRepository<MedicamentoEstoqueModel> {
+public class MedicamentoEstoqueRepository extends CrudRepository<MedicamentoEstoqueModel> {
 }
