@@ -4,6 +4,7 @@ import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
+import br.edu.utfpr.security.Security;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -109,10 +110,18 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-    public Response findByLoginAndPassword(String login, String senha){
+    public Response getToken(String login, String senha){
         UsuarioModel model = repository.findByLoginAndPasswordId(login, senha);
         if(model != null){
-            return Response.ok(model).build();
+            Security security = new Security();
+
+            return Response.ok(
+                    security.token(
+                            model.getProfissional().getFuncao(),
+                            model.getProfissional().getNome(),
+                            String.valueOf(model.getProfissional().getId())
+                    )
+            ).build();
         }
 
         return Response.status(Response.Status.NOT_FOUND).build();

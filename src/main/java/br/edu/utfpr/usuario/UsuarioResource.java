@@ -8,8 +8,10 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 @Path("/usuario")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -27,7 +29,7 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
 
     @Operation(summary = "Retorna todos")
     @GET
-    public Response getAll(){
+    public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
@@ -55,10 +57,11 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
     public Response delete(@PathParam("id") long id){
         return service.delete(id);
     }
-    @GET
+
+    @POST
     @Path("/login")
-    public Response getUsuarioByLoginAndPasswrod(UsuarioDTO usuarioDTO){
-        return service.findByLoginAndPassword(usuarioDTO.getLogin(), usuarioDTO.getSenha());
+    public Response getToken(UsuarioDTO usuarioDTO){
+        return service.getToken(usuarioDTO.getLogin(), usuarioDTO.getSenha());
     }
 
 }

@@ -7,8 +7,10 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 @Path("/atividadeludica")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -16,43 +18,43 @@ import javax.ws.rs.core.Response;
 @Tag(name = "Atividade Lúdica")
 public class AtividadeLudicaResource implements CrudResource<AtividadeLudicaDTO> {
 
-    private AtividadeLudicaService atividadeLudicaService;
+    private AtividadeLudicaService service;
 
     @Inject
-    public AtividadeLudicaResource(AtividadeLudicaService atividadeLudicaService){
-        this.atividadeLudicaService = atividadeLudicaService;
+    public AtividadeLudicaResource(AtividadeLudicaService service){
+        this.service = service;
     }
 
     @Operation(summary = "Retorna todas")
     @GET
-    public Response getAll(){
-        return atividadeLudicaService.getAll();
+    public Response getAll(@Context SecurityContext ctx){
+        return service.getAll();
     }
 
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
-       return atividadeLudicaService.findById(id);
+       return service.findById(id);
     }
 
     @POST
     @Transactional
     public Response add(AtividadeLudicaDTO atividadeLudicaDTO){
-        return atividadeLudicaService.add(atividadeLudicaDTO);
+        return service.add(atividadeLudicaDTO);
     }
 
     @PUT
     @Path("{id}")
     @Transactional
     public Response update(@PathParam("id") long id, AtividadeLudicaDTO atividadeLudicaDTO){
-        return atividadeLudicaService.update(id, atividadeLudicaDTO);
+        return service.update(id, atividadeLudicaDTO);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public Response delete(@PathParam("id") long id){
-        return atividadeLudicaService.delete(id);
+        return service.delete(id);
     }
 
 }
