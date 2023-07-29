@@ -8,11 +8,11 @@
 
 
 --Dev
---docker run -d -p 5445:5432 --name=esporte -e POSTGRES_PASSWORD=0000 postgres
+--docker run -d -p 5445:5432 --name=tymed -e POSTGRES_PASSWORD=0000 postgres
 
 --Prod
---docker network create --driver bridge esporte_ids
---docker run -d -p 5445:5432 --name=esporte -e POSTGRES_PASSWORD=0000 -e POSTGRES_DB=esporte --network=esporte_ids  postgres
+--docker network create --driver bridge tymed
+--docker run -d -p 5445:5432 --name=tymed -e POSTGRES_PASSWORD=0000 -e POSTGRES_DB=tymed --network=tymed  postgres
 
 --Criar o jar
 --./mvnw package
@@ -51,3 +51,6 @@
 -- insert into profissional (nome, idade, cpf, telefone, email, dataadmissao, salario, situacao, funcao,idendereco) values ('Fair', 114, 78241831064, 90239488948, 'fpiele3@nifty.com', '2022-10-01T17:16:44-03:00', 2291.03, 'ATIVO', 'ENFERMEIRO',13);
 -- insert into profissional (nome, idade, cpf, telefone, email, dataadmissao, salario, situacao, funcao,idendereco) values ('Pieter', 115, 76493969085, 95357166992, 'pfarey6@salon.com', '2022-03-03T14:54:11-03:00', 5362.83, 'ATIVO', 'MEDICO',14);
 -- insert into profissional (nome, idade, cpf, telefone, email, dataadmissao, salario, situacao, funcao,idendereco) values ('Burnard', 58, 07908261000, 84825155904, 'bskeech8@google.nl', '2022-08-20T17:32:10-03:00', 1521.41, 'ATIVO', 'CUIDADOR',15);
+
+--INSERT INTO USUARIO (LOGIN,SENHA,IDPROFISSIONAL) VALUES ('tymed','*Go3%Ds2F$g7',1);
+--$2a$10$K0WL9zg8vDaMGWuxd4mxFe3MDJ6C/IqQYZl/6cB3vg1tbtNWTRGWC

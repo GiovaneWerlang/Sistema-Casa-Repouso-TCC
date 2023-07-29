@@ -11,4 +11,8 @@ public class UsuarioRepository extends CrudRepository<UsuarioModel> {
         return find("login = ?1 and senha = ?2", login, senha).firstResult();
     }
 
+    public UsuarioModel findByLogin(String login){
+        return find("login = ?1", login).firstResult();
+    }
+
 }

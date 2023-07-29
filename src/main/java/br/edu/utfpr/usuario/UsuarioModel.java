@@ -21,7 +21,7 @@ public class UsuarioModel {
     private String login;
 
     @Column(name = "senha")
-    @Size(max = 50, min = 0)
+    @Size(min = 6)
     private String senha;
 
     @OneToOne(cascade = CascadeType.ALL)

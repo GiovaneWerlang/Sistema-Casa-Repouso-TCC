@@ -1,6 +1,5 @@
 package br.edu.utfpr.usuario;
 
-import br.edu.utfpr.profissional.ProfissionalModel;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,7 +14,7 @@ public class UsuarioDTO {
     @NotBlank(message = "Não pode ser vazio")
     private String login;
 
-    @Size(max=50, message = "Não pode ter mais de 50 caracteres")
+    @Size(min=6, message = "Não pode ter menos de 6 caracteres")
     @NotNull(message = "Não pode ser nulo")
     @NotBlank(message = "Não pode ser vazio")
     private String senha;

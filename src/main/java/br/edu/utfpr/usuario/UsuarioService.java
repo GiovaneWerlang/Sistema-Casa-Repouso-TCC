@@ -5,6 +5,7 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.security.Security;
+import io.quarkus.elytron.security.common.BcryptUtil;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -51,10 +53,12 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
         if(!violations.isEmpty()){
             return ResponseError.createFromViolations(violations).returnWithStatusCode(422);
         }
-
+        if(repository.findByLogin(usuarioDTO.getLogin()) != null){
+            return Response.status(Response.Status.CONFLICT.getStatusCode(),"Já existe um usuário com esse login.").build();
+        }
         UsuarioModel model = new UsuarioModel();
         model.setLogin(usuarioDTO.getLogin());
-        model.setSenha(usuarioDTO.getSenha());
+        model.setSenha(BcryptUtil.bcryptHash(usuarioDTO.getSenha()));
         if(profissionalRepository.findById(usuarioDTO.getProfissional()) != null){
             ProfissionalModel profissionalModel = profissionalRepository.findById(usuarioDTO.getProfissional());
             model.setProfissional(profissionalModel);
@@ -79,8 +83,12 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
 
         UsuarioModel model = repository.findById(id);
         if(model != null){
+            UsuarioModel doBanco = repository.findByLogin(usuarioDTO.getLogin());
+            if(doBanco != null && !Objects.equals(id,doBanco.getId())){
+                return Response.status(Response.Status.CONFLICT.getStatusCode(),"Já existe um usuário com esse login.").build();
+            }
             model.setLogin(usuarioDTO.getLogin());
-            model.setSenha(usuarioDTO.getSenha());
+            model.setSenha(BcryptUtil.bcryptHash(usuarioDTO.getSenha()));
 
             if(profissionalRepository.findById(usuarioDTO.getProfissional()) != null){
                 ProfissionalModel profissionalModel = profissionalRepository.findById(usuarioDTO.getProfissional());
@@ -110,9 +118,13 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-    public Response getToken(String login, String senha){
-        UsuarioModel model = repository.findByLoginAndPasswordId(login, senha);
+    public Response getToken(String login, String senha) {
+        UsuarioModel model = repository.findByLogin(login);
+
         if(model != null){
+            if(!BcryptUtil.matches(senha, model.getSenha())){
+                return Response.status(Response.Status.UNAUTHORIZED).build();
+            }
             Security security = new Security();
 
             return Response.ok(

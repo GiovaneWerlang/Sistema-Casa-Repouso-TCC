@@ -60,7 +60,7 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
 
     @POST
     @Path("/login")
-    public Response getToken(UsuarioDTO usuarioDTO){
+    public Response getToken(UsuarioDTO usuarioDTO) {
         return service.getToken(usuarioDTO.getLogin(), usuarioDTO.getSenha());
     }
 
