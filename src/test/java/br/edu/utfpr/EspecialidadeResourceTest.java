@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.especialidade.EspecialidadeDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -156,6 +157,7 @@ public class EspecialidadeResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
     @DisplayName("Deve buscar todas as especialidades com sucesso.")
     public void getAllEspecialidadeTest(){
 
@@ -204,6 +206,7 @@ public class EspecialidadeResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
     @DisplayName("Deve falhar ao buscar todas as especialidades.")
     public void getAllEspecialidadeErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
