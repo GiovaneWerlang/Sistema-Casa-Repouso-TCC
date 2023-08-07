@@ -56,7 +56,7 @@ public class EspecialidadeService implements CrudService<EspecialidadeDTO> {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode(),model.toString()).build();
+        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model).build();
     }
 
     public Response update(long id, EspecialidadeDTO especialidadeDTO){
@@ -69,7 +69,7 @@ public class EspecialidadeService implements CrudService<EspecialidadeDTO> {
         if(model != null){
             model.setNome(especialidadeDTO.getNome());
 
-            return Response.status(201, model.toString()).build();
+            return Response.status(201).entity(model).build();
         }
 
         return Response.status(Response.Status.NOT_FOUND).build();
