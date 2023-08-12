@@ -2,7 +2,9 @@ package br.edu.utfpr.medicamentouso;
 
 import lombok.Data;
 
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -14,17 +16,21 @@ public class MedicamentoUsoDTO {
     private Integer intervalo;
 
     @Max(value = 24, message = "Não pode ser maior que 24")
+    @Min(value = 1, message = "Não pode ser menor que 1")
     @NotNull(message = "Não pode ser nulo")
     private Integer qtdeVezesAoDia;
 
+    @FutureOrPresent(message = "Não pode ser no passado.")
     @NotNull(message = "Não pode ser nulo")
     private LocalDateTime dataHoraInicio;
 
     @Max(value = 2147483647, message = "Não pode ser maior que 2147483647")
+    @Min(value = 1, message = "Não pode ser menor que 1")
     @NotNull(message = "Não pode ser nulo")
     private Integer qtdeDiasUso;
 
     @Max(value = 2147483647, message = "Não pode ser maior que 2147483647")
+    @Min(value = 1, message = "Não pode ser menor que 1")
     @NotNull(message = "Não pode ser nulo")
     private Integer qtdeMedicamento;
 

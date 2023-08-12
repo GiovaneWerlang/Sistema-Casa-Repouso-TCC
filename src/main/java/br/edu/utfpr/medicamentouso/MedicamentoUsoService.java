@@ -1,5 +1,7 @@
 package br.edu.utfpr.medicamentouso;
 
+import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteModel;
+import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteRepository;
 import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
@@ -12,6 +14,7 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,13 +25,20 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
     private MedicamentoUsoRepository repository;
     private ResidenteRepository residenteRepository;
     private MedicamentoEstoqueRepository medicamentoEstoqueRepository;
+    private AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository;
     private Validator validator;
 
     @Inject
-    public MedicamentoUsoService(MedicamentoUsoRepository repository, ResidenteRepository residenteRepository, MedicamentoEstoqueRepository medicamentoEstoqueRepository, Validator validator) {
+    public MedicamentoUsoService(
+            MedicamentoUsoRepository repository,
+            ResidenteRepository residenteRepository,
+            MedicamentoEstoqueRepository medicamentoEstoqueRepository,
+            AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository,
+            Validator validator) {
         this.repository = repository;
         this.residenteRepository = residenteRepository;
         this.medicamentoEstoqueRepository = medicamentoEstoqueRepository;
+        this.atividadeMedicamentoResidenteRepository = atividadeMedicamentoResidenteRepository;
         this.validator = validator;
     }
 
@@ -80,8 +90,26 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
         }
         model.setMedicamento(medicamentoEstoqueModel);
 
+        if(model.getQtdeVezesAoDia() * model.getIntervalo() > 24){
+            return Response.status(422, "Inconsistência nos dados informados.").build();
+        }
+
         try{
             repository.persist(model);
+            List<AtividadeMedicamentoResidenteModel> atividades = new ArrayList<>();
+
+            int usos = model.getQtdeDiasUso() * model.getQtdeVezesAoDia();
+            int horas = 24 / model.getQtdeVezesAoDia();
+            for (int i = 1; i <= usos; i++){
+                    AtividadeMedicamentoResidenteModel atividade = new AtividadeMedicamentoResidenteModel();
+                    atividade.setMedicamento(model);
+                    atividade.setDescricao(model.getMedicamento().getNome() + " - " + model.getQtdeMedicamento());
+                    atividade.setDataHora(
+                            model.getDataHoraInicio().plusHours(horas * i)
+                    );
+                atividades.add(atividade);
+            }
+            atividadeMedicamentoResidenteRepository.persist(atividades);
         }catch (Exception ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
