@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
-import { delay, tap, take, Observable, catchError, throwError } from "rxjs";
+import { delay, tap, take, Observable, catchError, throwError, map } from "rxjs";
 import { environment } from "src/environments/environment.development";
 
 export class CrudService<T> {
@@ -11,7 +11,6 @@ export class CrudService<T> {
     list() {
         return this.http.get<T[]>(`${this.API_URL}${this.T_URL}`)
             .pipe(
-                delay(2000),
                 tap(console.log)
             );
     }
@@ -57,8 +56,6 @@ export class CrudService<T> {
     }
 
     private handleError(error: HttpErrorResponse) {
-        // Handle the HTTP error here
-        console.log(error)
-        return throwError('Something wrong happened');
+        return throwError(() => new Error(error.status.toString()));
     }
 }
