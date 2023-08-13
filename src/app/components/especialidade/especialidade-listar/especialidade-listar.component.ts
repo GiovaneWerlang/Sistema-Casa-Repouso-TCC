@@ -1,20 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { Especialidade } from '../modelo/especialidade';
 import { EspecialidadeService } from '../service/especialidade.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-especialidade-listar',
   templateUrl: './especialidade-listar.component.html',
-  styleUrls: ['./especialidade-listar.component.css']
+  styleUrls: ['./especialidade-listar.component.css'],
 })
 export class EspecialidadeListarComponent implements OnInit {
 
-  public especialidade: Especialidade[] = [];
+  public items: Especialidade[] = [];
 
-  constructor(private especialidadeService:EspecialidadeService) { }
+  constructor(
+    private especialidadeService:EspecialidadeService,
+    private router: Router
+    ) {
+      this.carregarLista();
+    }
+
+  novo(){
+    this.router.navigate(['/especialidade/cadastrar']);
+  }
 
   ngOnInit(): void {
-    this.carregarLista();
   }
 
   delete(id:any){
@@ -24,11 +33,13 @@ export class EspecialidadeListarComponent implements OnInit {
     })
   }
 
+  edit(id:number){
+    this.router.navigate([`/especialidade/editar/${id}`]);
+  }
 
   carregarLista():void{
-    console.log('teste');
     this.especialidadeService.list().subscribe((especialidade)=>{
-      this.especialidade = especialidade;
+      this.items = especialidade;
     })
   }
 }

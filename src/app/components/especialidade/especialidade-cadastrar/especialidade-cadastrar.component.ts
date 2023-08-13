@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { EspecialidadeService } from '../service/especialidade.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,8 @@ export class EspecialidadeCadastrarComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private especialidadeService: EspecialidadeService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -38,6 +39,9 @@ export class EspecialidadeCadastrarComponent implements OnInit {
   salvar() {
     this.especialidadeService.save(this.form.getRawValue()).subscribe((res) => {
       console.log(res)
+      if(res && res.id){
+        this.router.navigate(['/especialidade/listar']);
+      }
     })
     this.limpar();
   }

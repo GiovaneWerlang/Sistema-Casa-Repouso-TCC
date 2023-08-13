@@ -1,10 +1,16 @@
-<div>
-  <p>Cadastro de Especialidade</p>
-  <form [formGroup]="form" (submit)="salvar()">
-    Nome:<input class="campos" type="text" name="nome" id="txt_nome" formControlName="nome" />
-    <br>
-    <input type="submit" value="salvar">
-    <button>Limpar</button>
-  </form>
+<div class="col-12">
+  <div class="col-6 card">
+
+    <p>Cadastro de Especialidade</p>
+    <form [formGroup]="form" (submit)="salvar()" class="flex flex-column">
+      <label htmlFor="nome">Nome:</label>
+      <input type="text" pInputText name="nome" id="txt_nome" formControlName="nome" />
+      <br>
+      <div class="flex flex-row justify-content-end gap-2">
+        <button pButton class="p-button p-button-primary" type="submit">Salvar</button>
+        <button pButton class="p-button p-button-secondary">Limpar</button>
+      </div>
+    </form>
+  </div>
 </div>
 <a href="">home</a>

@@ -1,0 +1,8 @@
+<p-sidebar [(visible)]="sidebarVisible" [dismissible]="false">
+    <ng-template pTemplate="header">Header Content</ng-template>
+    <ng-template pTemplate="content">
+        <p-menu [model]="items"></p-menu>
+    </ng-template>
+    <ng-template pTemplate="footer">Footer Content</ng-template>
+</p-sidebar>
+<p-button (click)="sidebarVisible = true" icon="pi pi-bars"></p-button>
