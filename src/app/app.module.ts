@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
+import { CrudTableComponent } from './shared/crud-table/crud-table/crud-table.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { DividerModule } from 'primeng/divider';
     EspecialidadeCadastrarComponent,
     EspecialidadeListarComponent,
     SideMenuComponent,
+    CrudTableComponent,
   ],
   imports: [
     BrowserModule,

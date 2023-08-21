@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
-import { delay, tap, take, Observable, catchError, throwError, map } from "rxjs";
+import { tap, Observable, catchError, throwError } from "rxjs";
 import { environment } from "src/environments/environment.development";
 
 export class CrudService<T> {
@@ -7,6 +7,10 @@ export class CrudService<T> {
     private API_URL = environment.apiUrl;
 
     constructor(protected http: HttpClient, private T_URL: string) { }
+
+    getUrl(){
+        return this.T_URL;
+    }
 
     list() {
         return this.http.get<T[]>(`${this.API_URL}${this.T_URL}`)
