@@ -19,6 +19,9 @@ import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
 import { CrudTableComponent } from './shared/crud-table/crud-table/crud-table.component';
+import { HeaderComponent } from './components/header/header.component';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuComponent } from './components/menu/menu.component';
 
 
 @NgModule({
@@ -29,6 +32,8 @@ import { CrudTableComponent } from './shared/crud-table/crud-table/crud-table.co
     EspecialidadeListarComponent,
     SideMenuComponent,
     CrudTableComponent,
+    HeaderComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +47,7 @@ import { CrudTableComponent } from './shared/crud-table/crud-table/crud-table.co
     SidebarModule,
     TableModule,
     DividerModule,
+    TooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

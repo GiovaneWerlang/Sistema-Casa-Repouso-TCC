@@ -5,7 +5,7 @@ import { EspecialidadeCadastrarComponent } from './components/especialidade/espe
 import { EspecialidadeListarComponent } from './components/especialidade/especialidade-listar/especialidade-listar.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'especialidade/cadastrar', component: EspecialidadeCadastrarComponent },
   { path: 'especialidade/editar/:id', component: EspecialidadeCadastrarComponent },
   { path: 'especialidade/listar', component: EspecialidadeListarComponent },

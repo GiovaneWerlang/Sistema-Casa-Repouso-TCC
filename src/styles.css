@@ -21,3 +21,18 @@ body {
     border-radius: 5px;
     padding: 15px;
 }
+
+.home{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    width: 90%;
+    margin: auto;
+}
+
+.p-button{
+    padding: 0.4rem 1.7rem;
+    border-radius: 8px
+}

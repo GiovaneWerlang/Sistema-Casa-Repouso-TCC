@@ -50,6 +50,10 @@ export class EspecialidadeCadastrarComponent implements OnInit {
     this.form.reset();
   }
 
+  voltar(){
+    this.router.navigate(['/especialidade/listar']);
+  }
+
   private carregaEspecialidade(id: number) {
     this.especialidadeService.findByID(id).subscribe((especialidade) => this.form.setValue(especialidade));
   }
