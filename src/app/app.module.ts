@@ -22,6 +22,7 @@ import { CrudTableComponent } from './shared/crud-table/crud-table/crud-table.co
 import { HeaderComponent } from './components/header/header.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuComponent } from './components/menu/menu.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { MenuComponent } from './components/menu/menu.component';
     TableModule,
     DividerModule,
     TooltipModule,
+    PaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

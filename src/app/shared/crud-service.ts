@@ -20,10 +20,8 @@ export class CrudService<T> {
     }
 
     page(page:number, size: number): Observable<any[]> {
-        let params = new HttpParams()
-        .set('page', page.toString())
-        .set('size', size.toString());
-        return this.http.get<T[]>(`${this.API_URL}${this.T_URL}?${params.toString()}`).pipe(
+        
+        return this.http.get<T[]>(`${this.API_URL}${this.T_URL}/page/${page}/${size}`).pipe(
             catchError(this.handleError)
         );
     }

@@ -11,11 +11,15 @@ export class CrudTableComponent<T> {
   @Input() cols:string[] = [];
   public items: T[] = [];
 
+  first:number = 0;
+  rows:number = 10;
+  total:number = 0;
+
   constructor(
     private service:CrudService<T>,
     private router: Router
     ) {
-      this.carregarLista();
+      this.carregarLista(this.first, this.rows);
     }
 
   novo(){
@@ -27,7 +31,7 @@ export class CrudTableComponent<T> {
 
   delete(id:any){
     this.service.delete(id).subscribe((res)=>{
-      this.carregarLista();
+      this.carregarLista(0, this.rows);
     })
   }
 
@@ -35,9 +39,16 @@ export class CrudTableComponent<T> {
     this.router.navigate([`/${this.service.getUrl()}/editar/${id}`]);
   }
 
-  carregarLista():void{
-    this.service.list().subscribe((item)=>{
-      this.items = item;
+  carregarLista(page:number, size: number):void{
+    this.service.page(page, size).subscribe((page:any)=>{     
+      this.items = page.lista;
+      this.total = page.total;
     })
   }
+
+  onPageChange(event:any){
+    this.rows = event.rows;
+    this.carregarLista(event.page, event.rows);
+  }
+
 }
