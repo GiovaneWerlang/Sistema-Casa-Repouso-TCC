@@ -28,6 +28,9 @@ public class MedicamentoUsoResourceTest {
     @TestHTTPResource("/medicamentouso")
     URL apiURL;
 
+    @TestHTTPResource("/medicamentouso/page/0/1")
+    URL pageURL;
+
     @TestHTTPResource("/medicamentouso/1")
     URL idURL;
 
@@ -50,7 +53,7 @@ public class MedicamentoUsoResourceTest {
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
         medicamentousoDTO.setIntervalo(4);
         medicamentousoDTO.setQtdeVezesAoDia(3);
-        medicamentousoDTO.setDataHoraInicio(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
+        medicamentousoDTO.setDataHoraInicio(LocalDateTime.now().plusMinutes(10L));
         medicamentousoDTO.setQtdeDiasUso(7);
         medicamentousoDTO.setQtdeMedicamento(1);
         medicamentousoDTO.setResidente(1L);
@@ -74,7 +77,7 @@ public class MedicamentoUsoResourceTest {
                 "'PADRAO',\n" +
                 "'ATIVO',\n" +
                 "'teste',\n" +
-                "0,\n" +
+                "50,\n" +
                 "'00000000000',\n" +
                 "'0000000000',\n" +
                 "'teste@gmail.com'\n" +
@@ -135,7 +138,7 @@ public class MedicamentoUsoResourceTest {
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
         medicamentousoDTO.setIntervalo(4);
         medicamentousoDTO.setQtdeVezesAoDia(3);
-        medicamentousoDTO.setDataHoraInicio(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
+        medicamentousoDTO.setDataHoraInicio(LocalDateTime.now().plusMinutes(10L));
         medicamentousoDTO.setQtdeDiasUso(7);
         medicamentousoDTO.setQtdeMedicamento(1);
         medicamentousoDTO.setResidente(1L);
@@ -212,7 +215,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(7)
     @Test
-    @DisplayName("Deve buscar todas os medicamento usos com sucesso.")
+    @DisplayName("Deve buscar todos os medicamento usos com sucesso.")
     public void getAllMedicamentoUsoTest(){
 
 
@@ -228,6 +231,22 @@ public class MedicamentoUsoResourceTest {
 
     @Order(8)
     @Test
+    @DisplayName("Deve buscar os medicamento usos paginados com sucesso.")
+    public void pageMedicamentoUsoTest(){
+
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(9)
+    @Test
     @DisplayName("Deve deletar por id o medicamento uso com sucesso.")
     public void deleteMedicamentoUsoTest(){
 
@@ -242,7 +261,7 @@ public class MedicamentoUsoResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(9)
+    @Order(10)
     @Test
     @DisplayName("Deve falhar ao deletar por id o medicamento uso.")
     public void deleteMedicamentoUsoErrorTest(){
@@ -258,21 +277,57 @@ public class MedicamentoUsoResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @DisplayName("Deve falhar ao buscar todas os medicamento usos.")
     public void getAllMedicamentoUsoErrorTest() throws SQLException {
+
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from medicamentouso");
+        PreparedStatement stmt = c.prepareStatement("DELETE FROM ATIVIDADEMEDICAMENTORESIDENTE");
         stmt.execute();
         stmt.close();
         c.close();
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt2 = c2.prepareStatement("delete from medicamentouso");
+        stmt2.execute();
+        stmt2.close();
+        c2.close();
 
         Response response = given()
                 .contentType(ContentType.JSON)
                 .when()
                 .get(apiURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(12)
+    @Test
+    @DisplayName("Deve falhar ao buscar os medicamento usos paginados.")
+    public void pageMedicamentoUsoErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("DELETE FROM ATIVIDADEMEDICAMENTORESIDENTE");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt2 = c2.prepareStatement("delete from medicamentouso");
+        stmt2.execute();
+        stmt2.close();
+        c2.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
                 .then()
                 .extract().response();
 

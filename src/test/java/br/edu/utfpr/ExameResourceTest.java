@@ -28,6 +28,9 @@ public class ExameResourceTest {
     @TestHTTPResource("/exame")
     URL apiURL;
 
+    @TestHTTPResource("/exame/page/0/1")
+    URL pageURL;
+
     @TestHTTPResource("/exame/1")
     URL idURL;
 
@@ -313,7 +316,7 @@ public class ExameResourceTest {
 
     @Order(7)
     @Test
-    @DisplayName("Deve buscar todas as exames com sucesso.")
+    @DisplayName("Deve buscar todos os exames com sucesso.")
     public void getAllExameTest(){
 
 
@@ -329,6 +332,21 @@ public class ExameResourceTest {
 
     @Order(8)
     @Test
+    @DisplayName("Deve buscar os exames paginados com sucesso.")
+    public void pageExameTest(){
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(9)
+    @Test
     @DisplayName("Deve deletar por id a exame com sucesso.")
     public void deleteExameTest(){
 
@@ -343,7 +361,7 @@ public class ExameResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(9)
+    @Order(10)
     @Test
     @DisplayName("Deve falhar ao deletar por id a exame.")
     public void deleteExameErrorTest(){
@@ -359,7 +377,7 @@ public class ExameResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @DisplayName("Deve falhar ao buscar todos os exames.")
     public void getAllExameErrorTest() throws SQLException {
@@ -381,6 +399,34 @@ public class ExameResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(apiURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(12)
+    @Test
+    @DisplayName("Deve falhar ao buscar os exames paginados.")
+    public void pageExameErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from atividadeexameresidente");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt2 = c2.prepareStatement("delete from exame");
+        stmt2.execute();
+        stmt2.close();
+        c2.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
                 .then()
                 .extract().response();
 

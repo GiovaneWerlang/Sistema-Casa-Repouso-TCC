@@ -28,6 +28,9 @@ public class EntradaSaidaResourceTest {
     @TestHTTPResource("/entradasaida")
     URL apiURL;
 
+    @TestHTTPResource("/entradasaida/page/0/1")
+    URL pageURL;
+
     @TestHTTPResource("/entradasaida/1")
     URL idURL;
 
@@ -208,7 +211,23 @@ public class EntradaSaidaResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(8)
+    @Order(7)
+    @Test
+    @DisplayName("Deve buscar as entradasaidas paginadas com sucesso.")
+    public void pageEntradaSaidaTest(){
+
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(apiURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(9)
     @Test
     @DisplayName("Deve deletar por id a entradasaida com sucesso.")
     public void deleteEntradaSaidaTest(){
@@ -224,7 +243,7 @@ public class EntradaSaidaResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(9)
+    @Order(10)
     @Test
     @DisplayName("Deve falhar ao deletar por id a entradasaida.")
     public void deleteEntradaSaidaErrorTest(){
@@ -240,7 +259,7 @@ public class EntradaSaidaResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @DisplayName("Deve falhar ao buscar todas as entradasaidas.")
     public void getAllEntradaSaidaErrorTest() throws SQLException {
@@ -255,6 +274,27 @@ public class EntradaSaidaResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(apiURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(12)
+    @Test
+    @DisplayName("Deve falhar ao buscar as entradasaidas paginadas.")
+    public void pagelEntradaSaidaErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from entradasaida");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
                 .then()
                 .extract().response();
 

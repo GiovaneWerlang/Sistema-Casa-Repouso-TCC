@@ -27,6 +27,9 @@ public class EspecialidadeResourceTest {
     @TestHTTPResource("/especialidade")
     URL apiURL;
 
+    @TestHTTPResource("/especialidade/page/0/1")
+    URL pageURL;
+
     @TestHTTPResource("/especialidade/1")
     URL idURL;
 
@@ -172,7 +175,23 @@ public class EspecialidadeResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(8)
+    @Order(7)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
+    @DisplayName("Deve buscar as especialidades paginadas com sucesso.")
+    public void pageEspecialidadeTest(){
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(9)
     @Test
     @DisplayName("Deve deletar por id a especialidade com sucesso.")
     public void deleteEspecialidadeTest(){
@@ -188,7 +207,7 @@ public class EspecialidadeResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(9)
+    @Order(10)
     @Test
     @DisplayName("Deve falhar ao deletar por id a especialidade.")
     public void deleteEspecialidadeErrorTest(){
@@ -204,7 +223,7 @@ public class EspecialidadeResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
     @DisplayName("Deve falhar ao buscar todas as especialidades.")
@@ -220,6 +239,28 @@ public class EspecialidadeResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(apiURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(12)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
+    @DisplayName("Deve falhar ao buscar as especialidades paginadas.")
+    public void pageEspecialidadeErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from especialidade");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
                 .then()
                 .extract().response();
 

@@ -26,6 +26,12 @@ public class UsuarioResourceTest {
     @TestHTTPResource("/usuario")
     URL apiURL;
 
+    @TestHTTPResource("/usuario/login")
+    URL loginURL;
+
+    @TestHTTPResource("/usuario/page/0/1")
+    URL pageURL;
+
     @TestHTTPResource("/usuario/2")
     URL idURL;
 
@@ -98,7 +104,7 @@ public class UsuarioResourceTest {
                 .contentType(ContentType.JSON)
                 .body(usuarioDTO)
                 .when()
-                .post(apiURL+"/login")
+                .post(loginURL)
                 .then()
                 .extract().response();
 
@@ -117,7 +123,7 @@ public class UsuarioResourceTest {
                 .contentType(ContentType.JSON)
                 .body(usuarioDTO)
                 .when()
-                .post(apiURL+"/login")
+                .post(loginURL)
                 .then()
                 .extract().response();
 
@@ -136,7 +142,7 @@ public class UsuarioResourceTest {
                 .contentType(ContentType.JSON)
                 .body(usuarioDTO)
                 .when()
-                .post(apiURL+"/login")
+                .post(loginURL)
                 .then()
                 .extract().response();
 
@@ -283,7 +289,7 @@ public class UsuarioResourceTest {
 
     @Order(12)
     @Test
-    @DisplayName("Deve buscar todas as usuarios com sucesso.")
+    @DisplayName("Deve buscar todos os usuarios com sucesso.")
     public void getAllUsuarioTest(){
 
 
@@ -297,7 +303,23 @@ public class UsuarioResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(13)
+    @Order(12)
+    @Test
+    @DisplayName("Deve buscar os usuarios paginados com sucesso.")
+    public void pageUsuarioTest(){
+
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(14)
     @Test
     @DisplayName("Deve deletar por id a usuario com sucesso.")
     public void deleteUsuarioTest(){
@@ -313,7 +335,7 @@ public class UsuarioResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(14)
+    @Order(15)
     @Test
     @DisplayName("Deve falhar ao deletar por id a usuario.")
     public void deleteUsuarioErrorTest(){
@@ -329,9 +351,9 @@ public class UsuarioResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(15)
+    @Order(16)
     @Test
-    @DisplayName("Deve falhar ao buscar todas as usuarios.")
+    @DisplayName("Deve falhar ao buscar todos os usuarios.")
     public void getAllUsuarioErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
@@ -344,6 +366,27 @@ public class UsuarioResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(apiURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(17)
+    @Test
+    @DisplayName("Deve falhar ao buscar todos os usuarios paginados.")
+    public void pageUsuarioErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from usuario");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
                 .then()
                 .extract().response();
 

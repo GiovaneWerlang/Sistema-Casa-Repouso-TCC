@@ -23,13 +23,15 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
-//@TestTransaction
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ProfissionalResourceTest {
 
     @TestHTTPResource("/profissional")
     URL apiURL;
+
+    @TestHTTPResource("/profissional/page/0/1")
+    URL pageURL;
 
     @TestHTTPResource("/profissional/2")
     URL idURL;
@@ -251,7 +253,7 @@ public class ProfissionalResourceTest {
 
     @Order(7)
     @Test
-    @DisplayName("Deve buscar todas os profissionals com sucesso.")
+    @DisplayName("Deve buscar todos os profissionais com sucesso.")
     public void getAllProfissionalTest(){
 
 
@@ -267,6 +269,22 @@ public class ProfissionalResourceTest {
 
     @Order(8)
     @Test
+    @DisplayName("Deve buscar todos os profissionais paginados com sucesso.")
+    public void pageProfissionalTest(){
+
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(9)
+    @Test
     @DisplayName("Deve deletar por id o profissional com sucesso.")
     public void deleteProfissionalTest(){
 
@@ -281,7 +299,7 @@ public class ProfissionalResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(9)
+    @Order(10)
     @Test
     @DisplayName("Deve falhar ao deletar por id o profissional.")
     public void deleteProfissionalErrorTest(){
@@ -297,7 +315,7 @@ public class ProfissionalResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @DisplayName("Deve falhar ao buscar todos os profissionais.")
     public void getAllProfissionalErrorTest() throws SQLException {
@@ -315,6 +333,30 @@ public class ProfissionalResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(apiURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(12)
+    @Test
+    @DisplayName("Deve falhar ao buscar os profissionais paginados.")
+    public void pageProfissionalErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt1 = c.prepareStatement("delete from usuario");
+        stmt1.execute();
+        stmt1.close();
+        PreparedStatement stmt2 = c.prepareStatement("delete from profissional");
+        stmt2.execute();
+        stmt2.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageURL)
                 .then()
                 .extract().response();
 
