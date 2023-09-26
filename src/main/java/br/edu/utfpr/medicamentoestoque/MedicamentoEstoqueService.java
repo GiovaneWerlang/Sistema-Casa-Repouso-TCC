@@ -3,6 +3,7 @@ package br.edu.utfpr.medicamentoestoque;
 import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.Copy;
+import br.edu.utfpr.utils.PageDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -89,4 +90,20 @@ public class MedicamentoEstoqueService implements CrudService<MedicamentoEstoque
 
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+
+    public Response page(int page, int size){
+        if(page < 0 || size < 1){
+            return Response.status(422).build();
+        }
+        List<MedicamentoEstoqueModel> lista = repository.pageList(page,size);
+        if(lista.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        PageDTO<MedicamentoEstoqueModel> pageDTO = new PageDTO<>();
+        pageDTO.setLista(lista);
+        pageDTO.setPages(repository.pageCount(page,size));
+        pageDTO.setTotal(repository.pageTotal(page,size));
+        return Response.ok(pageDTO).build();
+    }
+
 }

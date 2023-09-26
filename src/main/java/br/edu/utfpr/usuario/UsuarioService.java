@@ -5,6 +5,7 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.security.Security;
+import br.edu.utfpr.utils.PageDTO;
 import io.quarkus.elytron.security.common.BcryptUtil;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -138,4 +139,20 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
 
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+
+    public Response page(int page, int size){
+        if(page < 0 || size < 1){
+            return Response.status(422).build();
+        }
+        List<UsuarioModel> lista = repository.pageList(page,size);
+        if(lista.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        PageDTO<UsuarioModel> pageDTO = new PageDTO<>();
+        pageDTO.setLista(lista);
+        pageDTO.setPages(repository.pageCount(page,size));
+        pageDTO.setTotal(repository.pageTotal(page,size));
+        return Response.ok(pageDTO).build();
+    }
+
 }

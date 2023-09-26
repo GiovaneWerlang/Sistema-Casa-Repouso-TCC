@@ -64,4 +64,10 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
         return service.getToken(usuarioDTO.getLogin(), usuarioDTO.getSenha());
     }
 
+    @GET
+    @Path("page/{page}/{size}")
+    public Response page(@PathParam("page") int page, @PathParam("size") int size){
+        return service.page(page,size);
+    }
+
 }

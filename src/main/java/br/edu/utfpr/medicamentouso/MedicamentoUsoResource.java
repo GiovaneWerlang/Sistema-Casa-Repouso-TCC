@@ -57,4 +57,10 @@ public class MedicamentoUsoResource implements CrudResource<MedicamentoUsoDTO> {
         return service.delete(id);
     }
 
+    @GET
+    @Path("page/{page}/{size}")
+    public Response page(@PathParam("page") int page, @PathParam("size") int size){
+        return service.page(page,size);
+    }
+
 }

@@ -56,4 +56,10 @@ public class MovimentacaoEstoqueResource implements CrudResource<MovimentacaoEst
         return service.delete(id);
     }
 
+    @GET
+    @Path("page/{page}/{size}")
+    public Response page(@PathParam("page") int page, @PathParam("size") int size){
+        return service.page(page,size);
+    }
+
 }
