@@ -14,4 +14,6 @@ public interface CrudService<T> {
 
     Response delete(long id);
 
+    Response page(int page, int size);
+
 }

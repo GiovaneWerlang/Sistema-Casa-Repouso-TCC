@@ -10,6 +10,7 @@ import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
+import br.edu.utfpr.utils.PageDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -149,20 +150,17 @@ public class ExameService implements CrudService<ExameDTO> {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
 
-            AtividadeExameResidenteModel atividadeExameResidenteModel = new AtividadeExameResidenteModel();
             if(atividadeExameResidenteRepository.findByExameId(model.getId()) != null){
-                atividadeExameResidenteModel = atividadeExameResidenteRepository.findByExameId(model.getId());
-//                if(atividadeExameResidenteModel.getSituacao() == null) {
+                AtividadeExameResidenteModel atividadeExameResidenteModel = atividadeExameResidenteRepository.findByExameId(model.getId());
                 atividadeExameResidenteModel.setDescricao(model.getNome());
                 atividadeExameResidenteModel.setDataHora(model.getDataHora());
                 atividadeExameResidenteModel.setExame(model);
 
-                    try{
-                        atividadeExameResidenteRepository.persist(atividadeExameResidenteModel);
-                    }catch (Exception ex){
-                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-                    }
-//                }
+                try{
+                    atividadeExameResidenteRepository.persist(atividadeExameResidenteModel);
+                }catch (Exception ex){
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                }
             }
 
             return Response.status(201, model.toString()).build();
@@ -180,4 +178,20 @@ public class ExameService implements CrudService<ExameDTO> {
 
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+
+    public Response page(int page, int size){
+        if(page < 0 || size < 1){
+            return Response.status(422).build();
+        }
+        List<ExameModel> lista = repository.pageList(page,size);
+        if(lista.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        PageDTO<ExameModel> pageDTO = new PageDTO<>();
+        pageDTO.setLista(lista);
+        pageDTO.setPages(repository.pageCount(page,size));
+        pageDTO.setTotal(repository.pageTotal(page,size));
+        return Response.ok(pageDTO).build();
+    }
+
 }

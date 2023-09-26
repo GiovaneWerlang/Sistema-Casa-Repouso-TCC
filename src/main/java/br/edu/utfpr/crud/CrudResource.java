@@ -17,4 +17,6 @@ public interface CrudResource<T> {
 
     Response delete(@PathParam("id") long id);
 
+    Response page(@PathParam("page") int page, @PathParam("size") int size);
+
 }

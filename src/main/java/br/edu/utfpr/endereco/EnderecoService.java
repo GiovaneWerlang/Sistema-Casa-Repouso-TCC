@@ -1,6 +1,5 @@
 package br.edu.utfpr.endereco;
 
-import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.Copy;
 
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped
-public class EnderecoService implements CrudService<EnderecoDTO> {
+public class EnderecoService {
 
     private EnderecoRepository repository;
     private Validator validator;

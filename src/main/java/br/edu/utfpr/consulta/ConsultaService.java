@@ -10,6 +10,7 @@ import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
+import br.edu.utfpr.utils.PageDTO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -150,20 +151,17 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
 
-            AtividadeConsultaResidenteModel atividadeConsultaResidenteModel = new AtividadeConsultaResidenteModel();
             if(atividadeConsultaResidenteRepository.findByConsultaId(model.getId()) != null){
-                atividadeConsultaResidenteModel = atividadeConsultaResidenteRepository.findByConsultaId(model.getId());
-//                if(atividadeConsultaResidenteModel.getSituacao() == null) {
-                    atividadeConsultaResidenteModel.setDescricao(model.getDescricao());
-                    atividadeConsultaResidenteModel.setDataHora(model.getDataHora());
-                    atividadeConsultaResidenteModel.setConsulta(model);
+                AtividadeConsultaResidenteModel atividadeConsultaResidenteModel = atividadeConsultaResidenteRepository.findByConsultaId(model.getId());
+                atividadeConsultaResidenteModel.setDescricao(model.getDescricao());
+                atividadeConsultaResidenteModel.setDataHora(model.getDataHora());
+                atividadeConsultaResidenteModel.setConsulta(model);
 
-                    try{
-                        atividadeConsultaResidenteRepository.persist(atividadeConsultaResidenteModel);
-                    }catch (Exception ex){
-                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-                    }
-//                }
+                try{
+                    atividadeConsultaResidenteRepository.persist(atividadeConsultaResidenteModel);
+                }catch (Exception ex){
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                }
             }
 
             return Response.status(201, model.toString()).build();
@@ -181,4 +179,20 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
 
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+
+    public Response page(int page, int size){
+        if(page < 0 || size < 1){
+            return Response.status(422).build();
+        }
+        List<ConsultaModel> lista = repository.pageList(page,size);
+        if(lista.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        PageDTO<ConsultaModel> pageDTO = new PageDTO<>();
+        pageDTO.setLista(lista);
+        pageDTO.setPages(repository.pageCount(page,size));
+        pageDTO.setTotal(repository.pageTotal(page,size));
+        return Response.ok(pageDTO).build();
+    }
+
 }

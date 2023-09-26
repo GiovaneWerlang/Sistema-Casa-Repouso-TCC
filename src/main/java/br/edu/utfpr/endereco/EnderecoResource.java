@@ -1,6 +1,5 @@
 package br.edu.utfpr.endereco;
 
-import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -16,7 +15,7 @@ import javax.ws.rs.core.SecurityContext;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "Endereço")
-public class EnderecoResource implements CrudResource<EnderecoDTO> {
+public class EnderecoResource {
 
     private EnderecoService service;
 
