@@ -105,7 +105,7 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode(),model.toString()).build();
+        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
     }
 
     public Response update(long id, ProfissionalDTO profissionalDTO){
@@ -169,7 +169,7 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
 
-            return Response.status(201, model.toString()).build();
+            return Response.status(201).entity(model.getId()).build();
         }
 
         return Response.status(Response.Status.NOT_FOUND).build();

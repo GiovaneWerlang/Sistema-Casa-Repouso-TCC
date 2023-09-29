@@ -75,7 +75,7 @@ public class EntradaSaidaService implements CrudService<EntradaSaidaDTO> {
         }catch (Exception ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        return Response.status( Response.Status.CREATED.getStatusCode(),model.toString()).build();
+        return Response.status(Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
     }
 
     public Response update(long id, EntradaSaidaDTO entradaSaidaDTO){
@@ -100,7 +100,7 @@ public class EntradaSaidaService implements CrudService<EntradaSaidaDTO> {
                 return Response.status( Response.Status.NOT_FOUND.getStatusCode(),"Residente não encontrado.").build();
             }
 
-            return Response.status(201, model.toString()).build();
+            return Response.status(201).entity(model.getId()).build();
         }
 
         return Response.status(Response.Status.NOT_FOUND).build();
