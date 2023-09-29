@@ -13,12 +13,14 @@ import { Situacoes } from 'src/app/shared/situacoes/situacoes';
   providers: [  { provide: CrudService, useExisting: AtividadeLudicaService}]
 })
 export class AtividadeludicaListarComponent {
-  cols:string[] = ["Id", "Nome", "DataHora","Situação"];
+
   public items: AtividadeLudica[] = [];
 
   first:number = 0;
   rows:number = 10;
   total:number = 0;
+
+  page:number = 0;
 
   situacoes:LabelValue[] = Situacoes;
 
@@ -26,7 +28,7 @@ export class AtividadeludicaListarComponent {
     private service:CrudService<AtividadeLudica>,
     private router: Router
     ) {
-      this.carregarLista(this.first, this.rows);
+      //this.carregarLista(this.first, this.rows);
     }
 
   novo(){
@@ -47,7 +49,7 @@ export class AtividadeludicaListarComponent {
   }
 
   carregarLista(page:number, size: number):void{
-    this.service.page(page, size).subscribe((page:any)=>{     
+    this.service.pagesort(page, size,"id",true).subscribe((page:any)=>{     
       this.items = page.lista;
       this.total = page.total;
     })
@@ -55,6 +57,17 @@ export class AtividadeludicaListarComponent {
 
   onPageChange(event:any){
     this.rows = event.rows;
+    this.page = event.page;
     this.carregarLista(event.page, event.rows);
+  }
+
+  customSort(event:any){
+    console.log(event)
+    if(event){
+    this.service.pagesort(this.page, this.rows, event.sortField ? event.sortField : "id", event.sortOrder === 1).subscribe((page:any)=>{     
+      this.items = page.lista;
+      this.total = page.total;
+    })
+  }
   }
 }

@@ -6,7 +6,7 @@
                 <th *ngFor="let col of columns">
                     {{ col }}
                 </th>
-                <th>Ações</th>
+                <th style="width:10%">Ações</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item>
@@ -16,9 +16,11 @@
                 <td>{{item.cpf | CPF}}</td>
                 <td>{{item.funcao | Enum:funcoes}}</td>
                 <td>{{item.situacao | Enum:situacoes}}</td>
-                <td class="flex gap-1">
-                    <p-button class="tablebutton" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(item.id)"></p-button>
-                    <p-button class="tablebutton" icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger" (click)="delete(item.id)"></p-button>
+                <td>
+                    <div class="flex gap-1">
+                        <p-button class="tablebutton" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(item.id)"></p-button>
+                        <p-button class="tablebutton" icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger" (click)="delete(item.id)"></p-button>
+                    </div>
                 </td>
             </tr>
         </ng-template>
