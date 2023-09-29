@@ -14,8 +14,8 @@
                 <td *ngFor="let detail of item | keyvalue">{{detail.value}}
                 </td>
                 <td class="flex gap-1">
-                    <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(item.id)"></p-button>
-                    <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger" (click)="delete(item.id)"></p-button>
+                    <p-button class="tablebutton" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(item.id)"></p-button>
+                    <p-button class="tablebutton" icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger" (click)="delete(item.id)"></p-button>
                 </td>
             </tr>
         </ng-template>
