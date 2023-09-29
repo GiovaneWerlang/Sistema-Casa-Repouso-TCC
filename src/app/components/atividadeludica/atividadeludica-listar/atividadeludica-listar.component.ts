@@ -3,6 +3,8 @@ import { AtividadeLudica } from '../modelo/atividadeludica';
 import { AtividadeLudicaService } from '../service/atividadeludica.service';
 import { CrudService } from 'src/app/shared/crud-service';
 import { Router } from '@angular/router';
+import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
+import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 
 @Component({
   selector: 'app-atividadeludica',
@@ -17,6 +19,8 @@ export class AtividadeludicaListarComponent {
   first:number = 0;
   rows:number = 10;
   total:number = 0;
+
+  situacoes:LabelValue[] = Situacoes;
 
   constructor(
     private service:CrudService<AtividadeLudica>,

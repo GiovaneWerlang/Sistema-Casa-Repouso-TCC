@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AtividadeLudicaService extends CrudService<AtividadeLudica> {
 
-  constructor(http:HttpClient) {
+  constructor(http: HttpClient) {
     super(http, 'atividadeludica');
   }
 }

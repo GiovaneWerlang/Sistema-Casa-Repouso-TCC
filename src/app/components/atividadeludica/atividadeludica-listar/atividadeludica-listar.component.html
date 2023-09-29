@@ -14,7 +14,7 @@
                 <td>{{item.id}}</td>
                 <td>{{item.nome}}</td>
                 <td>{{item.dataHora | date:"dd/MM/yyyy hh:mm"}}</td>
-                <td>{{item.situacao}}</td>
+                <td>{{item.situacao | Enum: situacoes}}</td>
                 <td class="flex gap-1">
                     <p-button class="tablebutton" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(item.id)"></p-button>
                     <p-button class="tablebutton" icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger" (click)="delete(item.id)"></p-button>

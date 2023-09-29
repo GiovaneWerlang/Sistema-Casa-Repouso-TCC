@@ -3,6 +3,7 @@ import { AtividadeLudicaService } from '../service/atividadeludica.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
+import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 
 @Component({
   selector: 'app-atividadeludica-cadastrar',
@@ -13,10 +14,7 @@ import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 export class AtividadeludicaCadastrarComponent implements OnInit {
 
   form: FormGroup;
-  opcoesSituacao:LabelValue[] = [
-    {label:"Ativo",value:"ATIVO"},
-    {label:"Inativo",value:"INATIVO"},
-  ];
+  opcoesSituacao:LabelValue[] = Situacoes;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,7 +58,7 @@ export class AtividadeludicaCadastrarComponent implements OnInit {
 
   private carrega(id: number) {
     this.atividadeLudicaService.findByID(id).subscribe((atividadeLudica) => {
-      this.form.setValue(atividadeLudica)
+      this.form.patchValue(atividadeLudica)
       this.form.get('dataHora')?.patchValue(new Date(atividadeLudica.dataHora))
     });
   }
