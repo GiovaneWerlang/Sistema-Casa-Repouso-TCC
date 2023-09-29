@@ -15,11 +15,11 @@ export class AppComponent {
 
     this.monitoraBreakspoints(breakpointService);
   }
-
+  
   monitoraBreakspoints(breakpointService: BreakpointserviceService) {
     breakpointService.getBreakpoints().subscribe((breakpoint: BreakpointState) => {
       const breakpoints = breakpoint.breakpoints;
-      this.desktop = breakpoints[Breakpoints.Web] || breakpoints[Breakpoints.WebLandscape];      
+      this.desktop = breakpoints[Breakpoints.Web] || breakpoints[Breakpoints.WebLandscape];
     });
   }
 }

@@ -44,3 +44,8 @@ body {
 .p-menuitem{
     background-color: rgb(255, 255, 255);
 }
+
+.tablebutton .p-button-icon-only{
+    height: 2.75rem !important;
+    width: 2.75rem !important;
+}

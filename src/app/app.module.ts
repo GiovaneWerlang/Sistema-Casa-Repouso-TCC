@@ -11,9 +11,10 @@ import { HomeComponent } from './components/home/home.component';
 import { EspecialidadeCadastrarComponent } from './components/especialidade/especialidade-cadastrar/especialidade-cadastrar.component';
 import { EspecialidadeListarComponent } from './components/especialidade/especialidade-listar/especialidade-listar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { AtividadeludicaCadastrarComponent } from './components/atividadeludica/atividadeludica-cadastrar/atividadeludica-cadastrar.component';
+import { AtividadeludicaListarComponent } from './components/atividadeludica/atividadeludica-listar/atividadeludica-listar.component';
 
 import { MenuModule } from 'primeng/menu';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
@@ -23,6 +24,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuComponent } from './components/menu/menu.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -35,6 +39,8 @@ import { PaginatorModule } from 'primeng/paginator';
     CrudTableComponent,
     HeaderComponent,
     MenuComponent,
+    AtividadeludicaListarComponent,
+    AtividadeludicaCadastrarComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +56,8 @@ import { PaginatorModule } from 'primeng/paginator';
     DividerModule,
     TooltipModule,
     PaginatorModule,
+    CalendarModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
