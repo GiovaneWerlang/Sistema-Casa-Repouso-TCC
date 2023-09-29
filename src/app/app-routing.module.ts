@@ -5,6 +5,8 @@ import { EspecialidadeCadastrarComponent } from './components/especialidade/espe
 import { EspecialidadeListarComponent } from './components/especialidade/especialidade-listar/especialidade-listar.component';
 import { AtividadeludicaListarComponent } from './components/atividadeludica/atividadeludica-listar/atividadeludica-listar.component';
 import { AtividadeludicaCadastrarComponent } from './components/atividadeludica/atividadeludica-cadastrar/atividadeludica-cadastrar.component';
+import { ProfissionalListarComponent } from './components/profissional/profissional-listar/profissional-listar.component';
+import { ProfissionalCadastrarComponent } from './components/profissional/profissional-cadastrar/profissional-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,6 +17,9 @@ const routes: Routes = [
   { path: 'atividadeludica/cadastrar', component: AtividadeludicaCadastrarComponent },
   { path: 'atividadeludica/editar/:id', component: AtividadeludicaCadastrarComponent },
   { path: 'atividadeludica/listar', component: AtividadeludicaListarComponent },
+  { path: 'profissional/cadastrar', component: ProfissionalCadastrarComponent },
+  { path: 'profissional/editar/:id', component: ProfissionalCadastrarComponent },
+  { path: 'profissional/listar', component: ProfissionalListarComponent },
 ];
 
 @NgModule({

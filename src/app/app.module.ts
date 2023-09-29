@@ -13,6 +13,8 @@ import { EspecialidadeListarComponent } from './components/especialidade/especia
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { AtividadeludicaCadastrarComponent } from './components/atividadeludica/atividadeludica-cadastrar/atividadeludica-cadastrar.component';
 import { AtividadeludicaListarComponent } from './components/atividadeludica/atividadeludica-listar/atividadeludica-listar.component';
+import { ProfissionalListarComponent } from './components/profissional/profissional-listar/profissional-listar.component';
+import { ProfissionalCadastrarComponent } from './components/profissional/profissional-cadastrar/profissional-cadastrar.component';
 
 import { MenuModule } from 'primeng/menu';
 import { InputTextModule } from 'primeng/inputtext';
@@ -27,7 +29,11 @@ import { PaginatorModule } from 'primeng/paginator';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { InputMaskModule } from 'primeng/inputmask';
 
+import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
+import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +47,10 @@ import { ButtonModule } from 'primeng/button';
     MenuComponent,
     AtividadeludicaListarComponent,
     AtividadeludicaCadastrarComponent,
+    ProfissionalListarComponent,
+    EnumPipe,
+    CpfPipe,
+    ProfissionalCadastrarComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +68,8 @@ import { ButtonModule } from 'primeng/button';
     PaginatorModule,
     CalendarModule,
     DropdownModule,
+    KeyFilterModule,
+    InputMaskModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
