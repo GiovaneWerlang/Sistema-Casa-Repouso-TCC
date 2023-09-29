@@ -33,13 +33,11 @@ export class EspecialidadeCadastrarComponent implements OnInit {
         this.carregaEspecialidade(Number(id));
       }
     })
-    console.log(environment.apiUrl)
   }
 
   salvar() {
     this.especialidadeService.save(this.form.getRawValue()).subscribe((res) => {
-      console.log(res)
-      if(res && res.id){
+      if(res){
         this.router.navigate(['/especialidade/listar']);
       }
     })
