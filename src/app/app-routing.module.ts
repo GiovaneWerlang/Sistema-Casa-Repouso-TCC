@@ -16,6 +16,8 @@ import { EntradasaidaListarComponent } from './components/entradasaida/entradasa
 import { EntradasaidaCadastrarComponent } from './components/entradasaida/entradasaida-cadastrar/entradasaida-cadastrar.component';
 import { ExameListarComponent } from './components/exame/exame-listar/exame-listar.component';
 import { ExameCadastrarComponent } from './components/exame/exame-cadastrar/exame-cadastrar.component';
+import { ConsultaListarComponent } from './components/consulta/consulta-listar/consulta-listar.component';
+import { ConsultaCadastrarComponent } from './components/consulta/consulta-cadastrar/consulta-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,6 +43,9 @@ const routes: Routes = [
   { path: 'exame/cadastrar', component: ExameCadastrarComponent },
   { path: 'exame/editar/:id', component: ExameCadastrarComponent },
   { path: 'exame/listar', component: ExameListarComponent},
+  { path: 'consulta/cadastrar', component: ConsultaCadastrarComponent },
+  { path: 'consulta/editar/:id', component: ConsultaCadastrarComponent },
+  { path: 'consulta/listar', component: ConsultaListarComponent},
 ];
 
 @NgModule({

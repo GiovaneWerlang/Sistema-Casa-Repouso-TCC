@@ -43,6 +43,8 @@ import { EntradasaidaListarComponent } from './components/entradasaida/entradasa
 import { EntradasaidaCadastrarComponent } from './components/entradasaida/entradasaida-cadastrar/entradasaida-cadastrar.component';
 import { ExameListarComponent } from './components/exame/exame-listar/exame-listar.component';
 import { ExameCadastrarComponent } from './components/exame/exame-cadastrar/exame-cadastrar.component';
+import { ConsultaListarComponent } from './components/consulta/consulta-listar/consulta-listar.component';
+import { ConsultaCadastrarComponent } from './components/consulta/consulta-cadastrar/consulta-cadastrar.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { ExameCadastrarComponent } from './components/exame/exame-cadastrar/exam
     EntradasaidaCadastrarComponent,
     ExameListarComponent,
     ExameCadastrarComponent,
+    ConsultaListarComponent,
+    ConsultaCadastrarComponent,
   ],
   imports: [
     BrowserModule,
