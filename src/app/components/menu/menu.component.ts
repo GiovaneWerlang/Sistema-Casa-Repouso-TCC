@@ -34,7 +34,15 @@ export class MenuComponent {
     }, {
       label: 'Medicamento',
       icon: 'pi pi-link',
-      url: 'medicamento/listar'
+      url: 'medicamentoestoque/listar'
+    }, {
+      label: 'Medicamento em Uso',
+      icon: 'pi pi-link',
+      url: 'medicamentouso/listar'
+    }, {
+      label: 'Movimentação de Medicamento',
+      icon: 'pi pi-link',
+      url: 'movimentacaoestoque/listar'
     }, {
       label: 'Profissional',
       icon: 'pi pi-link',
