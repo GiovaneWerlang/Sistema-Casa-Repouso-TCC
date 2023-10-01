@@ -36,6 +36,8 @@ import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
 import { ResidenteListarComponent } from './components/residente/residente-listar/residente-listar.component';
 import { ResidenteCadastrarComponent } from './components/residente/residente-cadastrar/residente-cadastrar.component';
+import { UsuarioListarComponent } from './components/usuario/usuario-listar/usuario-listar.component';
+import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastrar/usuario-cadastrar.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { ResidenteCadastrarComponent } from './components/residente/residente-ca
     ProfissionalCadastrarComponent,
     ResidenteListarComponent,
     ResidenteCadastrarComponent,
+    UsuarioListarComponent,
+    UsuarioCadastrarComponent,
   ],
   imports: [
     BrowserModule,

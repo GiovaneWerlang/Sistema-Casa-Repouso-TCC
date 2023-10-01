@@ -9,6 +9,8 @@ import { ProfissionalListarComponent } from './components/profissional/profissio
 import { ProfissionalCadastrarComponent } from './components/profissional/profissional-cadastrar/profissional-cadastrar.component';
 import { ResidenteListarComponent } from './components/residente/residente-listar/residente-listar.component';
 import { ResidenteCadastrarComponent } from './components/residente/residente-cadastrar/residente-cadastrar.component';
+import { UsuarioListarComponent } from './components/usuario/usuario-listar/usuario-listar.component';
+import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastrar/usuario-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,6 +27,9 @@ const routes: Routes = [
   { path: 'residente/cadastrar', component: ResidenteCadastrarComponent },
   { path: 'residente/editar/:id', component: ResidenteCadastrarComponent },
   { path: 'residente/listar', component: ResidenteListarComponent },
+  { path: 'usuario/cadastrar', component: UsuarioCadastrarComponent },
+  { path: 'usuario/editar/:id', component: UsuarioCadastrarComponent },
+  { path: 'usuario/listar', component: UsuarioListarComponent },
 ];
 
 @NgModule({

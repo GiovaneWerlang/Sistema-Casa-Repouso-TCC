@@ -1,0 +1,29 @@
+<div>
+    <p-button (click)="novo()" icon="pi pi-plus" pTooltip="Novo" tooltipPosition="bottom" icon="pi pi-plus" styleClass="p-button-rounded p-button-info p-button-text p-button-lg"></p-button>
+    <p-table [value]="items" [columns]="cols">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col }}
+                </th>
+                <th style="width:10%">Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>                
+                <td>{{item.id}}</td>
+                <td>{{item.login}}</td>
+                <td>{{item.profissional.nome}}</td>
+                <td>{{item.profissional.funcao | Enum:funcoes}}</td>
+                <td>{{item.profissional.situacao | Enum:situacoes}}</td>
+                <td>
+                    <div class="flex gap-1">
+                        <p-button class="tablebutton" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(item.id)"></p-button>
+                        <p-button class="tablebutton" icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger" (click)="delete(item.id)"></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="total" [rowsPerPageOptions]="[10, 20]"></p-paginator>
+</div>

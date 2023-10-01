@@ -1,0 +1,37 @@
+<div class="col-12 flex flex-column align-items-center">
+    <div class="col-12 xl:col-10 lg:col-10 md:col-10 sm:col-10">
+        <p>Cadastro de Profissional</p>
+        <form [formGroup]="form" (submit)="salvar()" class="flex flex-column">
+            <div class="flex flex-row flex-wrap">
+                <div class="col-12 flex flex-column">
+                    <label htmlFor="login">Login:</label>
+                    <input type="text" pInputText name="login" formControlName="login" />
+                    <div *ngIf="form.get('login')?.errors?.['required']">
+                        <small class="p-error">Este campo é obrigatório.</small>
+                    </div>
+                </div>
+                <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
+                    <label htmlFor="senha">Senha:</label>
+                    <input type="text" pInputText name="senha" formControlName="senha" />
+                    <div *ngIf="form.get('senha')?.errors?.['required']">
+                        <small class="p-error">Este campo é obrigatório.</small>
+                    </div>
+                </div>
+                <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
+                    <label htmlFor="profissional">Profissional:</label>
+                    <p-dropdown [options]="opcoesProfissional" name="profissional" formControlName="profissional" />
+                </div>                
+            </div>
+            <br>
+            <div class="flex flex-row justify-content-end gap-2">
+                <button pButton class="p-button p-button-primary" type="submit">Salvar</button>
+                <button pButton class="p-button p-button-secondary">Limpar</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-12  xl:col-10 lg:col-10 md:col-10 sm:col-10 flex align-items-start">
+        <p-button (click)="voltar()" pTooltip="Voltar" tooltipPosition="top" icon="pi pi-arrow-left"
+            [style]="{'float': 'left'}"
+            styleClass="p-button-rounded p-button-info p-button-text p-button-lg"></p-button>
+    </div>
+</div>
