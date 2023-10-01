@@ -34,6 +34,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
+import { ResidenteListarComponent } from './components/residente/residente-listar/residente-listar.component';
+import { ResidenteCadastrarComponent } from './components/residente/residente-cadastrar/residente-cadastrar.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
     ProfissionalListarComponent,
     EnumPipe,
     CpfPipe,
-    ProfissionalCadastrarComponent
+    ProfissionalCadastrarComponent,
+    ResidenteListarComponent,
+    ResidenteCadastrarComponent,
   ],
   imports: [
     BrowserModule,

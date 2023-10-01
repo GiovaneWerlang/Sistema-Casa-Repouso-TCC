@@ -7,6 +7,8 @@ import { AtividadeludicaListarComponent } from './components/atividadeludica/ati
 import { AtividadeludicaCadastrarComponent } from './components/atividadeludica/atividadeludica-cadastrar/atividadeludica-cadastrar.component';
 import { ProfissionalListarComponent } from './components/profissional/profissional-listar/profissional-listar.component';
 import { ProfissionalCadastrarComponent } from './components/profissional/profissional-cadastrar/profissional-cadastrar.component';
+import { ResidenteListarComponent } from './components/residente/residente-listar/residente-listar.component';
+import { ResidenteCadastrarComponent } from './components/residente/residente-cadastrar/residente-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,6 +22,9 @@ const routes: Routes = [
   { path: 'profissional/cadastrar', component: ProfissionalCadastrarComponent },
   { path: 'profissional/editar/:id', component: ProfissionalCadastrarComponent },
   { path: 'profissional/listar', component: ProfissionalListarComponent },
+  { path: 'residente/cadastrar', component: ResidenteCadastrarComponent },
+  { path: 'residente/editar/:id', component: ResidenteCadastrarComponent },
+  { path: 'residente/listar', component: ResidenteListarComponent },
 ];
 
 @NgModule({

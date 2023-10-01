@@ -1,0 +1,89 @@
+<div class="col-12 flex flex-column align-items-center">
+    <div class="col-12 xl:col-10 lg:col-10 md:col-10 sm:col-10">
+        <p>Cadastro de Profissional</p>
+        <form [formGroup]="form" (submit)="salvar()" class="flex flex-column">
+            <div class="flex flex-row flex-wrap">
+                <div class="col-12 flex flex-column">
+                    <label htmlFor="nome">Nome:</label>
+                    <input type="text" pInputText name="nome" formControlName="nome" />
+                </div>
+                <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
+                    <label htmlFor="cpf">Cpf:</label>
+                    <input type="text" pInputText name="cpf" formControlName="cpf" />
+                </div>
+                <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
+                    <label htmlFor="idade">Idade:</label>
+                    <input type="number" pInputText pKeyFilter="int" name="idade" formControlName="idade" />
+                </div>
+                <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
+                    <label htmlFor="telefone">Telefone:</label>
+                    <input type="text" pInputText name="telefone" formControlName="telefone" />
+                </div>
+                <div class="col-4 flex flex-column">
+                    <label htmlFor="dataHoraIngresso">DataHora Ingresso:</label>
+                    <p-calendar type="text" name="dataHoraIngresso" [showTime]="true" formControlName="dataHoraIngresso" />
+                </div>
+                <div class="col-4 flex flex-column">
+                    <label htmlFor="dataHoraPrevisaoSaida">DataHora Previsão de Saída:</label>
+                    <p-calendar type="text" name="dataHoraPrevisaoSaida" [showTime]="true" formControlName="dataHoraPrevisaoSaida" />
+                </div>
+                <div class="col-12 flex flex-column">
+                    <label htmlFor="email">E-mail:</label>
+                    <input type="email" pInputText name="email" formControlName="email" />
+                </div>
+                <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
+                    <label htmlFor="tipoEstadia">Estadia:</label>
+                    <p-dropdown [options]="tiposEstadia" name="tipoEstadia" formControlName="tipoEstadia" />
+                </div>
+                <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
+                    <label htmlFor="situacao">Situação:</label>
+                    <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao" />
+                </div>
+
+                <div formGroupName="endereco">
+                    <p>Endereço</p>
+                    <div class="flex flex-row flex-wrap">
+                        <div class="col-12 flex flex-column">
+                            <label htmlFor="logradouro">Logradouro:</label>
+                            <input type="text" pInputText name="logradouro" formControlName="logradouro" />
+                        </div>
+                        <div class="col-12 flex flex-column">
+                            <label htmlFor="bairro">Bairro:</label>
+                            <input type="text" pInputText name="bairro" formControlName="bairro" />
+                        </div>
+                        <div class="col-12 flex flex-column">
+                            <label htmlFor="municipio">Município:</label>
+                            <input type="text" pInputText name="municipio" formControlName="municipio" />
+                        </div>
+                        <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-12 flex flex-column">
+                            <label htmlFor="numero">Número:</label>
+                            <input type="text" pInputText name="numero" formControlName="numero" />
+                        </div>
+                        <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-12 flex flex-column">
+                            <span htmlFor="cep">Cep:</span>
+                            <p-inputMask mask="99999-999" pKeyFilter="int" name="cep" formControlName="cep" />
+                        </div>
+                        <div class="col-12 flex flex-column">
+                            <label htmlFor="estado">Estado:</label>
+                            <p-dropdown [options]="opcoesEstados" name="estado" formControlName="estado" />
+                        </div>
+                        <div class="col-12 flex flex-column">
+                            <label htmlFor="pais">País:</label>
+                            <p-dropdown [options]="opcoesPaises" name="pais" formControlName="pais" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="flex flex-row justify-content-end gap-2">
+                <button pButton class="p-button p-button-primary" type="submit">Salvar</button>
+                <button pButton class="p-button p-button-secondary">Limpar</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-12  xl:col-10 lg:col-10 md:col-10 sm:col-10 flex align-items-start">
+        <p-button (click)="voltar()" pTooltip="Voltar" tooltipPosition="top" icon="pi pi-arrow-left"
+            [style]="{'float': 'left'}"
+            styleClass="p-button-rounded p-button-info p-button-text p-button-lg"></p-button>
+    </div>
+</div>
