@@ -22,6 +22,8 @@ import { MedicamentoestoqueListarComponent } from './components/medicamentoestoq
 import { MedicamentoestoqueCadastrarComponent } from './components/medicamentoestoque/medicamentoestoque-cadastrar/medicamentoestoque-cadastrar.component';
 import { MovimentacaoestoqueListarComponent } from './components/movimentacaoestoque/movimentacaoestoque-listar/movimentacaoestoque-listar.component';
 import { MovimentacaoestoqueCadastrarComponent } from './components/movimentacaoestoque/movimentacaoestoque-cadastrar/movimentacaoestoque-cadastrar.component';
+import { MedicamentousoListarComponent } from './components/medicamentouso/medicamentouso-listar/medicamentouso-listar.component';
+import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -56,6 +58,9 @@ const routes: Routes = [
   { path: 'movimentacaoestoque/cadastrar', component: MovimentacaoestoqueCadastrarComponent },
   { path: 'movimentacaoestoque/editar/:id', component: MovimentacaoestoqueCadastrarComponent },
   { path: 'movimentacaoestoque/listar', component: MovimentacaoestoqueListarComponent},
+  { path: 'medicamentouso/cadastrar', component: MedicamentousoCadastrarComponent },
+  { path: 'medicamentouso/editar/:id', component: MedicamentousoCadastrarComponent },
+  { path: 'medicamentouso/listar', component: MedicamentousoListarComponent},
 ];
 
 @NgModule({

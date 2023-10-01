@@ -49,6 +49,8 @@ import { MedicamentoestoqueListarComponent } from './components/medicamentoestoq
 import { MedicamentoestoqueCadastrarComponent } from './components/medicamentoestoque/medicamentoestoque-cadastrar/medicamentoestoque-cadastrar.component';
 import { MovimentacaoestoqueListarComponent } from './components/movimentacaoestoque/movimentacaoestoque-listar/movimentacaoestoque-listar.component';
 import { MovimentacaoestoqueCadastrarComponent } from './components/movimentacaoestoque/movimentacaoestoque-cadastrar/movimentacaoestoque-cadastrar.component';
+import { MedicamentousoListarComponent } from './components/medicamentouso/medicamentouso-listar/medicamentouso-listar.component';
+import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +82,8 @@ import { MovimentacaoestoqueCadastrarComponent } from './components/movimentacao
     MedicamentoestoqueCadastrarComponent,
     MovimentacaoestoqueListarComponent,
     MovimentacaoestoqueCadastrarComponent,
+    MedicamentousoListarComponent,
+    MedicamentousoCadastrarComponent,
   ],
   imports: [
     BrowserModule,
