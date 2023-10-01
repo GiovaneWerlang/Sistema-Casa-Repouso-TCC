@@ -3,6 +3,7 @@ import { Endereco } from "./endereco";
 
 export interface Profissional {
     id?:number;
+    nome:string;
     idade:number;
     cpf:string;
     telefone:string;
