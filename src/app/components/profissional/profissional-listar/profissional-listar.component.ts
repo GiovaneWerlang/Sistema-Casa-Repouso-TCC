@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProfissionalService } from '../service/profissional.service';
-import { CrudService } from 'src/app/shared/crud-service';
+import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { Profissional } from '../modelo/profissional';
 import { Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';

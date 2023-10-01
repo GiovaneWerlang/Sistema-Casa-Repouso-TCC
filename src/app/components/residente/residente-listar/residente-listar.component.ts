@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ResidenteService } from '../service/residente.service';
-import { CrudService } from 'src/app/shared/crud-service';
+import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { Residente } from '../modelo/residente';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { TipoEstadia } from 'src/app/shared/tipoestadia/tipoestadia';

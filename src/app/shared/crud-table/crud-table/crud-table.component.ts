@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { CrudService } from '../../crud-service';
+import { CrudService } from '../../crud-service/crud-service';
 
 @Component({
   selector: 'app-crud-table',
