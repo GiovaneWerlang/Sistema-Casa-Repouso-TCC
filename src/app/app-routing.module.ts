@@ -11,6 +11,8 @@ import { ResidenteListarComponent } from './components/residente/residente-lista
 import { ResidenteCadastrarComponent } from './components/residente/residente-cadastrar/residente-cadastrar.component';
 import { UsuarioListarComponent } from './components/usuario/usuario-listar/usuario-listar.component';
 import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastrar/usuario-cadastrar.component';
+import { EntradasaidaListarComponent } from './components/entradasaida/entradasaida-listar/entradasaida-listar.component';
+import { EntradasaidaCadastrarComponent } from './components/entradasaida/entradasaida-cadastrar/entradasaida-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,6 +32,9 @@ const routes: Routes = [
   { path: 'usuario/cadastrar', component: UsuarioCadastrarComponent },
   { path: 'usuario/editar/:id', component: UsuarioCadastrarComponent },
   { path: 'usuario/listar', component: UsuarioListarComponent },
+  { path: 'entradasaida/cadastrar', component: EntradasaidaCadastrarComponent },
+  { path: 'entradasaida/editar/:id', component: EntradasaidaCadastrarComponent },
+  { path: 'entradasaida/listar', component: EntradasaidaListarComponent},
 ];
 
 @NgModule({

@@ -38,6 +38,8 @@ import { ResidenteListarComponent } from './components/residente/residente-lista
 import { ResidenteCadastrarComponent } from './components/residente/residente-cadastrar/residente-cadastrar.component';
 import { UsuarioListarComponent } from './components/usuario/usuario-listar/usuario-listar.component';
 import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastrar/usuario-cadastrar.component';
+import { EntradasaidaListarComponent } from './components/entradasaida/entradasaida-listar/entradasaida-listar.component';
+import { EntradasaidaCadastrarComponent } from './components/entradasaida/entradasaida-cadastrar/entradasaida-cadastrar.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastra
     ResidenteCadastrarComponent,
     UsuarioListarComponent,
     UsuarioCadastrarComponent,
+    EntradasaidaListarComponent,
+    EntradasaidaCadastrarComponent,
   ],
   imports: [
     BrowserModule,
