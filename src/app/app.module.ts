@@ -31,6 +31,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputMaskModule } from 'primeng/inputmask';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
@@ -40,6 +41,8 @@ import { UsuarioListarComponent } from './components/usuario/usuario-listar/usua
 import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastrar/usuario-cadastrar.component';
 import { EntradasaidaListarComponent } from './components/entradasaida/entradasaida-listar/entradasaida-listar.component';
 import { EntradasaidaCadastrarComponent } from './components/entradasaida/entradasaida-cadastrar/entradasaida-cadastrar.component';
+import { ExameListarComponent } from './components/exame/exame-listar/exame-listar.component';
+import { ExameCadastrarComponent } from './components/exame/exame-cadastrar/exame-cadastrar.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +66,8 @@ import { EntradasaidaCadastrarComponent } from './components/entradasaida/entrad
     UsuarioCadastrarComponent,
     EntradasaidaListarComponent,
     EntradasaidaCadastrarComponent,
+    ExameListarComponent,
+    ExameCadastrarComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +87,7 @@ import { EntradasaidaCadastrarComponent } from './components/entradasaida/entrad
     DropdownModule,
     KeyFilterModule,
     InputMaskModule,
+    InputTextareaModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

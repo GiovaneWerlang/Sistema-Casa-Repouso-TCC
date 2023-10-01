@@ -1,3 +1,4 @@
+import { Exame } from './components/exame/modelo/exame';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -13,6 +14,8 @@ import { UsuarioListarComponent } from './components/usuario/usuario-listar/usua
 import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastrar/usuario-cadastrar.component';
 import { EntradasaidaListarComponent } from './components/entradasaida/entradasaida-listar/entradasaida-listar.component';
 import { EntradasaidaCadastrarComponent } from './components/entradasaida/entradasaida-cadastrar/entradasaida-cadastrar.component';
+import { ExameListarComponent } from './components/exame/exame-listar/exame-listar.component';
+import { ExameCadastrarComponent } from './components/exame/exame-cadastrar/exame-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,6 +38,9 @@ const routes: Routes = [
   { path: 'entradasaida/cadastrar', component: EntradasaidaCadastrarComponent },
   { path: 'entradasaida/editar/:id', component: EntradasaidaCadastrarComponent },
   { path: 'entradasaida/listar', component: EntradasaidaListarComponent},
+  { path: 'exame/cadastrar', component: ExameCadastrarComponent },
+  { path: 'exame/editar/:id', component: ExameCadastrarComponent },
+  { path: 'exame/listar', component: ExameListarComponent},
 ];
 
 @NgModule({

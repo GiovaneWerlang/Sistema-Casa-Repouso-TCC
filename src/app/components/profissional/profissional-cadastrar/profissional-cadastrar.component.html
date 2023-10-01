@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="especialidade">Especialidade:</label>
-                    <p-dropdown [options]="opcoesEspecialidade" name="especialidade" formControlName="especialidade" />
+                    <p-dropdown [options]="opcoesEspecialidade" name="especialidade" formControlName="especialidade" [filter]="true"/>
                 </div>
 
                 <div formGroupName="endereco">
@@ -69,11 +69,11 @@
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="estado">Estado:</label>
-                            <p-dropdown [options]="opcoesEstados" name="estado" formControlName="estado" />
+                            <p-dropdown [options]="opcoesEstados" name="estado" formControlName="estado" [filter]="true"/>
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="pais">País:</label>
-                            <p-dropdown [options]="opcoesPaises" name="pais" formControlName="pais" />
+                            <p-dropdown [options]="opcoesPaises" name="pais" formControlName="pais" [filter]="true"/>
                         </div>
                     </div>
                 </div>
