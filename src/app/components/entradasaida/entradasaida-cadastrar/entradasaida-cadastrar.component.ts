@@ -5,12 +5,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResidenteService } from '../../residente/service/residente.service';
 import { Residente } from '../../residente/modelo/residente';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-entradasaida-cadastrar',
   templateUrl: './entradasaida-cadastrar.component.html',
   styleUrls: ['./entradasaida-cadastrar.component.css'],
-  providers: [EntradasaidaService]
+  providers: [EntradasaidaService, MessageService]
 })
 export class EntradasaidaCadastrarComponent {
   form: FormGroup;
@@ -21,13 +22,14 @@ export class EntradasaidaCadastrarComponent {
     private entradaSaidaService: EntradasaidaService,
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
       dataHoraEntrada: [null],
       dataHoraSaida: [null],
-      descricao: [''],
+      descricao: ['', [Validators.required, Validators.maxLength(255)]],
       residente: ['', Validators.required],
     });
     this.carregarOpcoesResidente();
@@ -43,12 +45,17 @@ export class EntradasaidaCadastrarComponent {
   }
 
   salvar() {
-    this.entradaSaidaService.save(this.form.getRawValue()).subscribe((res) => {
-      if(res){
-        this.router.navigate(['/entradasaida/listar']);
-      }
-    })
-    this.limpar();
+    if(this.form.valid){
+      this.entradaSaidaService.save(this.form.getRawValue()).subscribe((res) => {
+        if(res){
+          this.router.navigate(['/entradasaida/listar']);
+        }
+      })
+      this.limpar();
+    }else{
+      this.form.markAllAsTouched();
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+    }
   }
 
   limpar() {

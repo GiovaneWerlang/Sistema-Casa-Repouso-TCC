@@ -3,9 +3,13 @@
       <p>Cadastro de Entradas e Saídas</p>
       <form [formGroup]="form" (submit)="salvar()" class="flex flex-column">
         <div class="flex flex-row flex-wrap">
-          <div class="col-12 xl:col-10 lg:col-10 md:col-10 sm:col-10 flex flex-column">
+          <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
             <label htmlFor="descricao">Descrição:</label>
             <input type="text" pInputText name="descricao" formControlName="descricao" />
+            <div *ngIf="form.controls['descricao']?.invalid && (form.controls['descricao']?.dirty || form.controls['descricao']?.touched)">
+              <small *ngIf="form.get('descricao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+              <small *ngIf="form.get('descricao')?.errors?.['maxlength']" class="p-error">Tamanho máximo 255 caracteres.</small>
+            </div>
           </div>
           <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
             <label htmlFor="dataHoraSaida">DataHora Saida:</label>
@@ -18,6 +22,9 @@
           <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
             <label htmlFor="residente">Residente:</label>
             <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente" [style]="{'width':'100%'}"/>
+            <div *ngIf="form.controls['residente']?.invalid && (form.controls['residente']?.dirty || form.controls['residente']?.touched)">
+              <small *ngIf="form.get('residente')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+            </div>
           </div>
         </div>
         <br>
@@ -31,4 +38,5 @@
       <p-button (click)="voltar()" pTooltip="Voltar" tooltipPosition="top" icon="pi pi-arrow-left"
         [style]="{'float': 'left'}" styleClass="p-button-rounded p-button-info p-button-text p-button-lg"></p-button>
     </div>
+    <p-toast></p-toast>
   </div>
