@@ -4,12 +4,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-atividadeludica-cadastrar',
   templateUrl: './atividadeludica-cadastrar.component.html',
   styleUrls: ['./atividadeludica-cadastrar.component.css'],
-  providers: [AtividadeLudicaService]
+  providers: [AtividadeLudicaService, MessageService]
 })
 export class AtividadeludicaCadastrarComponent implements OnInit {
 
@@ -20,11 +21,12 @@ export class AtividadeludicaCadastrarComponent implements OnInit {
     private route: ActivatedRoute,
     private atividadeLudicaService: AtividadeLudicaService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
-      nome: ['', Validators.required],
+      nome: ['', [Validators.required, Validators.maxLength(255)]],
       dataHora: [new Date, Validators.required],
       situacao: ['ATIVO',Validators.required]
     });
@@ -40,12 +42,17 @@ export class AtividadeludicaCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    this.atividadeLudicaService.save(this.form.getRawValue()).subscribe((res) => {
-      if(res){
-        this.router.navigate(['/atividadeludica/listar']);
-      }
-    })
-    this.limpar();
+    if(this.form.valid){
+      this.atividadeLudicaService.save(this.form.getRawValue()).subscribe((res) => {
+        if(res){
+          this.router.navigate(['/atividadeludica/listar']);
+        }
+      })
+      this.limpar();
+    }else{
+      this.form.markAllAsTouched();
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+    }
   }
 
   limpar() {
