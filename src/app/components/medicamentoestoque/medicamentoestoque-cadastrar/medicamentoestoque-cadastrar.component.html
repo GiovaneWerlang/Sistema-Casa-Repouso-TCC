@@ -9,7 +9,7 @@
             <div *ngIf="form.controls['nome']?.invalid && (form.controls['nome']?.dirty || form.controls['nome']?.touched)">
               <small *ngIf="form.get('nome')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
               <small *ngIf="form.get('nome')?.errors?.['maxlength']" class="p-error">Valor máximo 100.</small>
-          </div>
+            </div>
           </div>
           <div class="col-12 xl:col-10 lg:col-10 md:col-10 sm:col-10 flex flex-column">
             <label htmlFor="principioAtivo">Princípio Ativo:</label>
@@ -17,7 +17,7 @@
             <div *ngIf="form.controls['principioAtivo']?.invalid && (form.controls['principioAtivo']?.dirty || form.controls['principioAtivo']?.touched)">
               <small *ngIf="form.get('principioAtivo')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
               <small *ngIf="form.get('principioAtivo')?.errors?.['maxlength']" class="p-error">Valor máximo 255.</small>
-          </div>
+            </div>
           </div>
           <div class="col-12 xl:col-10 lg:col-10 md:col-10 sm:col-10 flex flex-column">
             <label htmlFor="qtde">Quantidade:</label>
@@ -25,7 +25,7 @@
             <div *ngIf="form.controls['qtde']?.invalid && (form.controls['qtde']?.dirty || form.controls['qtde']?.touched)">
               <small *ngIf="form.get('qtde')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
               <small *ngIf="form.get('qtde')?.errors?.['max']" class="p-error">Valor máximo 2147483647.</small>
-          </div>
+            </div>
           </div>          
         </div>
         <br>
