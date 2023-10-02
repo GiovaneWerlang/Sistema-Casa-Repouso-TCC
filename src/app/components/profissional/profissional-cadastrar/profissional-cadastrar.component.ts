@@ -9,16 +9,18 @@ import { EspecialidadeService } from '../../especialidade/service/especialidade.
 import { Especialidade } from '../../especialidade/modelo/especialidade';
 import { Estados } from 'src/app/shared/estados/estados';
 import { Paises } from 'src/app/shared/paises/paises'
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-profissional-cadastrar',
   templateUrl: './profissional-cadastrar.component.html',
   styleUrls: ['./profissional-cadastrar.component.css'],
-  providers: [ProfissionalService]
+  providers: [ProfissionalService, MessageService]
 })
 export class ProfissionalCadastrarComponent implements OnInit {
 
   form: FormGroup;
+  formEndereco: FormGroup;
   opcoesSituacao:LabelValue[] = Situacoes;
   opcoesFuncao:LabelValue[] = Funcoes;
   opcoesEspecialidade:LabelValue[] = [];
@@ -30,29 +32,31 @@ export class ProfissionalCadastrarComponent implements OnInit {
     private profissionalService: ProfissionalService,
     private especialidadeService: EspecialidadeService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
+    this.formEndereco = this.formBuilder.group({
+      logradouro: ['', [Validators.required, Validators.maxLength(150)]],
+      numero: ['', [Validators.required, Validators.maxLength(50)]],
+      bairro: ['', [Validators.required, Validators.maxLength(100)]],
+      municipio: ['', [Validators.required, Validators.maxLength(150)]],
+      cep: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
+      estado: ['Acre', Validators.required],
+      pais: ['Brasil', Validators.required]
+    });
     this.form = this.formBuilder.group({
       id: [null],
-      nome: ['', Validators.required],
-      idade: [0, Validators.required],
+      nome: ['', [Validators.required, Validators.maxLength(150)]],
+      idade: [0, [Validators.required, Validators.min(1), Validators.max(140)]],
       cpf: ['', Validators.required],
-      telefone: ['', Validators.required],
-      email: ['', Validators.required],
-      salario: [0, Validators.required],
+      telefone: ['', [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+      email: ['', [Validators.required, Validators.maxLength(100)]],
+      salario: [0, [Validators.required, Validators.min(0)]],
       dataAdmissao: [new Date, Validators.required],
       funcao: ['CUIDADOR',Validators.required],
       situacao: ['ATIVO',Validators.required],
       especialidade: [null, Validators.required],
-      endereco: this.formBuilder.group({
-      logradouro: ['', Validators.required],
-      numero: ['', Validators.required],
-      bairro: ['', Validators.required],
-      municipio: ['', Validators.required],
-      cep: ['', Validators.required],
-      estado: ['', Validators.required],
-      pais: ['Brasil', Validators.required]
-      })
+      endereco: this.formEndereco
     });
     this.carregarOpcoesEspecialidade();
   }
@@ -67,12 +71,17 @@ export class ProfissionalCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    this.profissionalService.save(this.form.getRawValue()).subscribe((res) => {
-      if(res){
-        this.router.navigate(['/profissional/listar']);
-      }
-    })
-    this.limpar();
+    if(this.form.valid){
+      this.profissionalService.save(this.form.getRawValue()).subscribe((res) => {
+        if(res){
+          this.router.navigate(['/profissional/listar']);
+        }
+      })
+      this.limpar();
+    }else{
+      this.form.markAllAsTouched();
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+    }
   }
 
   limpar() {

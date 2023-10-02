@@ -6,22 +6,43 @@
                 <div class="col-12 flex flex-column">
                     <label htmlFor="nome">Nome:</label>
                     <input type="text" pInputText name="nome" formControlName="nome" />
+                    <div *ngIf="form.controls['nome']?.invalid && (form.controls['nome']?.dirty || form.controls['nome']?.touched)">
+                        <small *ngIf="form.get('nome')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('nome')?.errors?.['maxlength']" class="p-error">Tamanho máximo 150 caracteres.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="cpf">Cpf:</label>
-                    <input type="text" pInputText name="cpf" formControlName="cpf" />
+                    <p-inputMask mask="999.999.999-99" [unmask]="true" pKeyFilter="int" name="cpf" formControlName="cpf" />
+                    <div *ngIf="form.controls['cpf']?.invalid && (form.controls['cpf']?.dirty || form.controls['cpf']?.touched)">
+                        <small *ngIf="form.get('cpf')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="idade">Idade:</label>
                     <input type="number" pInputText pKeyFilter="int" name="idade" formControlName="idade" />
+                    <div *ngIf="form.controls['idade']?.invalid && (form.controls['idade']?.dirty || form.controls['idade']?.touched)">
+                        <small *ngIf="form.get('idade')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('idade')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>
+                        <small *ngIf="form.get('idade')?.errors?.['max']" class="p-error">Valor máximo 140.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="salario">Salário:</label>
                     <input type="text" pInputText pKeyFilter="money" name="salario" formControlName="salario" />
+                    <div *ngIf="form.controls['salario']?.invalid && (form.controls['salario']?.dirty || form.controls['salario']?.touched)">
+                        <small *ngIf="form.get('salario')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('salario')?.errors?.['min']" class="p-error">Valor mínimo 0.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="telefone">Telefone:</label>
                     <input type="text" pInputText name="telefone" formControlName="telefone" />
+                    <div *ngIf="form.controls['telefone']?.invalid && (form.controls['telefone']?.dirty || form.controls['telefone']?.touched)">
+                        <small *ngIf="form.get('telefone')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('telefone')?.errors?.['minlength']" class="p-error">Tamanho mínimo 10 caracteres.</small>
+                        <small *ngIf="form.get('telefone')?.errors?.['maxlength']" class="p-error">Tamanho máximo 11 caracteres.</small>
+                    </div>
                 </div>
                 <div class="col-4 flex flex-column">
                     <label htmlFor="dataAdmissao">Data Admissão:</label>
@@ -30,18 +51,31 @@
                 <div class="col-12 flex flex-column">
                     <label htmlFor="email">E-mail:</label>
                     <input type="email" pInputText name="email" formControlName="email" />
+                    <div *ngIf="form.controls['email']?.invalid && (form.controls['email']?.dirty || form.controls['email']?.touched)">
+                        <small *ngIf="form.get('email')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('email')?.errors?.['maxlength']" class="p-error">Tamanho máximo 100 caracteres.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="funcao">Função:</label>
                     <p-dropdown [options]="opcoesFuncao" name="funcao" formControlName="funcao" />
+                    <div *ngIf="form.controls['funcao']?.invalid && (form.controls['funcao']?.dirty || form.controls['funcao']?.touched)">
+                        <small *ngIf="form.get('funcao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="situacao">Situação:</label>
                     <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao" />
+                    <div *ngIf="form.controls['situacao']?.invalid && (form.controls['situacao']?.dirty || form.controls['situacao']?.touched)">
+                        <small *ngIf="form.get('situacao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="especialidade">Especialidade:</label>
                     <p-dropdown [options]="opcoesEspecialidade" name="especialidade" formControlName="especialidade" [filter]="true"/>
+                    <div *ngIf="form.controls['especialidade']?.invalid && (form.controls['especialidade']?.dirty || form.controls['especialidade']?.touched)">
+                        <small *ngIf="form.get('especialidade')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>
 
                 <div formGroupName="endereco">
@@ -50,30 +84,57 @@
                         <div class="col-12 flex flex-column">
                             <label htmlFor="logradouro">Logradouro:</label>
                             <input type="text" pInputText name="logradouro" formControlName="logradouro" />
+                            <div *ngIf="formEndereco.controls['logradouro']?.invalid && (formEndereco.controls['logradouro']?.dirty || formEndereco.controls['logradouro']?.touched)">
+                                <small *ngIf="formEndereco.get('logradouro')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                                <small *ngIf="formEndereco.get('logradouro')?.errors?.['maxlength']" class="p-error">Tamanho máximo 150 caracteres.</small>
+                            </div>
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="bairro">Bairro:</label>
                             <input type="text" pInputText name="bairro" formControlName="bairro" />
+                            <div *ngIf="formEndereco.controls['bairro']?.invalid && (formEndereco.controls['bairro']?.dirty || formEndereco.controls['bairro']?.touched)">
+                                <small *ngIf="formEndereco.get('bairro')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                                <small *ngIf="formEndereco.get('bairro')?.errors?.['maxlength']" class="p-error">Tamanho máximo 100 caracteres.</small>
+                            </div>
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="municipio">Município:</label>
                             <input type="text" pInputText name="municipio" formControlName="municipio" />
+                            <div *ngIf="formEndereco.controls['municipio']?.invalid && (formEndereco.controls['municipio']?.dirty || formEndereco.controls['municipio']?.touched)">
+                                <small *ngIf="formEndereco.get('municipio')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                                <small *ngIf="formEndereco.get('municipio')?.errors?.['maxlength']" class="p-error">Tamanho máximo 150 caracteres.</small>
+                            </div>
                         </div>
                         <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-12 flex flex-column">
                             <label htmlFor="numero">Número:</label>
                             <input type="text" pInputText name="numero" formControlName="numero" />
+                            <div *ngIf="formEndereco.controls['numero']?.invalid && (formEndereco.controls['numero']?.dirty || formEndereco.controls['numero']?.touched)">
+                                <small *ngIf="formEndereco.get('numero')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                                <small *ngIf="formEndereco.get('numero')?.errors?.['maxlength']" class="p-error">Tamanho máximo 50 caracteres.</small>
+                            </div>
                         </div>
                         <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-12 flex flex-column">
                             <span htmlFor="cep">Cep:</span>
-                            <p-inputMask mask="99999-999" pKeyFilter="int" name="cep" formControlName="cep" />
+                            <p-inputMask mask="99999-999" [unmask]="true" pKeyFilter="int" name="cep" formControlName="cep" />
+                            <div *ngIf="formEndereco.controls['cep']?.invalid && (formEndereco.controls['cep']?.dirty || formEndereco.controls['cep']?.touched)">
+                                <small *ngIf="formEndereco.get('cep')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                                <small *ngIf="formEndereco.get('cep')?.errors?.['minlength']" class="p-error">Tamanho mínimo 8 caracteres.</small>
+                                <small *ngIf="formEndereco.get('cep')?.errors?.['maxlength']" class="p-error">Tamanho máximo 8 caracteres.</small>
+                            </div>
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="estado">Estado:</label>
                             <p-dropdown [options]="opcoesEstados" name="estado" formControlName="estado" [filter]="true"/>
+                            <div *ngIf="formEndereco.controls['estado']?.invalid && (formEndereco.controls['estado']?.dirty || formEndereco.controls['estado']?.touched)">
+                                <small *ngIf="formEndereco.get('estado')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                            </div>
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="pais">País:</label>
                             <p-dropdown [options]="opcoesPaises" name="pais" formControlName="pais" [filter]="true"/>
+                            <div *ngIf="formEndereco.controls['pais']?.invalid && (formEndereco.controls['pais']?.dirty || formEndereco.controls['pais']?.touched)">
+                                <small *ngIf="formEndereco.get('pais')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,4 +151,5 @@
             [style]="{'float': 'left'}"
             styleClass="p-button-rounded p-button-info p-button-text p-button-lg"></p-button>
     </div>
+    <p-toast></p-toast>
 </div>
