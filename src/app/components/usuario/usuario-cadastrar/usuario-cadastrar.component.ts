@@ -53,8 +53,8 @@ export class UsuarioCadastrarComponent implements OnInit {
       })
       this.limpar();
     }else{
-      this.form.get('login')?.markAsTouched();
-      this.form.get('senha')?.markAsTouched();
+      this.form.markAllAsTouched();
+      this.form.get('logradouro')?.markAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
   }
