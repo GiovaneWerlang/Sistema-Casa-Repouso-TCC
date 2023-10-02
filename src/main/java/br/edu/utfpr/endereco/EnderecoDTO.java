@@ -30,7 +30,8 @@ public class EnderecoDTO {
     @NotBlank(message = "Não pode ser vazio")
     private String municipio;
 
-    @Size(max = 9, message = "Não pode ter mais de 9 caracteres")
+    @Size(max = 8, message = "Não pode ter mais de 8 caracteres")
+    @Size(min = 8, message = "Não pode ter menos de 8 caracteres")
     @NotNull(message = "Não pode ser nulo")
     @NotBlank(message = "Não pode ser vazio")
     private String cep;

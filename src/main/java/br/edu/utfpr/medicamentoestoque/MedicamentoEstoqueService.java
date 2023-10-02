@@ -4,6 +4,7 @@ import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.Copy;
 import br.edu.utfpr.utils.PageDTO;
+import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,7 +28,7 @@ public class MedicamentoEstoqueService implements CrudService<MedicamentoEstoque
     }
 
     public Response getAll(){
-        List<MedicamentoEstoqueModel> lista = repository.listAll();
+        List<MedicamentoEstoqueModel> lista = repository.listAll(Sort.by("id"));
         if(lista.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

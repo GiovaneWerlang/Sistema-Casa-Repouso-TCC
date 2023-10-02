@@ -7,6 +7,7 @@ import br.edu.utfpr.endereco.EnderecoRepository;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.Copy;
 import br.edu.utfpr.utils.PageDTO;
+import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -32,7 +33,7 @@ public class ResidenteService implements CrudService<ResidenteDTO> {
     }
 
     public Response getAll(){
-        List<ResidenteModel> lista = repository.listAll();
+        List<ResidenteModel> lista = repository.listAll(Sort.by("id"));
         if(lista.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }

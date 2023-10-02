@@ -23,6 +23,7 @@ public class ResidenteDTO {
     private int idade;
 
     @Size(max=11, message = "Não pode ter mais de 11 dígitos")
+    @Size(min=11, message = "Não pode ter menos de 11 dígitos")
     @NotNull(message = "Não pode ser nulo")
     @NotBlank(message = "Não pode ser vazio")
     @CPF(message = "Cpf deve ser válido")

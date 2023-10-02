@@ -2,7 +2,6 @@ package br.edu.utfpr.medicamentouso;
 
 import lombok.Data;
 
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -20,7 +19,6 @@ public class MedicamentoUsoDTO {
     @NotNull(message = "Não pode ser nulo")
     private Integer qtdeVezesAoDia;
 
-    @FutureOrPresent(message = "Não pode ser no passado.")
     @NotNull(message = "Não pode ser nulo")
     private LocalDateTime dataHoraInicio;
 
