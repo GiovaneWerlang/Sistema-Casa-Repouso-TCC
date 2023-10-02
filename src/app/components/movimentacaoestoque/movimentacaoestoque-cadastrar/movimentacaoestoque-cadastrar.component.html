@@ -6,14 +6,25 @@
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtde">Quantidade:</label>
                     <input type="number" pInputText pKeyFilter="int" name="qtde" formControlName="qtde" />
+                    <div *ngIf="form.controls['qtde']?.invalid && (form.controls['qtde']?.dirty || form.controls['qtde']?.touched)">
+                        <small *ngIf="form.get('qtde')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('qtde')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>
+                        <small *ngIf="form.get('qtde')?.errors?.['max']" class="p-error">Valor máximo 2147483647.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="tipo">Tipo:</label>
-                    <p-dropdown [options]="opcoesTipo" name="tipo" formControlName="tipo" />
+                    <p-dropdown [options]="opcoesTipo" name="tipo" formControlName="tipo" [style]="{'width':'100%'}"/>
+                    <div *ngIf="form.controls['tipo']?.invalid && (form.controls['tipo']?.dirty || form.controls['tipo']?.touched)">
+                        <small *ngIf="form.get('tipo')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="medicamento">Medicamento:</label>
-                    <p-dropdown [options]="opcoesMedicamento" name="medicamento" formControlName="medicamento" [filter]="true"/>
+                    <p-dropdown [options]="opcoesMedicamento" name="medicamento" formControlName="medicamento" [filter]="true" [style]="{'width':'100%'}"/>
+                    <div *ngIf="form.controls['medicamento']?.invalid && (form.controls['medicamento']?.dirty || form.controls['medicamento']?.touched)">
+                        <small *ngIf="form.get('medicamento')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>                
             </div>
             <br>
@@ -28,4 +39,5 @@
             [style]="{'float': 'left'}"
             styleClass="p-button-rounded p-button-info p-button-text p-button-lg"></p-button>
     </div>
+    <p-toast></p-toast>
 </div>
