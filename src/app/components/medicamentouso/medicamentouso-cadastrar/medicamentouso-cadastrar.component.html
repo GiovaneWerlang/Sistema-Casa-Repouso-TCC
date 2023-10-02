@@ -6,32 +6,60 @@
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="intervalo">Intervalo:</label>
                     <input type="number" pInputText pKeyFilter="int" name="intervalo" formControlName="intervalo" />
+                    <div *ngIf="form.controls['intervalo']?.invalid && (form.controls['intervalo']?.dirty || form.controls['intervalo']?.touched)">
+                        <small *ngIf="form.get('intervalo')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('intervalo')?.errors?.['max']" class="p-error">Valor máximo 48.</small>
+                    </div>
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
                     <label htmlFor="dataHoraInicio">DataHora Início:</label>
                     <p-calendar type="text" [showTime]="true" name="dataHoraInicio" formControlName="dataHoraInicio" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
-                  </div>
+                    <div *ngIf="form.controls['dataHoraInicio']?.invalid && (form.controls['dataHoraInicio']?.dirty || form.controls['dataHoraInicio']?.touched)">
+                        <small *ngIf="form.get('dataHoraInicio')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
+                </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtdeVezesAoDia">Vezes ao dia:</label>
                     <input type="number" pInputText pKeyFilter="int" name="qtdeVezesAoDia" formControlName="qtdeVezesAoDia" />
+                    <div *ngIf="form.controls['qtdeVezesAoDia']?.invalid && (form.controls['qtdeVezesAoDia']?.dirty || form.controls['qtdeVezesAoDia']?.touched)">
+                        <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>
+                        <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['max']" class="p-error">Valor máximo 24.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtdeDiasUso">Quantidade de dias:</label>
                     <input type="number" pInputText pKeyFilter="int" name="qtdeDiasUso" formControlName="qtdeDiasUso" />
+                    <div *ngIf="form.controls['qtdeDiasUso']?.invalid && (form.controls['qtdeDiasUso']?.dirty || form.controls['qtdeDiasUso']?.touched)">
+                        <small *ngIf="form.get('qtdeDiasUso')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('qtdeDiasUso')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>
+                        <small *ngIf="form.get('qtdeDiasUso')?.errors?.['max']" class="p-error">Valor máximo 2147483647.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtdeMedicamento">Quantidade de Medicamento:</label>
                     <input type="number" pInputText pKeyFilter="int" name="qtdeMedicamento" formControlName="qtdeMedicamento" />
+                    <div *ngIf="form.controls['qtdeMedicamento']?.invalid && (form.controls['qtdeMedicamento']?.dirty || form.controls['qtdeMedicamento']?.touched)">
+                        <small *ngIf="form.get('qtdeMedicamento')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('qtdeMedicamento')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>
+                        <small *ngIf="form.get('qtdeMedicamento')?.errors?.['max']" class="p-error">Valor máximo 2147483647.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="medicamento">Medicamento:</label>
                     <p-dropdown [options]="opcoesMedicamento" name="medicamento" formControlName="medicamento"
                         [filter]="true" [style]="{'width':'100%'}"/>
+                    <div *ngIf="form.controls['medicamento']?.invalid && (form.controls['medicamento']?.dirty || form.controls['medicamento']?.touched)">
+                        <small *ngIf="form.get('medicamento')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="residente">Residente:</label>
                     <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente"
                         [filter]="true" [style]="{'width':'100%'}"/>
+                    <div *ngIf="form.controls['residente']?.invalid && (form.controls['residente']?.dirty || form.controls['residente']?.touched)">
+                        <small *ngIf="form.get('residente')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
                 </div>
             </div>
             <br>
@@ -46,4 +74,5 @@
             [style]="{'float': 'left'}"
             styleClass="p-button-rounded p-button-info p-button-text p-button-lg"></p-button>
     </div>
+    <p-toast></p-toast>
 </div>
