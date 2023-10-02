@@ -9,11 +9,11 @@
         </div>
         <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
           <label htmlFor="dataHora">DataHora:</label>
-          <p-calendar type="text" [showTime]="true" name="dataHora" formControlName="dataHora" />
+          <p-calendar type="text" [showTime]="true" name="dataHora" formControlName="dataHora" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
         </div>
         <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
           <label htmlFor="situacao">Situação:</label>
-          <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao" />
+          <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao" [style]="{'width':'100%'}"/>
         </div>
       </div>
       <br>

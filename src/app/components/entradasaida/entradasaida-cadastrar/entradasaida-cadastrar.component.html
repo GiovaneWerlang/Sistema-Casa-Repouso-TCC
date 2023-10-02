@@ -9,15 +9,15 @@
           </div>
           <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
             <label htmlFor="dataHoraSaida">DataHora Saida:</label>
-            <p-calendar type="text" [showTime]="true" name="dataHoraSaida" formControlName="dataHoraSaida" />
+            <p-calendar type="text" [showTime]="true" name="dataHoraSaida" formControlName="dataHoraSaida" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
           </div>
           <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
             <label htmlFor="dataHoraEntrada">DataHora Entrada:</label>
-            <p-calendar type="text" [showTime]="true" name="dataHoraEntrada" formControlName="dataHoraEntrada" />
+            <p-calendar type="text" [showTime]="true" name="dataHoraEntrada" formControlName="dataHoraEntrada" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
           </div>
           <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
             <label htmlFor="residente">Residente:</label>
-            <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente" />
+            <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente" [style]="{'width':'100%'}"/>
           </div>
         </div>
         <br>

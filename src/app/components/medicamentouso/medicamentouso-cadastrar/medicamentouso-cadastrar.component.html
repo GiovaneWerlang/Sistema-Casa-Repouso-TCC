@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
                     <label htmlFor="dataHoraInicio">DataHora Início:</label>
-                    <p-calendar type="text" [showTime]="true" name="dataHoraInicio" formControlName="dataHoraInicio" />
+                    <p-calendar type="text" [showTime]="true" name="dataHoraInicio" formControlName="dataHoraInicio" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                   </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtdeVezesAoDia">Vezes ao dia:</label>
@@ -26,12 +26,12 @@
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="medicamento">Medicamento:</label>
                     <p-dropdown [options]="opcoesMedicamento" name="medicamento" formControlName="medicamento"
-                        [filter]="true" />
+                        [filter]="true" [style]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="residente">Residente:</label>
                     <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente"
-                        [filter]="true" />
+                        [filter]="true" [style]="{'width':'100%'}"/>
                 </div>
             </div>
             <br>

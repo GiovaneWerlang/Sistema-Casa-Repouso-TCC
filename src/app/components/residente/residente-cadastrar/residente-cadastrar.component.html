@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="cpf">Cpf:</label>
-                    <p-inputMask mask="999.999.999-99" [unmask]="true" pKeyFilter="int" name="cpf" formControlName="cpf" />
+                    <p-inputMask mask="999.999.999-99" [unmask]="true" pKeyFilter="int" name="cpf" formControlName="cpf"  [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['cpf']?.invalid && (form.controls['cpf']?.dirty || form.controls['cpf']?.touched)">
                         <small *ngIf="form.get('cpf')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
@@ -38,14 +38,14 @@
                 </div>
                 <div class="col-4 flex flex-column">
                     <label htmlFor="dataHoraIngresso">DataHora Ingresso:</label>
-                    <p-calendar type="text" name="dataHoraIngresso" [showTime]="true" formControlName="dataHoraIngresso" />
+                    <p-calendar type="text" name="dataHoraIngresso" [showTime]="true" formControlName="dataHoraIngresso" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['dataHoraIngresso']?.invalid && (form.controls['dataHoraIngresso']?.dirty || form.controls['dataHoraIngresso']?.touched)">
                         <small *ngIf="form.get('dataHoraIngresso')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-4 flex flex-column">
                     <label htmlFor="dataHoraPrevisaoSaida">DataHora Previsão de Saída:</label>
-                    <p-calendar type="text" name="dataHoraPrevisaoSaida" [showTime]="true" formControlName="dataHoraPrevisaoSaida" />
+                    <p-calendar type="text" name="dataHoraPrevisaoSaida" [showTime]="true" formControlName="dataHoraPrevisaoSaida" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 flex flex-column">
                     <label htmlFor="email">E-mail:</label>
@@ -57,14 +57,14 @@
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="tipoEstadia">Estadia:</label>
-                    <p-dropdown [options]="tiposEstadia" name="tipoEstadia" formControlName="tipoEstadia" />
+                    <p-dropdown [options]="tiposEstadia" name="tipoEstadia" formControlName="tipoEstadia" [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['tipoEstadia']?.invalid && (form.controls['tipoEstadia']?.dirty || form.controls['tipoEstadia']?.touched)">
                         <small *ngIf="form.get('tipoEstadia')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="situacao">Situação:</label>
-                    <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao" />
+                    <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao" [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['situacao']?.invalid && (form.controls['situacao']?.dirty || form.controls['situacao']?.touched)">
                         <small *ngIf="form.get('situacao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-12 flex flex-column">
                             <span htmlFor="cep">Cep:</span>
-                            <p-inputMask mask="99999-999" [unmask]="true" pKeyFilter="int" name="cep" formControlName="cep" />
+                            <p-inputMask mask="99999-999" [unmask]="true" pKeyFilter="int" name="cep" formControlName="cep" [style]="{'width':'100%'}"/>
                             <div *ngIf="formEndereco.controls['cep']?.invalid && (formEndereco.controls['cep']?.dirty || formEndereco.controls['cep']?.touched)">
                                 <small *ngIf="formEndereco.get('cep')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                                 <small *ngIf="formEndereco.get('cep')?.errors?.['minlength']" class="p-error">Tamanho mínimo 8 caracteres.</small>
@@ -116,14 +116,14 @@
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="estado">Estado:</label>
-                            <p-dropdown [options]="opcoesEstados" name="estado" formControlName="estado" [filter]="true"/>
+                            <p-dropdown [options]="opcoesEstados" name="estado" formControlName="estado" [filter]="true" [style]="{'width':'100%'}"/>
                             <div *ngIf="formEndereco.controls['estado']?.invalid && (formEndereco.controls['estado']?.dirty || formEndereco.controls['estado']?.touched)">
                                 <small *ngIf="formEndereco.get('estado')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                             </div>
                         </div>
                         <div class="col-12 flex flex-column">
                             <label htmlFor="pais">País:</label>
-                            <p-dropdown [options]="opcoesPaises" name="pais" formControlName="pais" [filter]="true"/>
+                            <p-dropdown [options]="opcoesPaises" name="pais" formControlName="pais" [filter]="true" [style]="{'width':'100%'}"/>
                             <div *ngIf="formEndereco.controls['pais']?.invalid && (formEndereco.controls['pais']?.dirty || formEndereco.controls['pais']?.touched)">
                                 <small *ngIf="formEndereco.get('pais')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                             </div>

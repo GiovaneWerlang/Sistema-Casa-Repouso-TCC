@@ -13,19 +13,19 @@
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
                     <label htmlFor="dataHora">DataHora:</label>
-                    <p-calendar type="text" [showTime]="true" name="dataHora" formControlName="dataHora" />
+                    <p-calendar type="text" [showTime]="true" name="dataHora" formControlName="dataHora" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="especialidade">Especialidade:</label>
-                    <p-dropdown [options]="opcoesEspecialidade" name="especialidade" formControlName="especialidade" [filter]="true" />
+                    <p-dropdown [options]="opcoesEspecialidade" name="especialidade" formControlName="especialidade" [filter]="true" [style]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="profissional">Profissional:</label>
-                    <p-dropdown [options]="opcoesProfissional" name="profissional" formControlName="profissional" [filter]="true"/>
+                    <p-dropdown [options]="opcoesProfissional" name="profissional" formControlName="profissional" [filter]="true" [style]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="residente">Residente:</label>
-                    <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente" [filter]="true" />
+                    <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente" [filter]="true" [style]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
                     <label htmlFor="laudo">Laudo:</label>
