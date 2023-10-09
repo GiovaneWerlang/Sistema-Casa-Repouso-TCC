@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { ResidenteService } from '../service/residente.service';
 import { TipoEstadia } from 'src/app/shared/tipoestadia/tipoestadia';
@@ -12,11 +13,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-residente-cadastrar',
   templateUrl: './residente-cadastrar.component.html',
   styleUrls: ['./residente-cadastrar.component.css'],
-  providers: [ResidenteService]
+  providers: [ResidenteService, MessageService]
 })
 export class ResidenteCadastrarComponent implements OnInit {
 
   form: FormGroup;
+  formEndereco: FormGroup;
   opcoesSituacao:LabelValue[] = Situacoes;
   tiposEstadia:LabelValue[] = TipoEstadia;
   opcoesEstados:string[] = Estados;
@@ -26,28 +28,30 @@ export class ResidenteCadastrarComponent implements OnInit {
     private route: ActivatedRoute,
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
+    this.formEndereco = this.formBuilder.group({
+      logradouro: ['', [Validators.required, Validators.maxLength(150)]],
+      numero: ['', [Validators.required, Validators.maxLength(50)]],
+      bairro: ['', [Validators.required, Validators.maxLength(100)]],
+      municipio: ['', [Validators.required, Validators.maxLength(150)]],
+      cep: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
+      estado: ['Acre', Validators.required],
+      pais: ['Brasil', Validators.required]
+    });
     this.form = this.formBuilder.group({
       id: [null],
-      nome: ['', Validators.required],
-      idade: [0, Validators.required],
+      nome: ['', [Validators.required, Validators.maxLength(150)]],
+      idade: [0, [Validators.required, Validators.min(1), Validators.max(140)]],
       cpf: ['', Validators.required],
-      telefone: ['', Validators.required],
-      email: ['', Validators.required],
+      telefone: ['', [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
+      email: ['', [Validators.required, Validators.maxLength(100)]],
       tipoEstadia: ['PADRAO',Validators.required],
       dataHoraIngresso: [new Date, Validators.required],
       dataHoraPrevisaoSaida: [null],
       situacao: ['ATIVO',Validators.required],
-      endereco: this.formBuilder.group({
-      logradouro: ['', Validators.required],
-      numero: ['', Validators.required],
-      bairro: ['', Validators.required],
-      municipio: ['', Validators.required],
-      cep: ['', Validators.required],
-      estado: ['', Validators.required],
-      pais: ['Brasil', Validators.required]
-      })
+      endereco: this.formEndereco
     });
   }
 
@@ -61,12 +65,17 @@ export class ResidenteCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    this.residenteService.save(this.form.getRawValue()).subscribe((res) => {
-      if(res){
-        this.router.navigate(['/residente/listar']);
-      }
-    })
-    this.limpar();
+    if(this.form.valid){
+      this.residenteService.save(this.form.getRawValue()).subscribe((res) => {
+        if(res){
+          this.router.navigate(['/residente/listar']);
+        }
+      })
+      this.limpar();
+    }else{
+      this.form.markAllAsTouched();
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+    }
   }
 
   limpar() {

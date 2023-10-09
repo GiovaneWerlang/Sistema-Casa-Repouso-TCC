@@ -7,12 +7,13 @@ import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MedicamentoEstoque } from '../../medicamentoestoque/modelo/medicamentoestoque';
 import { Residente } from '../../residente/modelo/residente';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-medicamentouso-cadastrar',
   templateUrl: './medicamentouso-cadastrar.component.html',
   styleUrls: ['./medicamentouso-cadastrar.component.css'],
-  providers: [MedicamentousoService]
+  providers: [MedicamentousoService, MessageService]
 })
 export class MedicamentousoCadastrarComponent implements OnInit {
 
@@ -26,17 +27,18 @@ export class MedicamentousoCadastrarComponent implements OnInit {
     private medicamentoEstoqueService: MedicamentoestoqueService,
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
-      intervalo: [null, Validators.required],
-      qtdeVezesAoDia: [null, Validators.required],
-      dataHoraInicio: [null, Validators.required],
-      qtdeDiasUso: [null, Validators.required],
-      qtdeMedicamento: [null, Validators.required],
+      intervalo: [null, [Validators.required, Validators.max(48)]],
+      qtdeVezesAoDia: [null, [Validators.required, Validators.min(1), Validators.max(24)]],
+      dataHoraInicio: [null, [Validators.required]],
+      qtdeDiasUso: [null, [Validators.required, Validators.min(1), Validators.max(2147483647)]],
+      qtdeMedicamento: [null, [Validators.required, Validators.min(1), Validators.max(2147483647)]],
       residente: [null, Validators.required],
-      medicamento: [null, Validators.required],   
+      medicamento: [null, Validators.required],
     });
     this.carregarOpcoesMedicamento();
     this.carregarOpcoesResidente();
@@ -52,12 +54,17 @@ export class MedicamentousoCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    this.medicamentoUsoService.save(this.form.getRawValue()).subscribe((res) => {
-      if(res){
-        this.router.navigate(['/medicamentouso/listar']);
-      }
-    })
-    this.limpar();
+    if(this.form.valid){
+      this.medicamentoUsoService.save(this.form.getRawValue()).subscribe((res) => {
+        if(res){
+          this.router.navigate(['/medicamentouso/listar']);
+        }
+      })
+      this.limpar();
+    }else{
+      this.form.markAllAsTouched();
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+    }
   }
 
   limpar() {

@@ -9,12 +9,13 @@ import { EspecialidadeService } from '../../especialidade/service/especialidade.
 import { Especialidade } from '../../especialidade/modelo/especialidade';
 import { Profissional } from '../../profissional/modelo/profissional';
 import { Residente } from '../../residente/modelo/residente';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-exame-cadastrar',
   templateUrl: './exame-cadastrar.component.html',
   styleUrls: ['./exame-cadastrar.component.css'],
-  providers: [ExameService]
+  providers: [ExameService, MessageService]
 })
 export class ExameCadastrarComponent implements OnInit {
 
@@ -30,14 +31,15 @@ export class ExameCadastrarComponent implements OnInit {
     private especialidadeService: EspecialidadeService,
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
-      nome: ['', Validators.required],
+      nome: ['', [Validators.required, Validators.maxLength(255)]],
       dataHora: [null, Validators.required],
-      local: ['', Validators.required],
-      laudo: [''],
+      local: ['', [Validators.required, Validators.maxLength(100)]],
+      laudo: ['', Validators.maxLength(255)],
       especialidade: [null, Validators.required],
       profissional: [null, Validators.required],
       residente: [null, Validators.required]
@@ -57,12 +59,17 @@ export class ExameCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    this.exameService.save(this.form.getRawValue()).subscribe((res) => {
-      if(res){
-        this.router.navigate(['/exame/listar']);
-      }
-    })
-    this.limpar();
+    if(this.form.valid){
+      this.exameService.save(this.form.getRawValue()).subscribe((res) => {
+        if(res){
+          this.router.navigate(['/exame/listar']);
+        }
+      })
+      this.limpar();
+    }else{
+      this.form.markAllAsTouched();
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+    }
   }
 
   limpar() {

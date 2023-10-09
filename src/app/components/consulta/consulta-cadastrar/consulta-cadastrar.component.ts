@@ -9,12 +9,13 @@ import { ResidenteService } from '../../residente/service/residente.service';
 import { Especialidade } from '../../especialidade/modelo/especialidade';
 import { Profissional } from '../../profissional/modelo/profissional';
 import { Residente } from '../../residente/modelo/residente';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-consulta-cadastrar',
   templateUrl: './consulta-cadastrar.component.html',
   styleUrls: ['./consulta-cadastrar.component.css'],
-  providers: [ConsultaService]
+  providers: [ConsultaService, MessageService]
 })
 export class ConsultaCadastrarComponent {
   form: FormGroup;
@@ -29,14 +30,15 @@ export class ConsultaCadastrarComponent {
     private especialidadeService: EspecialidadeService,
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
-      descricao: ['', Validators.required],
+      descricao: ['', [Validators.required, Validators.maxLength(255)]],
       dataHora: [null, Validators.required],
-      local: ['', Validators.required],
-      laudo: [''],
+      local: ['', [Validators.required, Validators.maxLength(100)]],
+      prescricao: ['', Validators.maxLength(255)],
       especialidade: [null, Validators.required],
       profissional: [null, Validators.required],
       residente: [null, Validators.required]
@@ -56,12 +58,17 @@ export class ConsultaCadastrarComponent {
   }
 
   salvar() {
-    this.consultaService.save(this.form.getRawValue()).subscribe((res) => {
-      if(res){
-        this.router.navigate(['/consulta/listar']);
-      }
-    })
-    this.limpar();
+    if(this.form.valid){
+      this.consultaService.save(this.form.getRawValue()).subscribe((res) => {
+        if(res){
+          this.router.navigate(['/consulta/listar']);
+        }
+      })
+      this.limpar();
+    }else{
+      this.form.markAllAsTouched();
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+    }
   }
 
   limpar() {

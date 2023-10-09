@@ -32,6 +32,7 @@ import { ButtonModule } from 'primeng/button';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastModule } from 'primeng/toast';
 
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
@@ -104,6 +105,7 @@ import { MedicamentousoCadastrarComponent } from './components/medicamentouso/me
     KeyFilterModule,
     InputMaskModule,
     InputTextareaModule,
+    ToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
