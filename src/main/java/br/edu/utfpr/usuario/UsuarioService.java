@@ -13,6 +13,10 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -119,7 +123,7 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-    public Response getToken(String login, String senha) {
+    public Response getDadosUsuario(String login, String senha) {
         UsuarioModel model = repository.findByLogin(login);
 
         if(model != null){
@@ -127,13 +131,21 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             }
             Security security = new Security();
-
-            return Response.ok(
+            Instant instant = Instant.now().plus(7, ChronoUnit.DAYS);
+            UsuarioDados usuarioDados = new UsuarioDados(
+                    model.getProfissional().getId(),
+                    model.getProfissional().getNome(),
                     security.token(
                             model.getProfissional().getFuncao(),
                             model.getProfissional().getNome(),
-                            String.valueOf(model.getProfissional().getId())
-                    )
+                            String.valueOf(model.getProfissional().getId()),
+                            instant
+                    ),
+                    model.getProfissional().getFuncao(),
+                    LocalDateTime.ofInstant(instant, ZoneOffset.UTC)
+            );
+            return Response.ok(
+                usuarioDados
             ).build();
         }
 
