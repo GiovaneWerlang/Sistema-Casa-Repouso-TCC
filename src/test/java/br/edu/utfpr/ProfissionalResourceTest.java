@@ -81,7 +81,7 @@ public class ProfissionalResourceTest {
         enderecoModel.setLogradouro("Teste");
         enderecoModel.setBairro("Teste");
         enderecoModel.setNumero("123");
-        enderecoModel.setCep("12345-678");
+        enderecoModel.setCep("12345678");
         enderecoModel.setMunicipio("Teste");
         enderecoModel.setEstado("Teste");
         enderecoModel.setPais("Teste");
@@ -159,7 +159,7 @@ public class ProfissionalResourceTest {
         enderecoModel.setLogradouro("Teste");
         enderecoModel.setBairro("Teste");
         enderecoModel.setNumero("123");
-        enderecoModel.setCep("12345-678");
+        enderecoModel.setCep("12345678");
         enderecoModel.setMunicipio("Teste");
         enderecoModel.setEstado("Teste");
         enderecoModel.setPais("Teste");

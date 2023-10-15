@@ -49,7 +49,7 @@ public class EnderecoResourceTest {
         enderecoDTO.setLogradouro("Teste");
         enderecoDTO.setBairro("Teste");
         enderecoDTO.setNumero("123");
-        enderecoDTO.setCep("12345-678");
+        enderecoDTO.setCep("12345678");
         enderecoDTO.setMunicipio("Teste");
         enderecoDTO.setEstado("Teste");
         enderecoDTO.setPais("Teste");
@@ -101,7 +101,7 @@ public class EnderecoResourceTest {
         enderecoDTO.setLogradouro("Teste");
         enderecoDTO.setBairro("Teste");
         enderecoDTO.setNumero("123");
-        enderecoDTO.setCep("12345-678");
+        enderecoDTO.setCep("12345678");
         enderecoDTO.setMunicipio("Teste");
         enderecoDTO.setEstado("Teste");
         enderecoDTO.setPais("Teste");
