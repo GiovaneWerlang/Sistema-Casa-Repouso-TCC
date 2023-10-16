@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { UsuarioService } from '../usuario/service/usuario.service';
 import { Router } from '@angular/router';
+import { AutenticacaoService } from './service/autenticacao.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [UsuarioService, MessageService]
+  providers: [AutenticacaoService, MessageService]
 })
 export class LoginComponent {
   form: FormGroup;
@@ -16,7 +16,7 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private usuarioService: UsuarioService,
+    private autenticacaoService: AutenticacaoService,
     private router: Router,
   ) {
     this.form = this.formBuilder.group({
@@ -27,7 +27,7 @@ export class LoginComponent {
 
   login() {
     if (this.form.valid) {
-      this.usuarioService.login({ login: this.form.get('login')?.value, senha: this.form.get('senha')?.value }).subscribe(
+      this.autenticacaoService.login({ login: this.form.get('login')?.value, senha: this.form.get('senha')?.value }).subscribe(
         (res) => {
           localStorage.setItem('dadosUsuario', res);
           this.router.navigate(['/home']);
