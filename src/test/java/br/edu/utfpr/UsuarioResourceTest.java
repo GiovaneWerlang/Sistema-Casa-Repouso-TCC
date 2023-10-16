@@ -26,9 +26,6 @@ public class UsuarioResourceTest {
     @TestHTTPResource("/usuario")
     URL apiURL;
 
-    @TestHTTPResource("/usuario/login")
-    URL loginURL;
-
     @TestHTTPResource("/usuario/page/0/1")
     URL pageURL;
 
@@ -94,63 +91,6 @@ public class UsuarioResourceTest {
 
     @Test
     @Order(2)
-    @DisplayName("Deve logar usuário com sucesso.")
-    public void loginUsuarioTest() throws SQLException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setLogin("Teste");
-        usuarioDTO.setSenha("123456");
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body(usuarioDTO)
-                .when()
-                .post(loginURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 200, response.getStatusCode());
-    }
-
-    @Test
-    @Order(3)
-    @DisplayName("Deve falhar logar usuário com senha incorreta.")
-    public void loginUsuarioSenhaIncorretaTest() throws SQLException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setLogin("Teste");
-        usuarioDTO.setSenha("asdfghj");
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body(usuarioDTO)
-                .when()
-                .post(loginURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 401, response.getStatusCode());
-    }
-
-    @Test
-    @Order(4)
-    @DisplayName("Deve falhar logar usuário não encontrado.")
-    public void loginUsuarioNaoEncontradoTest() throws SQLException {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setLogin("asdfjj");
-        usuarioDTO.setSenha("asdfghj");
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body(usuarioDTO)
-                .when()
-                .post(loginURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 404, response.getStatusCode());
-    }
-
-    @Test
-    @Order(5)
     @DisplayName("Deve falhar ao criar usuario.")
     public void createUsuarioValidationErrorTest(){
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -172,7 +112,7 @@ public class UsuarioResourceTest {
     }
 
     @Test
-    @Order(6)
+    @Order(3)
     @DisplayName("Deve falhar ao criar usuário com login já existente.")
     public void createUsuarioLoginJaExisteTest() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -191,7 +131,7 @@ public class UsuarioResourceTest {
         assertEquals( 409, response.getStatusCode());
     }
 
-    @Order(7)
+    @Order(4)
     @Test
     @DisplayName("Deve atualizar usuario com sucesso.")
     public void updateUsuarioTest(){
@@ -212,7 +152,7 @@ public class UsuarioResourceTest {
         assertEquals(201, response.getStatusCode());
     }
 
-    @Order(8)
+    @Order(5)
     @Test
     @DisplayName("Deve falhar ao atualizar usuario.")
     public void updateUsuarioValidationErrorTest(){
@@ -236,7 +176,7 @@ public class UsuarioResourceTest {
     }
 
     @Test
-    @Order(9)
+    @Order(6)
     @DisplayName("Deve falhar ao atualizar usuário com login já existente.")
     public void updateUsuarioLoginJaExisteTest() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -255,7 +195,7 @@ public class UsuarioResourceTest {
         assertEquals( 409, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(7)
     @Test
     @DisplayName("Deve buscar usuario por id com sucesso.")
     public void getByIdUsuarioTest(){
@@ -271,7 +211,7 @@ public class UsuarioResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(11)
+    @Order(8)
     @Test
     @DisplayName("Deve falhar ao buscar usuario por id.")
     public void getByIdUsuarioValidationErrorTest(){
@@ -287,7 +227,7 @@ public class UsuarioResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(12)
+    @Order(9)
     @Test
     @DisplayName("Deve buscar todos os usuarios com sucesso.")
     public void getAllUsuarioTest(){
@@ -303,7 +243,7 @@ public class UsuarioResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(12)
+    @Order(10)
     @Test
     @DisplayName("Deve buscar os usuarios paginados com sucesso.")
     public void pageUsuarioTest(){
@@ -319,7 +259,7 @@ public class UsuarioResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(14)
+    @Order(11)
     @Test
     @DisplayName("Deve deletar por id a usuario com sucesso.")
     public void deleteUsuarioTest(){
@@ -335,7 +275,7 @@ public class UsuarioResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(15)
+    @Order(12)
     @Test
     @DisplayName("Deve falhar ao deletar por id a usuario.")
     public void deleteUsuarioErrorTest(){
@@ -351,7 +291,7 @@ public class UsuarioResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(16)
+    @Order(13)
     @Test
     @DisplayName("Deve falhar ao buscar todos os usuarios.")
     public void getAllUsuarioErrorTest() throws SQLException {
@@ -372,7 +312,7 @@ public class UsuarioResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(17)
+    @Order(14)
     @Test
     @DisplayName("Deve falhar ao buscar todos os usuarios paginados.")
     public void pageUsuarioErrorTest() throws SQLException {

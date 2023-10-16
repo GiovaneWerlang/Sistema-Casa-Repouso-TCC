@@ -58,12 +58,6 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
         return service.delete(id);
     }
 
-    @POST
-    @Path("/login")
-    public Response login(UsuarioDTO usuarioDTO) {
-        return service.getDadosUsuario(usuarioDTO.getLogin(), usuarioDTO.getSenha());
-    }
-
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){

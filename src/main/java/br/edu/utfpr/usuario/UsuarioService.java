@@ -123,35 +123,6 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-    public Response getDadosUsuario(String login, String senha) {
-        UsuarioModel model = repository.findByLogin(login);
-
-        if(model != null){
-            if(!BcryptUtil.matches(senha, model.getSenha())){
-                return Response.status(Response.Status.UNAUTHORIZED).build();
-            }
-            Security security = new Security();
-            Instant instant = Instant.now().plus(7, ChronoUnit.DAYS);
-            UsuarioDados usuarioDados = new UsuarioDados(
-                    model.getProfissional().getId(),
-                    model.getProfissional().getNome(),
-                    security.token(
-                            model.getProfissional().getFuncao(),
-                            model.getProfissional().getNome(),
-                            String.valueOf(model.getProfissional().getId()),
-                            instant
-                    ),
-                    model.getProfissional().getFuncao(),
-                    LocalDateTime.ofInstant(instant, ZoneOffset.UTC)
-            );
-            return Response.ok(
-                usuarioDados
-            ).build();
-        }
-
-        return Response.status(Response.Status.NOT_FOUND).build();
-    }
-
     public Response page(int page, int size){
         if(page < 0 || size < 1){
             return Response.status(422).build();
