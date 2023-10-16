@@ -24,10 +24,13 @@ import { MovimentacaoestoqueListarComponent } from './components/movimentacaoest
 import { MovimentacaoestoqueCadastrarComponent } from './components/movimentacaoestoque/movimentacaoestoque-cadastrar/movimentacaoestoque-cadastrar.component';
 import { MedicamentousoListarComponent } from './components/medicamentouso/medicamentouso-listar/medicamentouso-listar.component';
 import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
+import { LoginComponent } from './components/login/login.component';
+import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'especialidade/cadastrar', component: EspecialidadeCadastrarComponent },
   { path: 'especialidade/editar/:id', component: EspecialidadeCadastrarComponent },
   { path: 'especialidade/listar', component: EspecialidadeListarComponent },
@@ -61,6 +64,7 @@ const routes: Routes = [
   { path: 'medicamentouso/cadastrar', component: MedicamentousoCadastrarComponent },
   { path: 'medicamentouso/editar/:id', component: MedicamentousoCadastrarComponent },
   { path: 'medicamentouso/listar', component: MedicamentousoListarComponent},
+  { path: '**', component: NaoencontradoComponent },
 ];
 
 @NgModule({

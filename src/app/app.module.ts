@@ -33,6 +33,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
 
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
@@ -52,6 +53,8 @@ import { MovimentacaoestoqueListarComponent } from './components/movimentacaoest
 import { MovimentacaoestoqueCadastrarComponent } from './components/movimentacaoestoque/movimentacaoestoque-cadastrar/movimentacaoestoque-cadastrar.component';
 import { MedicamentousoListarComponent } from './components/medicamentouso/medicamentouso-listar/medicamentouso-listar.component';
 import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
+import { LoginComponent } from './components/login/login.component';
+import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +88,8 @@ import { MedicamentousoCadastrarComponent } from './components/medicamentouso/me
     MovimentacaoestoqueCadastrarComponent,
     MedicamentousoListarComponent,
     MedicamentousoCadastrarComponent,
+    LoginComponent,
+    NaoencontradoComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,6 +111,7 @@ import { MedicamentousoCadastrarComponent } from './components/medicamentouso/me
     InputMaskModule,
     InputTextareaModule,
     ToastModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
