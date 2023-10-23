@@ -167,4 +167,19 @@ public class ResidenteService implements CrudService<ResidenteDTO> {
         return Response.ok(pageDTO).build();
     }
 
+    public Response pageSort(int page, int size, String atributo, boolean asc){
+        if(page < 0 || size < 1){
+            return Response.status(422).build();
+        }
+        List<ResidenteModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
+        if(lista.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        PageDTO<ResidenteModel> pageDTO = new PageDTO<>();
+        pageDTO.setLista(lista);
+        pageDTO.setPages(repository.pageCount(page,size));
+        pageDTO.setTotal(repository.pageTotal(page,size));
+        return Response.ok(pageDTO).build();
+    }
+
 }

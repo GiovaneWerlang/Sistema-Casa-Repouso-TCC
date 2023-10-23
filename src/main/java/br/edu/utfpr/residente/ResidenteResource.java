@@ -63,4 +63,10 @@ public class ResidenteResource implements CrudResource<ResidenteDTO> {
         return service.page(page,size);
     }
 
+    @GET
+    @Path("pagesort/{page}/{size}/{sort}/{asc}")
+    public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){
+        return service.pageSort(page,size,sort,asc);
+    }
+
 }
