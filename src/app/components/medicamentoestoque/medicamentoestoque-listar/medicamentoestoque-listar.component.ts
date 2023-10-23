@@ -3,6 +3,7 @@ import { MedicamentoEstoque } from '../modelo/medicamentoestoque';
 import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-table.component';
 import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { MedicamentoestoqueService } from '../service/medicamentoestoque.service';
+import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 
 @Component({
   selector: 'app-medicamentoestoque-listar',
@@ -11,5 +12,10 @@ import { MedicamentoestoqueService } from '../service/medicamentoestoque.service
   providers: [  { provide: CrudService, useExisting: MedicamentoestoqueService }]
 })
 export class MedicamentoestoqueListarComponent extends CrudTableComponent<MedicamentoEstoque> {
-  override cols:string[] = ["Id", "Nome", "Princípio Ativo", "Quantidade"];
+  override cols:LabelValue[] = [
+    { label:"Id", value:"id"},
+    { label:"Nome", value:"nome"},
+    { label:"Princípio Ativo", value:"principioAtivo"},
+    { label:"Quantidade", value:"qtde"}
+  ];
 }
