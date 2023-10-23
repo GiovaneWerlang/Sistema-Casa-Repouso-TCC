@@ -13,12 +13,15 @@ import { ResidenteService } from '../../residente/service/residente.service';
 
 })
 export class EntradasaidaListarComponent {
-  cols:string[] = ["Id", "DataHora Saída", "DataHora Entrada", "Residente"];
   public items: EntradaSaida[] = [];
 
   first:number = 0;
   rows:number = 10;
   total:number = 0;
+
+  page: number = 0;
+  sort: string = "id";
+  asc: boolean = true;
   
   constructor(
     private service:CrudService<EntradaSaida>,
@@ -45,7 +48,7 @@ export class EntradasaidaListarComponent {
   }
 
   carregarLista(page:number, size: number):void{
-    this.service.page(page, size).subscribe((page:any)=>{     
+    this.service.pagesort(page, size, this.sort, this.asc).subscribe((page: any) => {
       this.items = page.lista;
       this.total = page.total;
     })
@@ -54,5 +57,16 @@ export class EntradasaidaListarComponent {
   onPageChange(event:any){
     this.rows = event.rows;
     this.carregarLista(event.page, event.rows);
+  }
+
+  customSort(event: any) {
+    if (event) {
+      this.sort = event.sortField ? event.sortField : "id";
+      this.asc = event.sortOrder === 1;
+      this.service.pagesort(this.page, this.rows, this.sort , this.asc).subscribe((page: any) => {
+        this.items = page.lista;
+        this.total = page.total;
+      })
+    }
   }
 }
