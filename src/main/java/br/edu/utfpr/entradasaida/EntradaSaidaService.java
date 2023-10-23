@@ -5,6 +5,7 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
 import br.edu.utfpr.utils.PageDTO;
+import io.quarkus.panache.common.Sort;
 import io.quarkus.vertx.http.runtime.devmode.Json;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -121,6 +122,21 @@ public class EntradaSaidaService implements CrudService<EntradaSaidaDTO> {
             return Response.status(422).build();
         }
         List<EntradaSaidaModel> lista = repository.pageList(page,size);
+        if(lista.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        PageDTO<EntradaSaidaModel> pageDTO = new PageDTO<>();
+        pageDTO.setLista(lista);
+        pageDTO.setPages(repository.pageCount(page,size));
+        pageDTO.setTotal(repository.pageTotal(page,size));
+        return Response.ok(pageDTO).build();
+    }
+
+    public Response pageSort(int page, int size, String atributo, boolean asc){
+        if(page < 0 || size < 1){
+            return Response.status(422).build();
+        }
+        List<EntradaSaidaModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
