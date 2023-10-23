@@ -46,7 +46,7 @@ export class UsuarioCadastrarComponent implements OnInit {
 
   salvar() {   
     if(this.form.valid){
-      this.profissionalService.save(this.form.getRawValue()).subscribe((res) => {
+      this.usuarioService.save(this.form.getRawValue()).subscribe((res) => {
         if(res){
           this.router.navigate(['/usuario/listar']);
         }
