@@ -6,11 +6,12 @@ export class CrudService<T> {
 
     private API_URL = environment.apiUrl;
     headers:HttpHeaders;
+
     constructor(protected http: HttpClient, private T_URL: string) {
         let dados = localStorage.getItem('dadosUsuario');
         let token = '';
         if(dados){
-            token = JSON.parse(dados).token;
+            token = JSON.parse(dados)._token;
         }
         this.headers = new HttpHeaders().set('Authorization','Bearer ' + token);
     }
