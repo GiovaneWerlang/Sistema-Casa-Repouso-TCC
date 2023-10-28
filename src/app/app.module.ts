@@ -111,7 +111,7 @@ import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado
     InputMaskModule,
     InputTextareaModule,
     ToastModule,
-    CardModule
+    CardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

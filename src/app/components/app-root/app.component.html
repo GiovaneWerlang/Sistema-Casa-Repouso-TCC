@@ -1,6 +1,6 @@
-<app-header></app-header>
+<app-header *ngIf="autenticado"></app-header>
 <div class="flex">
-    <app-menu *ngIf="desktop"></app-menu>
+    <app-menu *ngIf="desktop && autenticado"></app-menu>
     <div [ngClass]="desktop ? 'routercontent' : 'w100'">
         <router-outlet></router-outlet>
     </div>
