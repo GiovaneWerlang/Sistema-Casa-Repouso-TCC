@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 
@@ -42,7 +43,7 @@ public class AutenticacaoService {
                             instant
                     ),
                     model.getProfissional().getFuncao(),
-                    LocalDateTime.ofInstant(instant, ZoneOffset.UTC)
+                    LocalDateTime.ofInstant(instant, ZoneId.of("America/Sao_Paulo"))
             );
             return Response.ok(
                     usuarioDados
