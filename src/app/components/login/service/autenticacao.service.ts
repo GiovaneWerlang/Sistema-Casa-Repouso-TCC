@@ -48,6 +48,25 @@ export class AutenticacaoService {
     this.router.navigate(['/login']);
   }
 
+  autoLogin() {    
+    const dadoUsuario = JSON.parse(localStorage.getItem('dadosUsuario') || '{}');
+   
+    if (!dadoUsuario) {
+      return;
+    }
+
+    const dataExpiracao = new Date(dadoUsuario._dataHoraExpiracao);
+    const usuario = new DadoUsuario(dadoUsuario.id, dadoUsuario.nome, dadoUsuario._token, dadoUsuario.funcao, dataExpiracao);  
+
+    if (usuario.getToken) {
+      this.dadoUsuario.next(usuario);
+      console.log('autologin')
+      console.log(this.router.url)
+      this.router.navigate(['/home']);
+    }
+    
+  }
+
   private handleLoginError(error: HttpErrorResponse) {    
     if(error?.status === 401){
       return throwError(() => new Error('Usuário ou senha informados estão incorretos.'));

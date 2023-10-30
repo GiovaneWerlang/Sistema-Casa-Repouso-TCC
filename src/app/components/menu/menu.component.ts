@@ -10,51 +10,51 @@ export class MenuComponent {
     {
       label: 'Home',
       icon: 'pi pi-home',
-      url: 'home'
+      routerLink: 'home'
     }, {
       label: 'Atividades Lúdicas',
       icon: 'pi pi-th-large',
-      url: 'atividadeludica/listar'
+      routerLink: 'atividadeludica/listar'
     }, {
       label: 'Consulta',
       icon: 'pi pi-file',
-      url: 'consulta/listar'
+      routerLink: 'consulta/listar'
     }, {
       label: 'Entradas e Saídas',
       icon: 'pi pi-arrow-right-arrow-left',
-      url: 'entradasaida/listar'
+      routerLink: 'entradasaida/listar'
     }, {
       label: 'Especialidade',
       icon: 'pi pi-link',
-      url: 'especialidade/listar'
+      routerLink: 'especialidade/listar'
     }, {
       label: 'Exame',
       icon: 'pi pi-clone',
-      url: 'exame/listar'
+      routerLink: 'exame/listar'
     }, {
       label: 'Medicamento',
       icon: 'pi pi-box',
-      url: 'medicamentoestoque/listar'
+      routerLink: 'medicamentoestoque/listar'
     }, {
       label: 'Medicamento em Uso',
       icon: 'pi pi-inbox',
-      url: 'medicamentouso/listar'
+      routerLink: 'medicamentouso/listar'
     }, {
       label: 'Movimentação de Medicamento',
       icon: 'pi pi-tags',
-      url: 'movimentacaoestoque/listar'
+      routerLink: 'movimentacaoestoque/listar'
     }, {
       label: 'Profissional',
       icon: 'pi pi-briefcase',
-      url: 'profissional/listar'
+      routerLink: 'profissional/listar'
     }, {
       label: 'Residente',
       icon: 'pi pi-user',
-      url: 'residente/listar'
+      routerLink: 'residente/listar'
     }, {
       label: 'Usuário',
       icon: 'pi pi-users',
-      url: 'usuario/listar'
+      routerLink: 'usuario/listar'
     }
   ];
 }
