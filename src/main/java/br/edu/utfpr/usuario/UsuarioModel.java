@@ -24,7 +24,7 @@ public class UsuarioModel {
     @Size(min = 6)
     private String senha;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "idprofissional")
     private ProfissionalModel profissional;
 }
