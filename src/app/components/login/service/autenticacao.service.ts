@@ -19,11 +19,11 @@ export interface DadoResponseAutenticacao {
 })
 export class AutenticacaoService {
   private API_URL = environment.apiUrl;
-  dadoUsuario = new BehaviorSubject<any>(false);
+  dadoUsuario = new BehaviorSubject<DadoUsuario | null>(null);
 
   constructor(private _http: HttpClient, private router: Router) { }
 
-  observe():Observable<DadoUsuario> {
+  observe():Observable<DadoUsuario | null> {
     return this.dadoUsuario.asObservable()
   }
 
@@ -44,11 +44,11 @@ export class AutenticacaoService {
 
   logout() {   
     localStorage.removeItem('dadosUsuario');
-    this.dadoUsuario.next(false);
+    this.dadoUsuario.next(null);
     this.router.navigate(['/login']);
   }
 
-  autoLogin() {    
+  autoLogin() {
     const dadoUsuario = JSON.parse(localStorage.getItem('dadosUsuario') || '{}');
    
     if (!dadoUsuario) {
@@ -60,8 +60,6 @@ export class AutenticacaoService {
 
     if (usuario.getToken) {
       this.dadoUsuario.next(usuario);
-      console.log('autologin')
-      console.log(this.router.url)
       this.router.navigate(['/home']);
     }
     

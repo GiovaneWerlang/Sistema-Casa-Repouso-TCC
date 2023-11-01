@@ -29,7 +29,7 @@ import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado
 import { AutenticacaoGuard } from './components/login/autenticacao.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AutenticacaoGuard] },
+  { path: '', component: HomeComponent, canActivate: [AutenticacaoGuard], pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AutenticacaoGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'especialidade/cadastrar', component: EspecialidadeCadastrarComponent },
@@ -68,8 +68,10 @@ const routes: Routes = [
   { path: '**', component: NaoencontradoComponent },
 ];
 
+const config = {useHash:true};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,config)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
