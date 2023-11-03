@@ -3,11 +3,11 @@
     <p-table [value]="items" (sortFunction)="customSort($event)" [customSort]="true" [lazy]="true" (onLazyLoad)="customSort($event)">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id" style="width:20%">Id <p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="nome" style="width:20%">Nome<p-sortIcon field="nome"></p-sortIcon></th>
+                <th pSortableColumn="id" style="width:10%">Id <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="nome" style="width:40%">Nome<p-sortIcon field="nome"></p-sortIcon></th>
                 <th pSortableColumn="cpf" style="width:20%">CPF<p-sortIcon field="cpf"></p-sortIcon></th>
-                <th pSortableColumn="tipoEstadia" style="width:30%">Estadia<p-sortIcon field="tipoEstadia"></p-sortIcon></th>
-                <th pSortableColumn="situacao" style="width:30%">Situação<p-sortIcon field="situacao"></p-sortIcon></th>
+                <th pSortableColumn="tipoEstadia" style="width:10%">Estadia<p-sortIcon field="tipoEstadia"></p-sortIcon></th>
+                <th pSortableColumn="situacao" style="width:10%">Situação<p-sortIcon field="situacao"></p-sortIcon></th>
                 <th style="width:10%">Ações</th>
             </tr>
         </ng-template>
@@ -26,6 +26,15 @@
                 </td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">Nenhum item cadastrado.</td>
+            </tr>
+        </ng-template>
     </p-table>
     <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="total" [rowsPerPageOptions]="[10, 20]"></p-paginator>
 </div>
+<p-blockUI [blocked]="carregando">
+    <p-progressSpinner></p-progressSpinner>
+</p-blockUI>
+<p-toast></p-toast>

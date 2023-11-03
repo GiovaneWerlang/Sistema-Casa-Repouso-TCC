@@ -57,4 +57,5 @@ export class MenuComponent {
       routerLink: 'usuario/listar'
     }
   ];
+  a = '';
 }

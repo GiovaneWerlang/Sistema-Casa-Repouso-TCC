@@ -57,6 +57,7 @@ import { MedicamentousoListarComponent } from './components/medicamentouso/medic
 import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,7 @@ import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado
     ProgressSpinnerModule,
     BlockUIModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

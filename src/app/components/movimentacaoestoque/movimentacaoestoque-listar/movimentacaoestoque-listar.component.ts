@@ -5,12 +5,13 @@ import { MovimentacaoEstoque } from '../modelo/movimentacaoestoque';
 import { Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { TipoMovimentacao } from 'src/app/shared/tipomovimentacao/tipomovimentacao';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-movimentacaoestoque-listar',
   templateUrl: './movimentacaoestoque-listar.component.html',
   styleUrls: ['./movimentacaoestoque-listar.component.css'],
-  providers: [  { provide: CrudService, useExisting: MovimentacaoestoqueService}]
+  providers: [  { provide: CrudService, useExisting: MovimentacaoestoqueService},MessageService]
 })
 export class MovimentacaoestoqueListarComponent {
   cols:string[] = ["Id", "Quantidade", "Tipo","Medicamento"];
@@ -25,12 +26,14 @@ export class MovimentacaoestoqueListarComponent {
   page: number = 0;
   sort: string = "id";
   asc: boolean = true;
+
+  carregando: boolean = false;
   
   constructor(
     private service:CrudService<MovimentacaoEstoque>,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
     ) {
-      this.carregarLista(this.first, this.rows);
     }
 
   novo(){
@@ -51,9 +54,14 @@ export class MovimentacaoestoqueListarComponent {
   }
 
   carregarLista(page:number, size: number):void{
+    this.carregando = true;
     this.service.pagesort(page, size, this.sort, this.asc).subscribe((page: any) => {
       this.items = page.lista;
       this.total = page.total;
+      this.carregando = false;
+    },(error) => {
+      this.carregando = false
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
     })
   }
 
@@ -64,11 +72,16 @@ export class MovimentacaoestoqueListarComponent {
 
   customSort(event: any) {
     if (event) {
+      this.carregando = true;
       this.sort = event.sortField ? event.sortField : "id";
       this.asc = event.sortOrder === 1;
       this.service.pagesort(this.page, this.rows, this.sort , this.asc).subscribe((page: any) => {
         this.items = page.lista;
         this.total = page.total;
+        this.carregando = false;
+      },(error) => {
+        this.carregando = false;
+        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
       })
     }
   }
