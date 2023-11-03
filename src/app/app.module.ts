@@ -34,6 +34,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUIModule } from 'primeng/blockui';
 
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
@@ -112,6 +114,8 @@ import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado
     InputTextareaModule,
     ToastModule,
     CardModule,
+    ProgressSpinnerModule,
+    BlockUIModule
   ],
   providers: [],
   bootstrap: [AppComponent]
