@@ -72,7 +72,7 @@ export class CrudService<T> {
         );
     }
 
-    private handleError(error: HttpErrorResponse) {
-        return throwError(() => new Error(error.status.toString()));
+    private handleError(error: HttpErrorResponse) {       
+        return throwError(() => new Error(`${error.status} - ${error.status === 0 ? 'Sem conexão' : error.statusText} `));
     }
 }
