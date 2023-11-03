@@ -14,7 +14,7 @@ body {
     color: var(--text-color);
 }
 
-.card{
+.card {
     display: flex;
     flex-direction: column;
     border: 1px solid #acacac;
@@ -22,7 +22,7 @@ body {
     padding: 15px;
 }
 
-.home{
+.home {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -32,20 +32,24 @@ body {
     margin: auto;
 }
 
-.p-button{
+.p-button {
     padding: 0.4rem 1.7rem;
     border-radius: 8px
 }
 
-.p-menu{
+.p-menu {
     border: none;
 }
 
-.p-menuitem{
+.p-menuitem {
     background-color: rgb(255, 255, 255);
 }
 
-.tablebutton .p-button-icon-only{
+.tablebutton .p-button-icon-only {
     height: 2.75rem !important;
     width: 2.75rem !important;
+}
+
+.p-progress-spinner-circle {
+    stroke: #0a2ea7 !important;
 }
