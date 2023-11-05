@@ -69,15 +69,15 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
         model.setSalario(profissionalDTO.getSalario());
         model.setSituacao(profissionalDTO.getSituacao());
         model.setFuncao(profissionalDTO.getFuncao());
-
-        EspecialidadeModel especialidadeModel;
-        if(especialidadeRepository.findById(profissionalDTO.getEspecialidade()) != null){
-            especialidadeModel = especialidadeRepository.findById(profissionalDTO.getEspecialidade());
-        }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+        if(profissionalDTO.getEspecialidade() != null) {
+            EspecialidadeModel especialidadeModel;
+            if (especialidadeRepository.findById(profissionalDTO.getEspecialidade()) != null) {
+                especialidadeModel = especialidadeRepository.findById(profissionalDTO.getEspecialidade());
+            } else {
+                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+            }
+            model.setEspecialidade(especialidadeModel);
         }
-        model.setEspecialidade(especialidadeModel);
-
         EnderecoDTO enderecoDTO = new EnderecoDTO();
         if(!Copy.copyProperties(enderecoDTO, profissionalDTO.getEndereco())){
             return Response.status(418).build();

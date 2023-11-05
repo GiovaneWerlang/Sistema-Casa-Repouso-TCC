@@ -50,7 +50,6 @@ public class ProfissionalDTO {
     @NotNull(message = "Não pode ser nulo")
     private Funcao funcao;
 
-    @NotNull(message = "Não pode ser nulo")
     private Long especialidade;
 
     @NotNull(message = "Não pode ser nulo")
