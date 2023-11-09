@@ -55,7 +55,7 @@ export class ProfissionalCadastrarComponent implements OnInit {
       dataAdmissao: [new Date, Validators.required],
       funcao: ['CUIDADOR',Validators.required],
       situacao: ['ATIVO',Validators.required],
-      especialidade: [null, Validators.required],
+      especialidade: [null],
       endereco: this.formEndereco
     });
     this.carregarOpcoesEspecialidade();

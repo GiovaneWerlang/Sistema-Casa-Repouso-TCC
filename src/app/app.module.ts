@@ -34,6 +34,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUIModule } from 'primeng/blockui';
 
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
@@ -55,6 +57,7 @@ import { MedicamentousoListarComponent } from './components/medicamentouso/medic
 import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -111,9 +114,11 @@ import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado
     InputMaskModule,
     InputTextareaModule,
     ToastModule,
-    CardModule
+    CardModule,
+    ProgressSpinnerModule,
+    BlockUIModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

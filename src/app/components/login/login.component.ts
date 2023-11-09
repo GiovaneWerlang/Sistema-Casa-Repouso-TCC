@@ -8,7 +8,7 @@ import { AutenticacaoService } from './service/autenticacao.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [AutenticacaoService, MessageService]
+  providers: [MessageService]
 })
 export class LoginComponent {
   form: FormGroup;
@@ -28,8 +28,7 @@ export class LoginComponent {
   login() {
     if (this.form.valid) {
       this.autenticacaoService.login({ login: this.form.get('login')?.value, senha: this.form.get('senha')?.value }).subscribe(
-        (res) => {
-          localStorage.setItem('dadosUsuario', res);
+        (next) => {
           this.router.navigate(['/home']);
         },
         (error) => {
@@ -43,8 +42,7 @@ export class LoginComponent {
   }
 
   logout() {
-    localStorage.removeItem('dadosUsuario');
-    this.router.navigate(['/login']);
+    this.autenticacaoService.logout();
   }
 
 }

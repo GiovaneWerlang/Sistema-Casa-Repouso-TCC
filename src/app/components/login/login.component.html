@@ -1,5 +1,5 @@
 <div class="flex justify-content-center">
-    <p-card header="Login" [style]="{ width: '360px' }">
+    <p-card header="Login" [style]="{'margin-top': '30vh' }" class="col-10 xl:col-3 lg:col-4 md:col-6 sm:col-10">
         <form>
             <form [formGroup]="form" class="flex flex-column">
                 <div class="col-12 flex flex-column">
@@ -22,7 +22,7 @@
         </form>
         <ng-template pTemplate="footer">
             <div class="flex justify-content-end">
-                <p-button label="Login" (click)="login()" icon="pi pi-check"></p-button>
+                <p-button label="Login" (click)="login()" icon="pi pi-sign-in"></p-button>
             </div>
         </ng-template>
     </p-card>

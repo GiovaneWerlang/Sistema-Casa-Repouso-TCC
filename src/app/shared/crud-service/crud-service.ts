@@ -6,11 +6,12 @@ export class CrudService<T> {
 
     private API_URL = environment.apiUrl;
     headers:HttpHeaders;
+
     constructor(protected http: HttpClient, private T_URL: string) {
         let dados = localStorage.getItem('dadosUsuario');
         let token = '';
         if(dados){
-            token = JSON.parse(dados).token;
+            token = JSON.parse(dados)._token;
         }
         this.headers = new HttpHeaders().set('Authorization','Bearer ' + token);
     }
@@ -71,7 +72,7 @@ export class CrudService<T> {
         );
     }
 
-    private handleError(error: HttpErrorResponse) {
-        return throwError(() => new Error(error.status.toString()));
+    private handleError(error: HttpErrorResponse) {       
+        return throwError(() => new Error(`${error.status} - ${error.status === 0 ? 'Sem conexão' : error.statusText} `));
     }
 }

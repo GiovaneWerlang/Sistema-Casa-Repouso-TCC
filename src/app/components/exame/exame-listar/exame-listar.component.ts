@@ -4,12 +4,13 @@ import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { Exame } from '../modelo/exame';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-exame-listar',
   templateUrl: './exame-listar.component.html',
   styleUrls: ['./exame-listar.component.css'],
-  providers: [  { provide: CrudService, useExisting: ExameService}]
+  providers: [  { provide: CrudService, useExisting: ExameService},MessageService]
 })
 export class ExameListarComponent {
   cols:string[] = ["Id", "Nome", "DataHora","Local", "Residente"];
@@ -23,11 +24,13 @@ export class ExameListarComponent {
   sort: string = "id";
   asc: boolean = true;
 
+  carregando: boolean = false;
+
   constructor(
     private service:CrudService<Exame>,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
     ) {
-      this.carregarLista(this.first, this.rows);
     }
 
   novo(){
@@ -48,9 +51,14 @@ export class ExameListarComponent {
   }
 
   carregarLista(page:number, size: number):void{
+    this.carregando = true;
     this.service.pagesort(page, size, this.sort, this.asc).subscribe((page: any) => {
       this.items = page.lista;
       this.total = page.total;
+      this.carregando = false;
+    },(error) => {
+      this.carregando = false;
+      this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
     })
   }
 
@@ -61,11 +69,16 @@ export class ExameListarComponent {
 
   customSort(event: any) {
     if (event) {
+      this.carregando = true;
       this.sort = event.sortField ? event.sortField : "id";
       this.asc = event.sortOrder === 1;
       this.service.pagesort(this.page, this.rows, this.sort , this.asc).subscribe((page: any) => {
         this.items = page.lista;
         this.total = page.total;
+        this.carregando = false;
+      },(error) => {
+        this.carregando = false;
+        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
       })
     }
   }

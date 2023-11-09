@@ -26,10 +26,11 @@ import { MedicamentousoListarComponent } from './components/medicamentouso/medic
 import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
+import { AutenticacaoGuard } from './components/login/autenticacao.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AutenticacaoGuard], pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, canActivate: [AutenticacaoGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'especialidade/cadastrar', component: EspecialidadeCadastrarComponent },
   { path: 'especialidade/editar/:id', component: EspecialidadeCadastrarComponent },
@@ -67,8 +68,10 @@ const routes: Routes = [
   { path: '**', component: NaoencontradoComponent },
 ];
 
+const config = {useHash:true};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,config)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
