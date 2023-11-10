@@ -1,6 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConsultaListarComponent } from './consulta-listar.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BlockUIModule } from 'primeng/blockui';
+import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { CalendarModule } from 'primeng/calendar';
 
 describe('ConsultaListarComponent', () => {
   let component: ConsultaListarComponent;
@@ -8,7 +17,17 @@ describe('ConsultaListarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ConsultaListarComponent]
+      declarations: [ConsultaListarComponent],
+      imports: [
+        RouterTestingModule, 
+        HttpClientTestingModule, 
+        TableModule, 
+        ButtonModule, 
+        PaginatorModule, 
+        BlockUIModule,
+        ProgressSpinnerModule,
+        ToastModule,
+      ],
     });
     fixture = TestBed.createComponent(ConsultaListarComponent);
     component = fixture.componentInstance;

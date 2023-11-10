@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AtividadeludicaListarComponent } from './atividadeludica-listar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
-import { PaginatorModule } from 'primeng/paginator';
+import { EspecialidadeListarComponent } from './especialidade-listar.component';
 import { BlockUIModule } from 'primeng/blockui';
+import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 
-describe('AtividadeludicaListarComponent', () => {
-  let component: AtividadeludicaListarComponent;
-  let fixture: ComponentFixture<AtividadeludicaListarComponent>;
+describe('EspecialidadeListarComponent', () => {
+  let component: EspecialidadeListarComponent;
+  let fixture: ComponentFixture<EspecialidadeListarComponent>;
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AtividadeludicaListarComponent],
+      declarations: [ EspecialidadeListarComponent ],
       imports: [
         RouterTestingModule, 
         HttpClientTestingModule, 
@@ -27,8 +27,12 @@ describe('AtividadeludicaListarComponent', () => {
         ProgressSpinnerModule,
         ToastModule,
       ],
-    });
-    fixture = TestBed.createComponent(AtividadeludicaListarComponent);
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(EspecialidadeListarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
