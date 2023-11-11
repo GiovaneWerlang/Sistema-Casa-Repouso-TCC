@@ -9,7 +9,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { CalendarModule } from 'primeng/calendar';
 
 describe('ConsultaListarComponent', () => {
   let component: ConsultaListarComponent;

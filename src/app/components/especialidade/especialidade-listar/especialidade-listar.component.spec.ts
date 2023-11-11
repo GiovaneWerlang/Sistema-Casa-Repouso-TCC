@@ -9,6 +9,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-table.component';
 
 describe('EspecialidadeListarComponent', () => {
   let component: EspecialidadeListarComponent;
@@ -16,7 +18,7 @@ describe('EspecialidadeListarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EspecialidadeListarComponent ],
+      declarations: [ EspecialidadeListarComponent, CrudTableComponent ],
       imports: [
         RouterTestingModule, 
         HttpClientTestingModule, 
@@ -27,6 +29,7 @@ describe('EspecialidadeListarComponent', () => {
         ProgressSpinnerModule,
         ToastModule,
       ],
+      providers: [MessageService]
     })
     .compileComponents();
   }));
