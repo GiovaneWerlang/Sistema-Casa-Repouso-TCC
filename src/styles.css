@@ -42,7 +42,7 @@ body {
 }
 
 .p-menuitem {
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
 }
 
 .tablebutton .p-button-icon-only {
@@ -51,5 +51,14 @@ body {
 }
 
 .p-progress-spinner-circle {
-    stroke: #0a2ea7 !important;
+    stroke: #3B82F6 !important;
+}
+
+.chart-container{
+    padding: 40px;
+    border: solid 1px #b2b5bd;
+    border-radius: 6px;
+    background-color: #fdfdfd;
+    box-shadow: #a19f9f 0px 0px 10px 4px;
+    margin: 12px;
 }

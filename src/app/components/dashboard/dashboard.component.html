@@ -1,0 +1,6 @@
+<div class="flex flex-row flex-wrap justify-content-center col-12">
+    <div *ngFor="let dado of data" class="col-12 lg:col-5 xl:col-5 chart-container pt-0 text-center">
+        <p class="font-bold text-blue-600">{{dado?.titulo}}</p>
+        <p-chart type="doughnut" [data]="dado" [options]="options"></p-chart>
+    </div>
+</div>

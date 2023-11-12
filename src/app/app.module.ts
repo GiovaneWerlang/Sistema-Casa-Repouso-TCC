@@ -36,6 +36,7 @@ import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
+import { ChartModule } from 'primeng/chart';
 
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
@@ -58,6 +59,7 @@ import { MedicamentousoCadastrarComponent } from './components/medicamentouso/me
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 import { MessageService } from 'primeng/api';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +95,7 @@ import { MessageService } from 'primeng/api';
     MedicamentousoCadastrarComponent,
     LoginComponent,
     NaoencontradoComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,7 +119,8 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     CardModule,
     ProgressSpinnerModule,
-    BlockUIModule
+    BlockUIModule,
+    ChartModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

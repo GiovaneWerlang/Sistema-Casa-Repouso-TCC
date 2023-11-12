@@ -56,7 +56,7 @@
                 "fonts": true
               },
               "vendorChunk": false,
-              "extractLicenses": false,
+              "extractLicenses": true,
               "sourceMap": true,
               "namedChunks": false,
               "aot": true
@@ -72,7 +72,7 @@
                 "fonts": true
               },
               "vendorChunk": true,
-              "extractLicenses": false,
+              "extractLicenses": true,
               "sourceMap": true,
               "namedChunks": true,
               "aot": true,
