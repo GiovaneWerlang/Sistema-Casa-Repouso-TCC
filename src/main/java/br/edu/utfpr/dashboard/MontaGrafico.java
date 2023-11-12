@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public abstract class MontaGrafico {
 
-    private List<String> cores = new ArrayList<>(Stream.of(Cores.values()).map(Cores::getCor).toList());
+    private final List<String> cores = new ArrayList<>(Stream.of(Cores.values()).map(Cores::getCor).toList());
 
     public DashboardDTO montaGrafico(List<DadoDTO> dadosDTO, String titulo) {
         if (dadosDTO != null && !dadosDTO.isEmpty()) {
