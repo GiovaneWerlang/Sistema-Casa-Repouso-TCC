@@ -26,4 +26,8 @@ public class DadoDTO {
         this.label = label.getDescricao();
         this.data = data;
     }
+    public DadoDTO(String label, Integer data) {
+        this.label = label;
+        this.data = data.longValue();
+    }
 }

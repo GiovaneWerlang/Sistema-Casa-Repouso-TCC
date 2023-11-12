@@ -70,6 +70,8 @@ public class DashboardService extends MontaGrafico {
         List<DadoDTO> dadosIngresso30DiasResidente = residenteRepository.getDadosIngresso30diasDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
         lista.add(montaGrafico(dadosIngresso30DiasResidente, "Residentes novos últimos 30 dias"));
 
+        List<DadoDTO> dadosMenorQtdeMedicamentoEstoque = medicamentoEstoqueRepository.getDadosMenorQtdeDash();
+        lista.add(montaGrafico(dadosMenorQtdeMedicamentoEstoque, "Medicamentos com menor qtde"));
 
         if(lista.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
