@@ -89,8 +89,12 @@ export class ResidenteCadastrarComponent implements OnInit {
   private carrega(id: number) {
     this.residenteService.findByID(id).subscribe((residente) => {
       this.form.patchValue(residente);
-      this.form.get('dataHoraIngresso')?.patchValue(new Date(residente.dataHoraIngresso));
-      this.form.get('dataHoraPrevisaoSaida')?.patchValue(new Date(residente.dataHoraPrevisaoSaida));
+      if(residente.dataHoraIngresso){
+        this.form.get('dataHoraIngresso')?.patchValue(new Date(residente.dataHoraIngresso));
+      }
+      if(residente.dataHoraPrevisaoSaida){
+        this.form.get('dataHoraPrevisaoSaida')?.patchValue(new Date(residente.dataHoraPrevisaoSaida));
+      }
 
       this.form.get('logradouro')?.patchValue(residente.endereco.logradouro);
       this.form.get('bairro')?.patchValue(residente.endereco.bairro);

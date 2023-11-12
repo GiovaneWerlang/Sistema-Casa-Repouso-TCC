@@ -68,9 +68,14 @@ export class EntradasaidaCadastrarComponent {
 
   private carrega(id: number) {
     this.entradaSaidaService.findByID(id).subscribe((entradaSaida) => {
-      this.form.patchValue(entradaSaida)
-      this.form.get('dataHoraEntrada')?.patchValue(new Date(entradaSaida.dataHoraEntrada));
-      this.form.get('dataHoraSaida')?.patchValue(new Date(entradaSaida.dataHoraSaida));
+      this.form.get('descricao')?.patchValue(entradaSaida?.descricao);
+      this.form.get('residente')?.patchValue(entradaSaida?.residente?.id);
+      if(entradaSaida?.dataHoraEntrada){
+        this.form.get('dataHoraEntrada')?.patchValue(new Date(entradaSaida.dataHoraEntrada));
+      }
+      if(entradaSaida?.dataHoraSaida){
+        this.form.get('dataHoraSaida')?.patchValue(new Date(entradaSaida.dataHoraSaida));
+      }
     });
   }
 
