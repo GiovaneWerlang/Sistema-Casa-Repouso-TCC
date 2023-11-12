@@ -73,6 +73,9 @@ public class DashboardService extends MontaGrafico {
         List<DadoDTO> dadosMenorQtdeMedicamentoEstoque = medicamentoEstoqueRepository.getDadosMenorQtdeDash();
         lista.add(montaGrafico(dadosMenorQtdeMedicamentoEstoque, "Medicamentos com menor qtde"));
 
+        List<DadoDTO> dadosEntradaSaidaRes = entradaSaidaRepository.getDadosEntradaSaidaResidentesDash();
+        lista.add(montaGrafico(dadosEntradaSaidaRes, "Entradas/Saídas por residente"));
+
         if(lista.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
