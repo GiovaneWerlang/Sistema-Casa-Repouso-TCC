@@ -1,19 +1,17 @@
 package br.edu.utfpr.dashboard;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class GraficoDadoDTO {
 
-    private List<Integer> data;
+    private List<Long> data;
     private List<String> backgroundColor;
 
 }
