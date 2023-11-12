@@ -1,5 +1,10 @@
 package br.edu.utfpr.dashboard.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Cores {
     C1("#f72585"),
     C2("#b5179e"),
@@ -13,13 +18,5 @@ public enum Cores {
     C10("#4cc9f0");
 
     private final String cor;
-
-    Cores(String cor) {
-        this.cor = cor;
-    }
-
-    public String getCor() {
-        return cor;
-    }
 
 }
