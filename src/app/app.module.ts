@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -60,6 +60,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 import { MessageService } from 'primeng/api';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AutenticacaoInterceptorService } from './components/login/autenticacaointerceptor.service';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     BlockUIModule,
     ChartModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, {provide: HTTP_INTERCEPTORS, useClass: AutenticacaoInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
