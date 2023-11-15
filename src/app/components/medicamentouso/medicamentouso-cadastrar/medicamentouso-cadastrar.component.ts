@@ -18,9 +18,9 @@ import { MessageService } from 'primeng/api';
 export class MedicamentousoCadastrarComponent implements OnInit {
 
   form: FormGroup;
-  opcoesMedicamento:LabelValue[] = [];
-  opcoesResidente:LabelValue[] = [];
-  
+  opcoesMedicamento: LabelValue[] = [];
+  opcoesResidente: LabelValue[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private medicamentoUsoService: MedicamentousoService,
@@ -54,14 +54,14 @@ export class MedicamentousoCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.medicamentoUsoService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/medicamentouso/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
@@ -71,7 +71,7 @@ export class MedicamentousoCadastrarComponent implements OnInit {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/medicamentouso/listar']);
   }
 
@@ -86,15 +86,15 @@ export class MedicamentousoCadastrarComponent implements OnInit {
     });
   }
 
-  private carregarOpcoesMedicamento(){
-    this.medicamentoEstoqueService.list().subscribe((res) => 
-      this.opcoesMedicamento = res?.map((i:MedicamentoEstoque) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesMedicamento() {
+    this.medicamentoEstoqueService.list().subscribe((res) =>
+      this.opcoesMedicamento = res?.map((i: MedicamentoEstoque) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
 
-  private carregarOpcoesResidente(){
-    this.residenteService.list().subscribe((res) => 
-      this.opcoesResidente = res?.map((i:Residente) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesResidente() {
+    this.residenteService.list().subscribe((res) =>
+      this.opcoesResidente = res?.map((i: Residente) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
 

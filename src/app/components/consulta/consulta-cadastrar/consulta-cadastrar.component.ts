@@ -58,14 +58,14 @@ export class ConsultaCadastrarComponent {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.consultaService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/consulta/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
@@ -75,7 +75,7 @@ export class ConsultaCadastrarComponent {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/consulta/listar']);
   }
 
@@ -90,21 +90,21 @@ export class ConsultaCadastrarComponent {
     });
   }
 
-  private carregarOpcoesEspecialidade(){
-    this.especialidadeService.list().subscribe((res) => 
-      this.opcoesEspecialidade = res?.map((i:Especialidade) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesEspecialidade() {
+    this.especialidadeService.list().subscribe((res) =>
+      this.opcoesEspecialidade = res?.map((i: Especialidade) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
 
-  private carregarOpcoesProfissional(){
-    this.profissionalService.list().subscribe((res) => 
-      this.opcoesProfissional = res?.map((i:Profissional) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesProfissional() {
+    this.profissionalService.list().subscribe((res) =>
+      this.opcoesProfissional = res?.map((i: Profissional) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
 
-  private carregarOpcoesResidente(){
-    this.residenteService.list().subscribe((res) => 
-      this.opcoesResidente = res?.map((i:Residente) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesResidente() {
+    this.residenteService.list().subscribe((res) =>
+      this.opcoesResidente = res?.map((i: Residente) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
 }

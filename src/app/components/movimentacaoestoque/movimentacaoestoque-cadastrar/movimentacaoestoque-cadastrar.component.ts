@@ -17,9 +17,9 @@ import { MessageService } from 'primeng/api';
 export class MovimentacaoestoqueCadastrarComponent implements OnInit {
 
   form: FormGroup;
-  opcoesTipo:LabelValue[] = TipoMovimentacao;
-  opcoesMedicamento:LabelValue[] = [];
-  
+  opcoesTipo: LabelValue[] = TipoMovimentacao;
+  opcoesMedicamento: LabelValue[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private movimentacaoEstoqueService: MovimentacaoestoqueService,
@@ -31,8 +31,8 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [null],
       tipo: ['ENTRADA', Validators.required],
-      qtde: [0, [Validators.required, Validators.min(1), Validators.max(2147483647)]], 
-      medicamento: [null, Validators.required],   
+      qtde: [0, [Validators.required, Validators.min(1), Validators.max(2147483647)]],
+      medicamento: [null, Validators.required],
     });
     this.carregarOpcoesMedicamento();
   }
@@ -47,14 +47,14 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.movimentacaoEstoqueService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/movimentacaoestoque/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
@@ -64,7 +64,7 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/movimentacaoestoque/listar']);
   }
 
@@ -76,9 +76,9 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
     });
   }
 
-  private carregarOpcoesMedicamento(){
-    this.medicamentoEstoqueService.list().subscribe((res) => 
-      this.opcoesMedicamento = res?.map((i:MedicamentoEstoque) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesMedicamento() {
+    this.medicamentoEstoqueService.list().subscribe((res) =>
+      this.opcoesMedicamento = res?.map((i: MedicamentoEstoque) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
 

@@ -15,7 +15,7 @@ import { MessageService } from 'primeng/api';
 })
 export class EntradasaidaCadastrarComponent {
   form: FormGroup;
-  opcoesResidente:LabelValue[] = [];
+  opcoesResidente: LabelValue[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -45,14 +45,14 @@ export class EntradasaidaCadastrarComponent {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.entradaSaidaService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/entradasaida/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
@@ -62,7 +62,7 @@ export class EntradasaidaCadastrarComponent {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/entradasaida/listar']);
   }
 
@@ -70,19 +70,19 @@ export class EntradasaidaCadastrarComponent {
     this.entradaSaidaService.findByID(id).subscribe((entradaSaida) => {
       this.form.get('descricao')?.patchValue(entradaSaida?.descricao);
       this.form.get('residente')?.patchValue(entradaSaida?.residente?.id);
-      if(entradaSaida?.dataHoraEntrada){
+      if (entradaSaida?.dataHoraEntrada) {
         this.form.get('dataHoraEntrada')?.patchValue(new Date(entradaSaida.dataHoraEntrada));
       }
-      if(entradaSaida?.dataHoraSaida){
+      if (entradaSaida?.dataHoraSaida) {
         this.form.get('dataHoraSaida')?.patchValue(new Date(entradaSaida.dataHoraSaida));
       }
     });
   }
 
-  private carregarOpcoesResidente(){
-    this.residenteService.list().subscribe((res) => 
-      this.opcoesResidente = res?.map((i:Residente) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesResidente() {
+    this.residenteService.list().subscribe((res) =>
+      this.opcoesResidente = res?.map((i: Residente) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
-  
+
 }

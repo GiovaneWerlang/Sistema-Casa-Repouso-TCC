@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   options: any;
 
-  constructor(private _dashboardService:DashboardService) {
+  constructor(private _dashboardService: DashboardService) {
     this.options = {
       cutout: '50%'
     };
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this._dashboardService.list().subscribe(dados => {
-      this.data = dados;      
+      this.data = dados;
     });
   }
 }

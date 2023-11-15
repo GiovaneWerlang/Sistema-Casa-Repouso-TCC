@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   constructor(
     private config: PrimeNGConfig,
     breakpointService: BreakpointserviceService,
-    private _autenticacaoService:AutenticacaoService) {
+    private _autenticacaoService: AutenticacaoService) {
     config.setTranslation(Translate);
     this.monitoraBreakspoints(breakpointService);
     this.monitoraAutenticado();
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  monitoraAutenticado(){
+  monitoraAutenticado() {
     this._autenticacaoService.dadoUsuario.asObservable().subscribe(
       dado => {
         this.autenticado = !!dado;

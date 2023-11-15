@@ -19,10 +19,10 @@ export class ResidenteCadastrarComponent implements OnInit {
 
   form: FormGroup;
   formEndereco: FormGroup;
-  opcoesSituacao:LabelValue[] = Situacoes;
-  tiposEstadia:LabelValue[] = TipoEstadia;
-  opcoesEstados:string[] = Estados;
-  opcoesPaises:string[] = Paises;
+  opcoesSituacao: LabelValue[] = Situacoes;
+  tiposEstadia: LabelValue[] = TipoEstadia;
+  opcoesEstados: string[] = Estados;
+  opcoesPaises: string[] = Paises;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,10 +47,10 @@ export class ResidenteCadastrarComponent implements OnInit {
       cpf: ['', Validators.required],
       telefone: ['', [Validators.required, Validators.maxLength(11), Validators.minLength(10)]],
       email: ['', [Validators.required, Validators.maxLength(100)]],
-      tipoEstadia: ['PADRAO',Validators.required],
+      tipoEstadia: ['PADRAO', Validators.required],
       dataHoraIngresso: [new Date, Validators.required],
       dataHoraPrevisaoSaida: [null],
-      situacao: ['ATIVO',Validators.required],
+      situacao: ['ATIVO', Validators.required],
       endereco: this.formEndereco
     });
   }
@@ -65,14 +65,14 @@ export class ResidenteCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.residenteService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/residente/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
@@ -82,17 +82,17 @@ export class ResidenteCadastrarComponent implements OnInit {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/residente/listar']);
   }
 
   private carrega(id: number) {
     this.residenteService.findByID(id).subscribe((residente) => {
       this.form.patchValue(residente);
-      if(residente.dataHoraIngresso){
+      if (residente.dataHoraIngresso) {
         this.form.get('dataHoraIngresso')?.patchValue(new Date(residente.dataHoraIngresso));
       }
-      if(residente.dataHoraPrevisaoSaida){
+      if (residente.dataHoraPrevisaoSaida) {
         this.form.get('dataHoraPrevisaoSaida')?.patchValue(new Date(residente.dataHoraPrevisaoSaida));
       }
 

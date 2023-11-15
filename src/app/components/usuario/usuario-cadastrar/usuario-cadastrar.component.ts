@@ -16,7 +16,7 @@ import { MessageService } from 'primeng/api';
 export class UsuarioCadastrarComponent implements OnInit {
 
   form: FormGroup;
-  opcoesProfissional:LabelValue[] = [];
+  opcoesProfissional: LabelValue[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +29,7 @@ export class UsuarioCadastrarComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [null],
       login: [null, Validators.compose([Validators.required, Validators.maxLength(50)])],
-      senha: [null, Validators.compose([Validators.required, Validators.minLength(6)])],      
+      senha: [null, Validators.compose([Validators.required, Validators.minLength(6)])],
       profissional: [null, Validators.required]
     });
     this.carregarOpcoesProfissional();
@@ -44,15 +44,15 @@ export class UsuarioCadastrarComponent implements OnInit {
     })
   }
 
-  salvar() {   
-    if(this.form.valid){
+  salvar() {
+    if (this.form.valid) {
       this.usuarioService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/usuario/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.form.get('logradouro')?.markAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
@@ -63,7 +63,7 @@ export class UsuarioCadastrarComponent implements OnInit {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/usuario/listar']);
   }
 
@@ -75,9 +75,9 @@ export class UsuarioCadastrarComponent implements OnInit {
     });
   }
 
-  private carregarOpcoesProfissional(){
-    this.profissionalService.list().subscribe((res) => 
-      this.opcoesProfissional = res?.map((i:Profissional) => ({label:i.id + ' - ' + i.nome, value:i.id}))
+  private carregarOpcoesProfissional() {
+    this.profissionalService.list().subscribe((res) =>
+      this.opcoesProfissional = res?.map((i: Profissional) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
   }
 

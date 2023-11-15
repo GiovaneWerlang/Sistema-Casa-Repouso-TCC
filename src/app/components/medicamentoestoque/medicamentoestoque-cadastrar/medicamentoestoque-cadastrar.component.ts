@@ -39,14 +39,14 @@ export class MedicamentoestoqueCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.medicamentoEstoqueService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/medicamentoestoque/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }

@@ -21,11 +21,11 @@ export class ProfissionalCadastrarComponent implements OnInit {
 
   form: FormGroup;
   formEndereco: FormGroup;
-  opcoesSituacao:LabelValue[] = Situacoes;
-  opcoesFuncao:LabelValue[] = Funcoes;
-  opcoesEspecialidade:LabelValue[] = [];
-  opcoesEstados:string[] = Estados;
-  opcoesPaises:string[] = Paises;
+  opcoesSituacao: LabelValue[] = Situacoes;
+  opcoesFuncao: LabelValue[] = Funcoes;
+  opcoesEspecialidade: LabelValue[] = [];
+  opcoesEstados: string[] = Estados;
+  opcoesPaises: string[] = Paises;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,8 +53,8 @@ export class ProfissionalCadastrarComponent implements OnInit {
       email: ['', [Validators.required, Validators.maxLength(100)]],
       salario: [0, [Validators.required, Validators.min(0)]],
       dataAdmissao: [new Date, Validators.required],
-      funcao: ['CUIDADOR',Validators.required],
-      situacao: ['ATIVO',Validators.required],
+      funcao: ['CUIDADOR', Validators.required],
+      situacao: ['ATIVO', Validators.required],
       especialidade: [null],
       endereco: this.formEndereco
     });
@@ -71,14 +71,14 @@ export class ProfissionalCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.profissionalService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/profissional/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
@@ -88,7 +88,7 @@ export class ProfissionalCadastrarComponent implements OnInit {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/profissional/listar']);
   }
 
@@ -109,9 +109,9 @@ export class ProfissionalCadastrarComponent implements OnInit {
     });
   }
 
-  private carregarOpcoesEspecialidade(){
-    this.especialidadeService.list().subscribe((res) => 
-      this.opcoesEspecialidade = res?.map((i:Especialidade) => ({label:i.nome, value:i.id}))
+  private carregarOpcoesEspecialidade() {
+    this.especialidadeService.list().subscribe((res) =>
+      this.opcoesEspecialidade = res?.map((i: Especialidade) => ({ label: i.nome, value: i.id }))
     );
   }
 

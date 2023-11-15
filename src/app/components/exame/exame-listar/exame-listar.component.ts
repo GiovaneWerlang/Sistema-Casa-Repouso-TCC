@@ -10,15 +10,15 @@ import { MessageService } from 'primeng/api';
   selector: 'app-exame-listar',
   templateUrl: './exame-listar.component.html',
   styleUrls: ['./exame-listar.component.css'],
-  providers: [  { provide: CrudService, useExisting: ExameService},MessageService]
+  providers: [{ provide: CrudService, useExisting: ExameService }, MessageService]
 })
 export class ExameListarComponent {
-  cols:string[] = ["Id", "Nome", "DataHora","Local", "Residente"];
+  cols: string[] = ["Id", "Nome", "DataHora", "Local", "Residente"];
   public items: Exame[] = [];
 
-  first:number = 0;
-  rows:number = 10;
-  total:number = 0;
+  first: number = 0;
+  rows: number = 10;
+  total: number = 0;
 
   page: number = 0;
   sort: string = "id";
@@ -27,42 +27,45 @@ export class ExameListarComponent {
   carregando: boolean = false;
 
   constructor(
-    private service:CrudService<Exame>,
+    private service: CrudService<Exame>,
     private router: Router,
     private messageService: MessageService
-    ) {
-    }
+  ) {
+  }
 
-  novo(){
+  novo() {
     this.router.navigate([`/${this.service.getUrl()}/cadastrar`]);
   }
 
   ngOnInit(): void {
   }
 
-  delete(id:any){
-    this.service.delete(id).subscribe((res)=>{
+  delete(id: any) {
+    this.service.delete(id).subscribe((res) => {
       this.carregarLista(0, this.rows);
     })
   }
 
-  edit(id:number){
+  edit(id: number) {
     this.router.navigate([`/${this.service.getUrl()}/editar/${id}`]);
   }
 
-  carregarLista(page:number, size: number):void{
+  carregarLista(page: number, size: number): void {
     this.carregando = true;
-    this.service.pagesort(page, size, this.sort, this.asc).subscribe((page: any) => {
-      this.items = page.lista;
-      this.total = page.total;
-      this.carregando = false;
-    },(error) => {
-      this.carregando = false;
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+    this.service.pagesort(page, size, this.sort, this.asc).subscribe({
+      next: (page: any) => {
+        this.items = page.lista;
+        this.total = page.total;
+        this.carregando = false;
+      },
+      error: (error) => {
+        this.carregando = false;
+        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+      }
     })
   }
 
-  onPageChange(event:any){
+  onPageChange(event: any) {
     this.rows = event.rows;
     this.carregarLista(event.page, event.rows);
   }
@@ -72,13 +75,16 @@ export class ExameListarComponent {
       this.carregando = true;
       this.sort = event.sortField ? event.sortField : "id";
       this.asc = event.sortOrder === 1;
-      this.service.pagesort(this.page, this.rows, this.sort , this.asc).subscribe((page: any) => {
-        this.items = page.lista;
-        this.total = page.total;
-        this.carregando = false;
-      },(error) => {
-        this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+      this.service.pagesort(this.page, this.rows, this.sort, this.asc).subscribe({
+        next: (page: any) => {
+          this.items = page.lista;
+          this.total = page.total;
+          this.carregando = false;
+        },
+        error: (error) => {
+          this.carregando = false;
+          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        }
       })
     }
   }

@@ -15,7 +15,7 @@ import { MessageService } from 'primeng/api';
 export class AtividadeludicaCadastrarComponent implements OnInit {
 
   form: FormGroup;
-  opcoesSituacao:LabelValue[] = Situacoes;
+  opcoesSituacao: LabelValue[] = Situacoes;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +28,7 @@ export class AtividadeludicaCadastrarComponent implements OnInit {
       id: [null],
       nome: ['', [Validators.required, Validators.maxLength(255)]],
       dataHora: [new Date, Validators.required],
-      situacao: ['ATIVO',Validators.required]
+      situacao: ['ATIVO', Validators.required]
     });
   }
 
@@ -42,14 +42,14 @@ export class AtividadeludicaCadastrarComponent implements OnInit {
   }
 
   salvar() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.atividadeLudicaService.save(this.form.getRawValue()).subscribe((res) => {
-        if(res){
+        if (res) {
           this.router.navigate(['/atividadeludica/listar']);
         }
       })
       this.limpar();
-    }else{
+    } else {
       this.form.markAllAsTouched();
       this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
     }
@@ -59,7 +59,7 @@ export class AtividadeludicaCadastrarComponent implements OnInit {
     this.form.reset();
   }
 
-  voltar(){
+  voltar() {
     this.router.navigate(['/atividadeludica/listar']);
   }
 
