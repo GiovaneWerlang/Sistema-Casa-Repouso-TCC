@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="cpf">Cpf:</label>
-                    <p-inputMask mask="999.999.999-99" [unmask]="true" pKeyFilter="int" name="cpf" formControlName="cpf"  [style]="{'width':'100%'}"/>
+                    <input type="text" pInputText mask="000.000.000-00" pKeyFilter="int" name="cpf" formControlName="cpf"  [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['cpf']?.invalid && (form.controls['cpf']?.dirty || form.controls['cpf']?.touched)">
                         <small *ngIf="form.get('cpf')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="telefone">Telefone:</label>
-                    <input type="text" pInputText name="telefone" formControlName="telefone" />
+                    <input type="text" pInputText mask="(00) 0000-0000||(00) 00000-0000" pKeyFilter="int" name="telefone" formControlName="telefone" />
                     <div *ngIf="form.controls['telefone']?.invalid && (form.controls['telefone']?.dirty || form.controls['telefone']?.touched)">
                         <small *ngIf="form.get('telefone')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                         <small *ngIf="form.get('telefone')?.errors?.['minlength']" class="p-error">Tamanho mínimo 10 caracteres.</small>

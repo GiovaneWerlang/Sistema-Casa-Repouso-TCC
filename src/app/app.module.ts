@@ -61,6 +61,7 @@ import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado
 import { MessageService } from 'primeng/api';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AutenticacaoInterceptorService } from './components/login/autenticacaointerceptor.service';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -121,9 +122,15 @@ import { AutenticacaoInterceptorService } from './components/login/autenticacaoi
     CardModule,
     ProgressSpinnerModule,
     BlockUIModule,
-    ChartModule
+    ChartModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
-  providers: [MessageService, {provide: HTTP_INTERCEPTORS, useClass: AutenticacaoInterceptorService, multi: true}],
+  providers: [
+    MessageService, 
+    {provide: HTTP_INTERCEPTORS, useClass: AutenticacaoInterceptorService, multi: true},
+    provideNgxMask()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
