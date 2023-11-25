@@ -3,6 +3,7 @@ package br.edu.utfpr.medicamentouso;
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteRepository;
 import br.edu.utfpr.crud.CrudService;
+import br.edu.utfpr.enums.SituacaoAtividade;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueRepository;
@@ -105,10 +106,11 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             for (int i = 1; i <= usos; i++){
                     AtividadeMedicamentoResidenteModel atividade = new AtividadeMedicamentoResidenteModel();
                     atividade.setMedicamento(model);
-                    atividade.setDescricao(model.getMedicamento().getNome() + " - " + model.getQtdeMedicamento());
+                    atividade.setDescricao(model.getMedicamento().getNome() + " - Qtde: " + model.getQtdeMedicamento());
                     atividade.setDataHora(
                             model.getDataHoraInicio().plusHours(horas * i)
                     );
+                    atividade.setSituacao(SituacaoAtividade.PENDENTE);
                 atividades.add(atividade);
             }
             atividadeMedicamentoResidenteRepository.persist(atividades);

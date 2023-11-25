@@ -21,8 +21,7 @@ public class AtividadeMedicamentoResidenteRepository extends CrudRepository<Ativ
 
     public List<DadoDTO> getDadosDash(LocalDateTime dataInicial, LocalDateTime dataFinal){
         return find("select " +
-                        "case when  " +
-                        "am.situacao is null then 'Pendente' else am.situacao end as label, " +
+                        "am.situacao as label, " +
                         "count(am.id) as data " +
                         "from AtividadeMedicamentoResidenteModel am " +
                         "where am.dataHora between :dataInicial and :dataFinal " +

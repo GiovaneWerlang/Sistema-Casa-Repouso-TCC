@@ -3,6 +3,7 @@ package br.edu.utfpr.exame;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteRepository;
 import br.edu.utfpr.crud.CrudService;
+import br.edu.utfpr.enums.SituacaoAtividade;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -100,6 +101,7 @@ public class ExameService implements CrudService<ExameDTO> {
             atividadeExameResidenteModel.setDescricao(model.getNome());
             atividadeExameResidenteModel.setDataHora(model.getDataHora());
             atividadeExameResidenteModel.setExame(model);
+            atividadeExameResidenteModel.setSituacao(SituacaoAtividade.PENDENTE);
             atividadeExameResidenteRepository.persist(atividadeExameResidenteModel);
         }catch (Exception ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

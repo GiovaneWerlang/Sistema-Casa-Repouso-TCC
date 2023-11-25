@@ -6,6 +6,8 @@ import lombok.Getter;
 public enum SituacaoAtividade {
 
     REALIZADA("Realizada"),
+    PENDENTE("Pendente"),
+    ENVIADA("Enviada"),
     NAOREALIZADA("Não Realizada");
 
     private String descricao;

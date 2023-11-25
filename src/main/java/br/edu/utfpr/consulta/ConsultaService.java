@@ -3,6 +3,7 @@ package br.edu.utfpr.consulta;
 import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteRepository;
 import br.edu.utfpr.crud.CrudService;
+import br.edu.utfpr.enums.SituacaoAtividade;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -101,6 +102,7 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
             atividadeConsultaResidenteModel.setDescricao(model.getDescricao());
             atividadeConsultaResidenteModel.setDataHora(model.getDataHora());
             atividadeConsultaResidenteModel.setConsulta(model);
+            atividadeConsultaResidenteModel.setSituacao(SituacaoAtividade.PENDENTE);
             atividadeConsultaResidenteRepository.persist(atividadeConsultaResidenteModel);
         }catch (Exception ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
