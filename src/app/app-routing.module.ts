@@ -24,6 +24,14 @@ import { MovimentacaoestoqueListarComponent } from './components/movimentacaoest
 import { MovimentacaoestoqueCadastrarComponent } from './components/movimentacaoestoque/movimentacaoestoque-cadastrar/movimentacaoestoque-cadastrar.component';
 import { MedicamentousoListarComponent } from './components/medicamentouso/medicamentouso-listar/medicamentouso-listar.component';
 import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
+
+import { AtividademedicamentoListarComponent } from './components/atividadesresidente/atividademedicamento/atividademedicamento-listar/atividademedicamento-listar.component';
+import { AtividademedicamentoEditarComponent } from './components/atividadesresidente/atividademedicamento/atividademedicamento-editar/atividademedicamento-editar.component';
+import { AtividadeconsultaEditarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-editar/atividadeconsulta-editar.component';
+import { AtividadeconsultaListarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-listar/atividadeconsulta-listar.component';
+import { AtividadeexameListarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-listar/atividadeexame-listar.component';
+import { AtividadeexameEditarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-editar/atividadeexame-editar.component';
+
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 import { AutenticacaoGuard } from './components/login/autenticacao.guard';
@@ -38,6 +46,16 @@ const routes: Routes = [
   { path: 'atividadeludica/cadastrar', component: AtividadeludicaCadastrarComponent },
   { path: 'atividadeludica/editar/:id', component: AtividadeludicaCadastrarComponent },
   { path: 'atividadeludica/listar', component: AtividadeludicaListarComponent },
+
+  { path: 'atividadeconsulta/editar/:id', component: AtividadeconsultaEditarComponent },
+  { path: 'atividadeconsulta/listar', component: AtividadeconsultaListarComponent },
+
+  { path: 'atividadeexame/editar/:id', component: AtividadeexameEditarComponent },
+  { path: 'atividadeexame/listar', component: AtividadeexameListarComponent },
+
+  { path: 'atividademedicamento/editar/:id', component: AtividademedicamentoEditarComponent },
+  { path: 'atividademedicamento/listar', component: AtividademedicamentoListarComponent },
+
   { path: 'profissional/cadastrar', component: ProfissionalCadastrarComponent },
   { path: 'profissional/editar/:id', component: ProfissionalCadastrarComponent },
   { path: 'profissional/listar', component: ProfissionalListarComponent },

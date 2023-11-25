@@ -15,6 +15,20 @@ export class MenuComponent {
       label: 'Atividades Lúdicas',
       icon: 'pi pi-th-large',
       routerLink: 'atividadeludica/listar'
+    },{
+      label: 'Atividades Residente - Consulta',
+      icon: 'pi pi-th-large',
+      routerLink: 'atividadeconsulta/listar'
+    },
+    {
+      label: 'Atividades Residente - Exame',
+      icon: 'pi pi-th-large',
+      routerLink: 'atividadeexame/listar'
+    },
+    {
+      label: 'Atividades Residente - Medicamento',
+      icon: 'pi pi-th-large',
+      routerLink: 'atividademedicamento/listar'
     }, {
       label: 'Consulta',
       icon: 'pi pi-file',

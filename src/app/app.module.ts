@@ -38,6 +38,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
 import { ChartModule } from 'primeng/chart';
 
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
 import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
 import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
 import { ResidenteListarComponent } from './components/residente/residente-listar/residente-listar.component';
@@ -61,7 +63,12 @@ import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado
 import { MessageService } from 'primeng/api';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AutenticacaoInterceptorService } from './components/login/autenticacaointerceptor.service';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { AtividademedicamentoListarComponent } from './components/atividadesresidente/atividademedicamento/atividademedicamento-listar/atividademedicamento-listar.component';
+import { AtividademedicamentoEditarComponent } from './components/atividadesresidente/atividademedicamento/atividademedicamento-editar/atividademedicamento-editar.component';
+import { AtividadeconsultaEditarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-editar/atividadeconsulta-editar.component';
+import { AtividadeconsultaListarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-listar/atividadeconsulta-listar.component';
+import { AtividadeexameListarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-listar/atividadeexame-listar.component';
+import { AtividadeexameEditarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-editar/atividadeexame-editar.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +105,12 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     LoginComponent,
     NaoencontradoComponent,
     DashboardComponent,
+    AtividademedicamentoListarComponent,
+    AtividademedicamentoEditarComponent,
+    AtividadeconsultaEditarComponent,
+    AtividadeconsultaListarComponent,
+    AtividadeexameListarComponent,
+    AtividadeexameEditarComponent,
   ],
   imports: [
     BrowserModule,

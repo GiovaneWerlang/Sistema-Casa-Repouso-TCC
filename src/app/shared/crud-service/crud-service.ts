@@ -13,6 +13,10 @@ export class CrudService<T> {
         return this.T_URL;
     }
 
+    getApiUrl(){
+        return this.API_URL;
+    }
+
     list() {
         return this.http.get<T[]>(`${this.API_URL}${this.T_URL}`)
             .pipe(
