@@ -42,7 +42,7 @@ export class AutenticacaoService {
     );
   }
 
-  logout() {   
+  logout() {
     localStorage.removeItem('dadosUsuario');
     this.dadoUsuario.next(null);
     this.router.navigate(['/login']);
@@ -56,6 +56,11 @@ export class AutenticacaoService {
     }
 
     const dataExpiracao = new Date(dadoUsuario._dataHoraExpiracao);
+    
+    if(dataExpiracao < new Date()){
+      this.logout();
+      return;
+    }
     const usuario = new DadoUsuario(dadoUsuario.id, dadoUsuario.nome, dadoUsuario._token, dadoUsuario.funcao, dataExpiracao);  
 
     if (usuario.getToken) {
