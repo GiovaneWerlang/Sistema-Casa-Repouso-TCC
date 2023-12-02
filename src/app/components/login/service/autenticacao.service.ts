@@ -52,22 +52,25 @@ export class AutenticacaoService {
     const dadoUsuario = JSON.parse(localStorage.getItem('dadosUsuario') || '{}');
    
     if (!dadoUsuario) {
-      return;
-    }
-
-    const dataExpiracao = new Date(dadoUsuario._dataHoraExpiracao);
-    
-    if(dataExpiracao < new Date()){
       this.logout();
       return;
     }
-    const usuario = new DadoUsuario(dadoUsuario.id, dadoUsuario.nome, dadoUsuario._token, dadoUsuario.funcao, dataExpiracao);  
+
+    if(this.validaTokenExpirado(dadoUsuario.getDataHora)){
+      this.logout();
+      return;
+    }
+    const usuario = new DadoUsuario(dadoUsuario.id, dadoUsuario.nome, dadoUsuario._token, dadoUsuario.funcao, new Date(dadoUsuario._dataHoraExpiracao));  
 
     if (usuario.getToken) {
       this.dadoUsuario.next(usuario);
-      this.router.navigate(['/home']);
     }
     
+  }
+
+  validaTokenExpirado(dataHora:string){
+    const dataExpiracao = new Date(dataHora);    
+    return dataExpiracao.getTime() < new Date().getTime();
   }
 
   private handleLoginError(error: HttpErrorResponse) {    

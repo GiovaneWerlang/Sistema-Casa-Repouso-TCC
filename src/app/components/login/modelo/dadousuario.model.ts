@@ -14,4 +14,8 @@ export class DadoUsuario {
     }
     return this._token;
   }
+
+  get getDataHora(){
+    return this._dataHoraExpiracao;
+  }
 }
