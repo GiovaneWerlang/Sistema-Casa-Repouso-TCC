@@ -12,7 +12,7 @@ public abstract class MontaGrafico {
     private final List<String> cores = new ArrayList<>(Stream.of(Cores.values()).map(Cores::getCor).toList());
 
     public DashboardDTO montaGrafico(List<DadoDTO> dadosDTO, String titulo) {
-        if (dadosDTO != null && !dadosDTO.isEmpty()) {
+        if (dadosDTO != null && !dadosDTO.isEmpty() && dadosDTO.get(0).getData() != 0L) {
             return DashboardDTO.builder()
                     .titulo(titulo)
                     .labels(dadosDTO.stream().map(l -> l.getLabel()).toList())
