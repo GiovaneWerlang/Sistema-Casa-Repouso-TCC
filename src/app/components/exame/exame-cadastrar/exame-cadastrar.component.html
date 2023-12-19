@@ -48,7 +48,7 @@
                     <label htmlFor="laudo">Laudo:</label>
                     <textarea rows="5" cols="30" pInputTextarea name="laudo" formControlName="laudo"></textarea>
                     <div *ngIf="form.controls['laudo']?.invalid && (form.controls['laudo']?.dirty || form.controls['laudo']?.touched)">
-                        <small *ngIf="form.get('laudo')?.errors?.['maxlength']" class="p-error">Tamanho máximo 255 caracteres.</small>
+                        <small *ngIf="form.get('laudo')?.errors?.['maxlength']" class="p-error">Tamanho máximo 500 caracteres.</small>
                     </div>
                 </div>
             </div>

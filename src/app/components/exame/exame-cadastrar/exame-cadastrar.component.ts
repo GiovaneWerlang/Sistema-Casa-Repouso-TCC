@@ -39,7 +39,7 @@ export class ExameCadastrarComponent implements OnInit {
       nome: ['', [Validators.required, Validators.maxLength(255)]],
       dataHora: [null, Validators.required],
       local: ['', [Validators.required, Validators.maxLength(100)]],
-      laudo: ['', Validators.maxLength(255)],
+      laudo: ['', Validators.maxLength(500)],
       especialidade: [null, Validators.required],
       profissional: [null, Validators.required],
       residente: [null, Validators.required]
