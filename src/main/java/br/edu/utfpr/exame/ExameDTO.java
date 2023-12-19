@@ -23,7 +23,7 @@ public class ExameDTO {
     @Size(max = 100, message = "Não pode ter mais de 100 caracteres")
     private String local;
 
-    @Size(max = 255, message = "Não pode ter mais de 255 caracteres")
+    @Size(max = 500, message = "Não pode ter mais de 500 caracteres")
     private String laudo;
 
     @NotNull(message = "Não pode ser nulo")
