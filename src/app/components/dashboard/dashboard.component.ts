@@ -11,16 +11,19 @@ export class DashboardComponent implements OnInit {
   data: any;
 
   options: any;
+  carregando: boolean = false;
 
   constructor(private _dashboardService: DashboardService) {
     this.options = {
       cutout: '50%'
     };
+    this.carregando = true;
   }
 
   ngOnInit(): void {
     this._dashboardService.list().subscribe(dados => {
       this.data = dados;
+      this.carregando = false;
     });
   }
 }
