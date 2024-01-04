@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 @Data
 public class MedicamentoUsoDTO {
 
-    @Max(value = 48, message = "Não pode ser maior que 48")
+    @Max(value = 2147483647, message = "Não pode ser maior que 2147483647")
+    @Min(value = 1, message = "Não pode ser menor que 1")
     @NotNull(message = "Não pode ser nulo")
     private Integer intervalo;
 

@@ -93,8 +93,11 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
         }
         model.setMedicamento(medicamentoEstoqueModel);
 
-        if(model.getQtdeVezesAoDia() * model.getIntervalo() > 24){
+        if(model.getIntervalo() < 24 && model.getQtdeVezesAoDia() * model.getIntervalo() > 24 || model.getIntervalo() < 1){
             return Response.status(422, "Inconsistência nos dados informados.").build();
+        }
+        if(model.getIntervalo() >= 24 && model.getQtdeVezesAoDia() > 1){
+            return Response.status(422, "O campo vezes ao dia não pode ter valor maior que 1 se o intervalo for igual ou maior a 24 horas.").build();
         }
 
         try{
@@ -102,7 +105,7 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             List<AtividadeMedicamentoResidenteModel> atividades = new ArrayList<>();
 
             int usos = model.getQtdeDiasUso() * model.getQtdeVezesAoDia();
-            int horas = 24 / model.getQtdeVezesAoDia();
+            int horas = model.getIntervalo() < 24 ? 24 / model.getQtdeVezesAoDia() : model.getIntervalo();
             for (int i = 1; i <= usos; i++){
                     AtividadeMedicamentoResidenteModel atividade = new AtividadeMedicamentoResidenteModel();
                     atividade.setMedicamento(model);
