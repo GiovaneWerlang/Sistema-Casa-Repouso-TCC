@@ -4,11 +4,11 @@
         <form [formGroup]="form" (submit)="salvar()" class="flex flex-column">
             <div class="flex flex-row flex-wrap">
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="intervalo">Intervalo:</label>
-                    <input type="number" pInputText pKeyFilter="int" name="intervalo" formControlName="intervalo" />
+                    <label htmlFor="intervalo">Intervalo (horas):</label>
+                    <input type="number" pInputText pKeyFilter="pint" name="intervalo" formControlName="intervalo" />
                     <div *ngIf="form.controls['intervalo']?.invalid && (form.controls['intervalo']?.dirty || form.controls['intervalo']?.touched)">
                         <small *ngIf="form.get('intervalo')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
-                        <small *ngIf="form.get('intervalo')?.errors?.['max']" class="p-error">Valor máximo 48.</small>
+                        <small *ngIf="form.get('intervalo')?.errors?.['max']" class="p-error">Valor máximo 2147483647.</small>
                     </div>
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
@@ -20,16 +20,17 @@
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtdeVezesAoDia">Vezes ao dia:</label>
-                    <input type="number" pInputText pKeyFilter="int" name="qtdeVezesAoDia" formControlName="qtdeVezesAoDia" />
+                    <input type="number" pInputText pKeyFilter="pint" name="qtdeVezesAoDia" formControlName="qtdeVezesAoDia" />
                     <div *ngIf="form.controls['qtdeVezesAoDia']?.invalid && (form.controls['qtdeVezesAoDia']?.dirty || form.controls['qtdeVezesAoDia']?.touched)">
                         <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                         <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>
-                        <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['max']" class="p-error">Valor máximo 24.</small>
+                        <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['max'] && form.get('intervalo')?.value < 24" class="p-error">Valor máximo 24.</small>
+                        <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['max'] && form.get('intervalo')?.value >= 24" class="p-error">Valor máximo 1.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtdeDiasUso">Quantidade de dias:</label>
-                    <input type="number" pInputText pKeyFilter="int" name="qtdeDiasUso" formControlName="qtdeDiasUso" />
+                    <input type="number" pInputText pKeyFilter="pint" name="qtdeDiasUso" formControlName="qtdeDiasUso" />
                     <div *ngIf="form.controls['qtdeDiasUso']?.invalid && (form.controls['qtdeDiasUso']?.dirty || form.controls['qtdeDiasUso']?.touched)">
                         <small *ngIf="form.get('qtdeDiasUso')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                         <small *ngIf="form.get('qtdeDiasUso')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>
@@ -38,7 +39,7 @@
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
                     <label htmlFor="qtdeMedicamento">Quantidade de Medicamento:</label>
-                    <input type="number" pInputText pKeyFilter="int" name="qtdeMedicamento" formControlName="qtdeMedicamento" />
+                    <input type="number" pInputText pKeyFilter="pint" name="qtdeMedicamento" formControlName="qtdeMedicamento" />
                     <div *ngIf="form.controls['qtdeMedicamento']?.invalid && (form.controls['qtdeMedicamento']?.dirty || form.controls['qtdeMedicamento']?.touched)">
                         <small *ngIf="form.get('qtdeMedicamento')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                         <small *ngIf="form.get('qtdeMedicamento')?.errors?.['min']" class="p-error">Valor mínimo 1.</small>

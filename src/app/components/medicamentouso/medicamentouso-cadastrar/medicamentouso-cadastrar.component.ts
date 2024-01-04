@@ -32,7 +32,7 @@ export class MedicamentousoCadastrarComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       id: [null],
-      intervalo: [null, [Validators.required, Validators.max(48)]],
+      intervalo: [null, [Validators.required, Validators.max(2147483647)]],
       qtdeVezesAoDia: [null, [Validators.required, Validators.min(1), Validators.max(24)]],
       dataHoraInicio: [null, [Validators.required]],
       qtdeDiasUso: [null, [Validators.required, Validators.min(1), Validators.max(2147483647)]],
@@ -42,6 +42,7 @@ export class MedicamentousoCadastrarComponent implements OnInit {
     });
     this.carregarOpcoesMedicamento();
     this.carregarOpcoesResidente();
+    this.monitoraIntervalo();
   }
 
   ngOnInit(): void {
@@ -96,6 +97,20 @@ export class MedicamentousoCadastrarComponent implements OnInit {
     this.residenteService.list().subscribe((res) =>
       this.opcoesResidente = res?.map((i: Residente) => ({ label: i.id + ' - ' + i.nome, value: i.id }))
     );
+  }
+
+  monitoraIntervalo(){
+    this.form.get('intervalo')?.valueChanges.subscribe((intervalo) => {
+      if(intervalo && intervalo >= 24){
+        this.form.get('qtdeVezesAoDia')?.clearValidators();
+        this.form.get('qtdeVezesAoDia')?.addValidators([Validators.required, Validators.min(1), Validators.max(1)]);
+        this.form.get('qtdeVezesAoDia')?.updateValueAndValidity();
+      }else{
+        this.form.get('qtdeVezesAoDia')?.clearValidators();
+        this.form.get('qtdeVezesAoDia')?.addValidators([Validators.required, Validators.min(1), Validators.max(24)]);
+        this.form.get('qtdeVezesAoDia')?.updateValueAndValidity();
+      }
+    })
   }
 
 }
