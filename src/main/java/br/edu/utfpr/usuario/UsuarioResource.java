@@ -38,6 +38,7 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
     public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
+
     @POST
     @Transactional
     public Response add(UsuarioDTO usuarioDTO){

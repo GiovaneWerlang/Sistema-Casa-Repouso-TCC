@@ -43,6 +43,10 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
     public Response findById(long id){
         UsuarioModel model = repository.findById(id);
         if(model != null){
+            model.setSenha(null);
+            ProfissionalModel modelProfissional = new ProfissionalModel();
+            modelProfissional.setId(model.getProfissional().getId());
+            model.setProfissional(modelProfissional);
             return Response.ok(model).build();
         }
 
