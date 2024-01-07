@@ -2,6 +2,8 @@ package br.edu.utfpr.atividadesresidente.atividadeconsultaresidente;
 
 import br.edu.utfpr.atividadesresidente.AtividadeResidenteDTO;
 import br.edu.utfpr.erro.ResponseError;
+import br.edu.utfpr.profissional.ProfissionalModel;
+import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.utils.PageDTO;
 import io.quarkus.panache.common.Sort;
 
@@ -18,11 +20,13 @@ public class AtividadeConsultaResidenteService {
 
     private AtividadeConsultaResidenteRepository repository;
     private Validator validator;
+    private ProfissionalRepository profissionalRepository;
 
     @Inject
-    public AtividadeConsultaResidenteService(AtividadeConsultaResidenteRepository repository, Validator validator) {
+    public AtividadeConsultaResidenteService(AtividadeConsultaResidenteRepository repository, Validator validator, ProfissionalRepository profissionalRepository) {
         this.repository = repository;
         this.validator = validator;
+        this.profissionalRepository = profissionalRepository;
     }
 
     public Response getAll(){
@@ -49,8 +53,10 @@ public class AtividadeConsultaResidenteService {
         }
 
         AtividadeConsultaResidenteModel model = repository.findById(id);
-        if(model != null){
+        ProfissionalModel profissionalModel = profissionalRepository.findById(atividadeResidenteDTO.getProfissional());
+        if(model != null && profissionalModel != null){
             model.setSituacao(atividadeResidenteDTO.getSituacao());
+            model.setProfissional(profissionalModel);
 
             return Response.status(201).entity(model.getId()).build();
         }

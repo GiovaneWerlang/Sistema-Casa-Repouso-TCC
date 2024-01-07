@@ -2,6 +2,7 @@ package br.edu.utfpr.atividadesresidente.atividadeexameresidente;
 
 import br.edu.utfpr.enums.SituacaoAtividade;
 import br.edu.utfpr.exame.ExameModel;
+import br.edu.utfpr.profissional.ProfissionalModel;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -30,5 +31,9 @@ public class AtividadeExameResidenteModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idexame")
     private ExameModel exame;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idprofissional")
+    private ProfissionalModel profissional;
 
 }
