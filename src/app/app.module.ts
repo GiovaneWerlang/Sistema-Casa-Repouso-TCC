@@ -69,6 +69,7 @@ import { AtividadeconsultaEditarComponent } from './components/atividadesresiden
 import { AtividadeconsultaListarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-listar/atividadeconsulta-listar.component';
 import { AtividadeexameListarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-listar/atividadeexame-listar.component';
 import { AtividadeexameEditarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-editar/atividadeexame-editar.component';
+import { DataHoraInterceptorService } from './shared/crud-service/datahorainterceptor.service';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { AtividadeexameEditarComponent } from './components/atividadesresidente/
   providers: [
     MessageService, 
     {provide: HTTP_INTERCEPTORS, useClass: AutenticacaoInterceptorService, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: DataHoraInterceptorService, multi: true },
     provideNgxMask()
   ],
   bootstrap: [AppComponent]
