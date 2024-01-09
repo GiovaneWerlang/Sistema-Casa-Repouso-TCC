@@ -2,6 +2,7 @@ package br.edu.utfpr.atividadesresidente.atividadeexameresidente;
 
 import br.edu.utfpr.crud.CrudRepository;
 import br.edu.utfpr.dashboard.DadoDTO;
+import br.edu.utfpr.enums.SituacaoAtividade;
 import io.quarkus.panache.common.Parameters;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,6 +18,10 @@ public class AtividadeExameResidenteRepository extends CrudRepository<AtividadeE
 
     public List<AtividadeExameResidenteModel> findByTime(){
         return find("datahora between ?1 and ?2", LocalDateTime.now().withHour(5), LocalDateTime.now().plusDays(1).withHour(8)).list();
+    }
+
+    public List<AtividadeExameResidenteModel> findToSendByDatahoraSituacao(){
+        return find("datahora between ?1 and ?2 and situacao = ?3", LocalDateTime.now(), LocalDateTime.now().plusHours(2), SituacaoAtividade.PENDENTE).list();
     }
 
     public List<DadoDTO> getDadosDash(LocalDateTime dataInicial, LocalDateTime dataFinal){
