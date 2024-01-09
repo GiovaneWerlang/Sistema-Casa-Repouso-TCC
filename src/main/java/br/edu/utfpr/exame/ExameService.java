@@ -98,7 +98,8 @@ public class ExameService implements CrudService<ExameDTO> {
         try{
             repository.persist(model);
             AtividadeExameResidenteModel atividadeExameResidenteModel = new AtividadeExameResidenteModel();
-            atividadeExameResidenteModel.setDescricao(model.getNome());
+            atividadeExameResidenteModel.setDescricao(model.getNome() +
+                    " - Residente: " + model.getResidente().getNome());
             atividadeExameResidenteModel.setDataHora(model.getDataHora());
             atividadeExameResidenteModel.setExame(model);
             atividadeExameResidenteModel.setSituacao(SituacaoAtividade.PENDENTE);

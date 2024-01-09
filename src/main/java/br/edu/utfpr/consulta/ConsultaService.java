@@ -99,7 +99,8 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
         try{
             repository.persist(model);
             AtividadeConsultaResidenteModel atividadeConsultaResidenteModel = new AtividadeConsultaResidenteModel();
-            atividadeConsultaResidenteModel.setDescricao(model.getDescricao());
+            atividadeConsultaResidenteModel.setDescricao(model.getDescricao() +
+                    " - Residente: " + model.getResidente().getNome());
             atividadeConsultaResidenteModel.setDataHora(model.getDataHora());
             atividadeConsultaResidenteModel.setConsulta(model);
             atividadeConsultaResidenteModel.setSituacao(SituacaoAtividade.PENDENTE);
