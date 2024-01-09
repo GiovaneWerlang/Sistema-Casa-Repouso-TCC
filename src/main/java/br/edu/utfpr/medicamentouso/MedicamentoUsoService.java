@@ -105,11 +105,15 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             List<AtividadeMedicamentoResidenteModel> atividades = new ArrayList<>();
 
             int usos = model.getQtdeDiasUso() * model.getQtdeVezesAoDia();
-            int horas = model.getIntervalo() < 24 ? 24 / model.getQtdeVezesAoDia() : model.getIntervalo();
+            int horas = model.getIntervalo() < 24 ? model.getQtdeVezesAoDia() != 1 ? 24 / model.getQtdeVezesAoDia() : 1 : model.getIntervalo();
             for (int i = 1; i <= usos; i++){
                     AtividadeMedicamentoResidenteModel atividade = new AtividadeMedicamentoResidenteModel();
                     atividade.setMedicamento(model);
-                    atividade.setDescricao(model.getMedicamento().getNome() + " - Qtde: " + model.getQtdeMedicamento());
+                    atividade.setDescricao(
+                                    model.getMedicamento().getNome() + " - Principio ativo: " +
+                                    model.getMedicamento().getPrincipioAtivo() +
+                                    " - Qtde: " + model.getQtdeMedicamento() +
+                                    " - Residente: " + model.getResidente().getNome());
                     atividade.setDataHora(
                             model.getDataHoraInicio().plusHours(horas * i)
                     );
