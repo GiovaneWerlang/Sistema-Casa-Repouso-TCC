@@ -37,8 +37,7 @@ public class AtividadeResidenteScheduler {
         this.profissionalService = profissionalService;
     }
 
-    //@Scheduled(every="1h")
-    @Scheduled(every="2m")
+    @Scheduled(every="1h")
     void cronJob(ScheduledExecution execution) {
         processarAtividades(buscarEmails());
     }
