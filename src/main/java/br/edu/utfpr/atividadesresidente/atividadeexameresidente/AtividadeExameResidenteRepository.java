@@ -35,4 +35,8 @@ public class AtividadeExameResidenteRepository extends CrudRepository<AtividadeE
         ).project(DadoDTO.class).list();
     }
 
+    public int atualizarSituacaoEnviada(Long id){
+        return update("situacaoatividade = 'ENVIADA', idprofissional = 1 where id = ?1", id);
+    }
+
 }

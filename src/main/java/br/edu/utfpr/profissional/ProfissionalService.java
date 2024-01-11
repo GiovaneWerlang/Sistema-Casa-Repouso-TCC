@@ -218,4 +218,8 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
         return Response.ok(pageDTO).build();
     }
 
+    public List<String> buscarEmails(){
+       return repository.findEmailByFuncaoCuidador();
+    }
+
 }
