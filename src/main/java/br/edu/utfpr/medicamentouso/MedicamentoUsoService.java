@@ -1,9 +1,7 @@
 package br.edu.utfpr.medicamentouso;
 
-import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteRepository;
 import br.edu.utfpr.crud.CrudService;
-import br.edu.utfpr.enums.SituacaoAtividade;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueRepository;
@@ -17,7 +15,6 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -102,25 +99,8 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
 
         try{
             repository.persist(model);
-            List<AtividadeMedicamentoResidenteModel> atividades = new ArrayList<>();
-
-            int usos = model.getQtdeDiasUso() * model.getQtdeVezesAoDia();
-            int horas = model.getIntervalo() < 24 ? model.getQtdeVezesAoDia() != 1 ? 24 / model.getQtdeVezesAoDia() : 1 : model.getIntervalo();
-            for (int i = 1; i <= usos; i++){
-                    AtividadeMedicamentoResidenteModel atividade = new AtividadeMedicamentoResidenteModel();
-                    atividade.setMedicamento(model);
-                    atividade.setDescricao(
-                                    model.getMedicamento().getNome() + " - Principio ativo: " +
-                                    model.getMedicamento().getPrincipioAtivo() +
-                                    " - Qtde: " + model.getQtdeMedicamento() +
-                                    " - Residente: " + model.getResidente().getNome());
-                    atividade.setDataHora(
-                            model.getDataHoraInicio().plusHours(horas * i)
-                    );
-                    atividade.setSituacao(SituacaoAtividade.PENDENTE);
-                atividades.add(atividade);
-            }
-            atividadeMedicamentoResidenteRepository.persist(atividades);
+            GerarAtividadesMedicamentoUso gerarAtividadesMedicamentoUso = new GerarAtividadesMedicamentoUso();
+            atividadeMedicamentoResidenteRepository.persist(gerarAtividadesMedicamentoUso.gerar(model));
         }catch (Exception ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

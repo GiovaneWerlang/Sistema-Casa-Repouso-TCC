@@ -98,13 +98,8 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
 
         try{
             repository.persist(model);
-            AtividadeConsultaResidenteModel atividadeConsultaResidenteModel = new AtividadeConsultaResidenteModel();
-            atividadeConsultaResidenteModel.setDescricao(model.getDescricao() +
-                    " - Residente: " + model.getResidente().getNome());
-            atividadeConsultaResidenteModel.setDataHora(model.getDataHora());
-            atividadeConsultaResidenteModel.setConsulta(model);
-            atividadeConsultaResidenteModel.setSituacao(SituacaoAtividade.PENDENTE);
-            atividadeConsultaResidenteRepository.persist(atividadeConsultaResidenteModel);
+            GerarAtividadeConsulta gerarAtividadeConsulta = new GerarAtividadeConsulta();
+            atividadeConsultaResidenteRepository.persist(gerarAtividadeConsulta.gerar(model));
         }catch (Exception ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
