@@ -38,6 +38,5 @@ public class EnvioWhatsapp {
                 e.printStackTrace();
             }
         }
-        System.out.println(habilitar);
     }
 }
