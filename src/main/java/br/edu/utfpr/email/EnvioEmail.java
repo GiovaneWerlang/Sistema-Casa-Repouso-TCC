@@ -8,14 +8,20 @@ import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class EnvioEmail {
 
-    public void enviar(String emailProfissional, String subject, String texto) {
+    @ConfigProperty(name = "email.login", defaultValue="Não configurado!")
+    String login;
 
-        String emailTymed = "tymed@hotmail.com";
-        final String username = "tymed@hotmail.com";
-        final String password = "tymed";
+    @ConfigProperty(name = "email.senha", defaultValue="Não configurado!")
+    String senha;
+
+    public void enviar(String emailProfissional, String subject, String texto) {
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -27,14 +33,14 @@ public class EnvioEmail {
                 new jakarta.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(login, senha);
                     }
                 });
 
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(emailTymed));
+            message.setFrom(new InternetAddress(login));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(emailProfissional));
             message.setSubject(subject);
             message.setText(texto);

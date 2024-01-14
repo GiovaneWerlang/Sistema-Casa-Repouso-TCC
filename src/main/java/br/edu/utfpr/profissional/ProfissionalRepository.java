@@ -17,4 +17,8 @@ public class ProfissionalRepository extends CrudRepository<ProfissionalModel> {
         return find("select p.email from ProfissionalModel p where p.funcao = ?1", Funcao.CUIDADOR).project(String.class).list();
     }
 
+    public List<String> findTelefoneByFuncaoCuidador(){
+        return find("select p.telefone from ProfissionalModel p where p.funcao = ?1", Funcao.CUIDADOR).project(String.class).list();
+    }
+
 }

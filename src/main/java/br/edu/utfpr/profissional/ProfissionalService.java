@@ -222,4 +222,8 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
        return repository.findEmailByFuncaoCuidador();
     }
 
+    public List<String> buscarTelefones(){
+        return repository.findTelefoneByFuncaoCuidador();
+    }
+
 }

@@ -3,25 +3,34 @@ package br.edu.utfpr.atividadesresidente.processa;
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteRepository;
 import br.edu.utfpr.email.EnvioEmail;
+import br.edu.utfpr.whatsapp.EnvioWhatsapp;
 
-import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
+ import java.util.List;
 
+@ApplicationScoped
 public class ProcessaAtividadeMedicamento implements ProcessaAtividade<AtividadeMedicamentoResidenteModel>{
 
-
     private AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository;
+    private EnvioEmail envioEmail;
+    private EnvioWhatsapp envioWhatsapp;
 
-    public ProcessaAtividadeMedicamento(AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository) {
+    public ProcessaAtividadeMedicamento(AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository,
+                                        EnvioEmail envioEmail,
+                                        EnvioWhatsapp envioWhatsapp) {
         this.atividadeMedicamentoResidenteRepository = atividadeMedicamentoResidenteRepository;
+        this.envioEmail = envioEmail;
+        this.envioWhatsapp = envioWhatsapp;
     }
 
     @Override
-    public void processarLista(List<String> emails) {
+    public void processarLista(List<String> emails, List<String> telefones) {
 
-        List<AtividadeMedicamentoResidenteModel> lista = buscarMedicamentosPendentes();
+        List<AtividadeMedicamentoResidenteModel> lista = buscarAtividadesPendentes();
 
         for (AtividadeMedicamentoResidenteModel model : lista){
             enviarEmails(emails, criaCorpo(model), model);
+            enviarWhatsapps(telefones, criaCorpo(model), model);
         }
     }
 
@@ -39,20 +48,30 @@ public class ProcessaAtividadeMedicamento implements ProcessaAtividade<Atividade
         return sb.toString();
     }
 
-    public  List<AtividadeMedicamentoResidenteModel> buscarMedicamentosPendentes(){
+    public List<AtividadeMedicamentoResidenteModel> buscarAtividadesPendentes(){
         return atividadeMedicamentoResidenteRepository.findToSendByDatahoraSituacao();
     }
 
     public void enviarEmails(List<String> emails, String corpo, AtividadeMedicamentoResidenteModel model){
         try {
             for (String email : emails) {
-                EnvioEmail envioEmail = new EnvioEmail();
                 envioEmail.enviar(email, "Lembrete de atividade", corpo);
-           }
+            }
+            atualizarSituacaoDaAtividade(model.getId());
         }catch(Exception e){
             e.printStackTrace();
         }
-        atualizarSituacaoDaAtividade(model.getId());
+    }
+
+    public void enviarWhatsapps(List<String> telefones, String corpo, AtividadeMedicamentoResidenteModel model) {
+        try {
+            for (String telefone : telefones) {
+                envioWhatsapp.enviar(telefone,corpo);
+            }
+            atualizarSituacaoDaAtividade(model.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void atualizarSituacaoDaAtividade(Long id){
