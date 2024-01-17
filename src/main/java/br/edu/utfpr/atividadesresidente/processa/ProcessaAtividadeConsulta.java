@@ -6,34 +6,12 @@ import br.edu.utfpr.email.EnvioEmail;
 import br.edu.utfpr.whatsapp.EnvioWhatsapp;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import java.util.List;
 
 @ApplicationScoped
-public class ProcessaAtividadeConsulta implements ProcessaAtividade<AtividadeConsultaResidenteModel>{
+public class ProcessaAtividadeConsulta extends ProcessaAtividade<AtividadeConsultaResidenteModel, AtividadeConsultaResidenteRepository> {
 
-    private AtividadeConsultaResidenteRepository atividadeConsultaResidenteRepository;
-    private EnvioEmail envioEmail;
-    private EnvioWhatsapp envioWhatsapp;
-
-    @Inject
-    public ProcessaAtividadeConsulta(AtividadeConsultaResidenteRepository atividadeConsultaResidenteRepository,
-                                     EnvioEmail envioEmail,
-                                     EnvioWhatsapp envioWhatsapp) {
-        this.atividadeConsultaResidenteRepository = atividadeConsultaResidenteRepository;
-        this.envioEmail = envioEmail;
-        this.envioWhatsapp = envioWhatsapp;
-    }
-
-    @Override
-    public void processarLista(List<String> emails, List<String> telefones) {
-
-        List<AtividadeConsultaResidenteModel> lista = buscarAtividadesPendentes();
-
-        for (AtividadeConsultaResidenteModel model : lista){
-            enviarEmails(emails, criaCorpo(model), model);
-            enviarWhatsapps(telefones, criaCorpo(model), model);
-        }
+    public ProcessaAtividadeConsulta(AtividadeConsultaResidenteRepository repository, EnvioEmail envioEmail, EnvioWhatsapp envioWhatsapp) {
+        super(repository, envioEmail, envioWhatsapp);
     }
 
     public String criaCorpo(AtividadeConsultaResidenteModel model){
@@ -49,36 +27,6 @@ public class ProcessaAtividadeConsulta implements ProcessaAtividade<AtividadeCon
         sb.append(" horas. No local: ");
         sb.append(model.getConsulta().getLocal());
         return sb.toString();
-    }
-
-    public  List<AtividadeConsultaResidenteModel> buscarAtividadesPendentes(){
-        return atividadeConsultaResidenteRepository.findToSendByDatahoraSituacao();
-    }
-
-    public void enviarEmails(List<String> emails, String corpo, AtividadeConsultaResidenteModel model){
-        try {
-            for (String email : emails) {
-                envioEmail.enviar(email, "Lembrete de atividade", corpo);
-            }
-            atualizarSituacaoDaAtividade(model.getId());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void enviarWhatsapps(List<String> telefones, String corpo, AtividadeConsultaResidenteModel model) {
-        try {
-            for (String telefone : telefones) {
-                envioWhatsapp.enviar(telefone,corpo);
-            }
-            atualizarSituacaoDaAtividade(model.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void atualizarSituacaoDaAtividade(Long id){
-       atividadeConsultaResidenteRepository.atualizarSituacaoEnviada(id);
     }
 
 }

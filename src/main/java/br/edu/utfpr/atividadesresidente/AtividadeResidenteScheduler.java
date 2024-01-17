@@ -3,10 +3,8 @@ package br.edu.utfpr.atividadesresidente;
 import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteRepository;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteRepository;
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteRepository;
-import br.edu.utfpr.atividadesresidente.processa.ProcessaAtividade;
-import br.edu.utfpr.atividadesresidente.processa.ProcessaAtividadeConsulta;
-import br.edu.utfpr.atividadesresidente.processa.ProcessaAtividadeExame;
-import br.edu.utfpr.atividadesresidente.processa.ProcessaAtividadeMedicamento;
+import br.edu.utfpr.atividadesresidente.processa.*;
+import br.edu.utfpr.crud.CrudRepositoryAtividade;
 import br.edu.utfpr.email.EnvioEmail;
 import br.edu.utfpr.profissional.ProfissionalService;
 import br.edu.utfpr.whatsapp.EnvioWhatsapp;
@@ -47,8 +45,7 @@ public class AtividadeResidenteScheduler {
         this.envioWhatsapp = envioWhatsapp;
     }
 
-    //@Scheduled(every="1h")
-    @Scheduled(every="2m")
+    @Scheduled(every="1h")
     void cronJob(ScheduledExecution execution) {
         processarAtividades(buscarEmails(), buscarTelefones());
     }
@@ -63,7 +60,7 @@ public class AtividadeResidenteScheduler {
 
     @Transactional
     public void processarAtividades(List<String> emails, List<String> telefones){
-        ProcessaAtividade processaAtividade;
+        ProcessaAtividade<? extends AtividadeResidenteModel, ? extends CrudRepositoryAtividade<?>> processaAtividade;
 
         processaAtividade = new ProcessaAtividadeConsulta(atividadeConsultaResidenteRepository, envioEmail, envioWhatsapp);
         processaAtividade.processarLista(emails, telefones);
