@@ -10,8 +10,12 @@ body {
     padding: 0;
     margin: 0;
     font-family: var(--font-family);
-    background-color: var(--surface-0);
+    background-color: var(--surface-100);
     color: var(--text-color);
+}
+
+.header{
+    background-color: var(--surface-0);
 }
 
 .card {
@@ -56,9 +60,8 @@ body {
 
 .chart-container{
     padding: 40px;
-    border: solid 1px #b2b5bd;
     border-radius: 6px;
     background-color: #fdfdfd;
-    box-shadow: #a19f9f 0px 0px 10px 4px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     margin: 12px;
 }
