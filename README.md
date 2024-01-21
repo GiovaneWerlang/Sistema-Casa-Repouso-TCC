@@ -44,21 +44,8 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ```
 
 
-## Environment
-Crie um arquivo .env no diretório base
-Com os parâmetros:
-
-HABILITARENVIOEMAIL=
-
-EMAILLOGIN=
-
-EMAILSENHA=
-
-HABILITARENVIOWHATS=
-
-WHATSNUMEROID=
-
-WHATSTOKEN=
+## Envio de e-mails e whatsapp
+Adicione os dados na tela de configuração de sistema
 
 ## JWT
 Gere as chaves usando os comandos:
