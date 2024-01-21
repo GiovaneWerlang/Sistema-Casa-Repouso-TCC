@@ -2,6 +2,7 @@ package br.edu.utfpr.atividadesresidente.processa;
 
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteRepository;
+import br.edu.utfpr.configuracaosistema.ConfiguracaoSistemaModel;
 import br.edu.utfpr.email.EnvioEmail;
 import br.edu.utfpr.whatsapp.EnvioWhatsapp;
 
@@ -10,8 +11,8 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ProcessaAtividadeExame extends ProcessaAtividade<AtividadeExameResidenteModel, AtividadeExameResidenteRepository> {
 
-    public ProcessaAtividadeExame(AtividadeExameResidenteRepository repository, EnvioEmail envioEmail, EnvioWhatsapp envioWhatsapp) {
-        super(repository, envioEmail, envioWhatsapp);
+    public ProcessaAtividadeExame(AtividadeExameResidenteRepository repository, ConfiguracaoSistemaModel configuracaoSistema, EnvioEmail envioEmail, EnvioWhatsapp envioWhatsapp) {
+        super(repository, configuracaoSistema, envioEmail, envioWhatsapp);
     }
 
     public String criaCorpo(AtividadeExameResidenteModel model){

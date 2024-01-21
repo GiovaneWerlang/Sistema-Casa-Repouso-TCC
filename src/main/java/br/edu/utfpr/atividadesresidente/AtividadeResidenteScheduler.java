@@ -4,6 +4,8 @@ import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeCons
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteRepository;
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteRepository;
 import br.edu.utfpr.atividadesresidente.processa.*;
+import br.edu.utfpr.configuracaosistema.ConfiguracaoSistemaModel;
+import br.edu.utfpr.configuracaosistema.ConfiguracaoSistemaRepository;
 import br.edu.utfpr.crud.CrudRepositoryAtividade;
 import br.edu.utfpr.email.EnvioEmail;
 import br.edu.utfpr.profissional.ProfissionalService;
@@ -23,6 +25,7 @@ public class AtividadeResidenteScheduler {
 
     private AtividadeExameResidenteRepository atividadeExameResidenteRepository;
     private AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository;
+    private ConfiguracaoSistemaRepository configuracaoSistemaRepository;
 
     private ProfissionalService profissionalService;
 
@@ -33,6 +36,7 @@ public class AtividadeResidenteScheduler {
     public AtividadeResidenteScheduler(AtividadeConsultaResidenteRepository atividadeConsultaResidenteRepository,
                                        AtividadeExameResidenteRepository atividadeExameResidenteRepository,
                                        AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository,
+                                       ConfiguracaoSistemaRepository configuracaoSistemaRepository,
                                        ProfissionalService profissionalService,
                                        EnvioEmail envioEmail,
                                        EnvioWhatsapp envioWhatsapp
@@ -40,12 +44,13 @@ public class AtividadeResidenteScheduler {
         this.atividadeConsultaResidenteRepository = atividadeConsultaResidenteRepository;
         this.atividadeExameResidenteRepository = atividadeExameResidenteRepository;
         this.atividadeMedicamentoResidenteRepository = atividadeMedicamentoResidenteRepository;
+        this.configuracaoSistemaRepository = configuracaoSistemaRepository;
         this.profissionalService = profissionalService;
         this.envioEmail = envioEmail;
         this.envioWhatsapp = envioWhatsapp;
     }
 
-    @Scheduled(every="1h")
+    @Scheduled(every="3m")
     void cronJob(ScheduledExecution execution) {
         processarAtividades(buscarEmails(), buscarTelefones());
     }
@@ -61,14 +66,15 @@ public class AtividadeResidenteScheduler {
     @Transactional
     public void processarAtividades(List<String> emails, List<String> telefones){
         ProcessaAtividade<? extends AtividadeResidenteModel, ? extends CrudRepositoryAtividade<?>> processaAtividade;
+        ConfiguracaoSistemaModel configuracaoSistema = configuracaoSistemaRepository.findById(1L);
 
-        processaAtividade = new ProcessaAtividadeConsulta(atividadeConsultaResidenteRepository, envioEmail, envioWhatsapp);
+        processaAtividade = new ProcessaAtividadeConsulta(atividadeConsultaResidenteRepository,configuracaoSistema, envioEmail, envioWhatsapp);
         processaAtividade.processarLista(emails, telefones);
 
-        processaAtividade = new ProcessaAtividadeExame(atividadeExameResidenteRepository, envioEmail, envioWhatsapp);
+        processaAtividade = new ProcessaAtividadeExame(atividadeExameResidenteRepository,configuracaoSistema, envioEmail, envioWhatsapp);
         processaAtividade.processarLista(emails, telefones);
 
-        processaAtividade = new ProcessaAtividadeMedicamento(atividadeMedicamentoResidenteRepository, envioEmail, envioWhatsapp);
+        processaAtividade = new ProcessaAtividadeMedicamento(atividadeMedicamentoResidenteRepository,configuracaoSistema, envioEmail, envioWhatsapp);
         processaAtividade.processarLista(emails, telefones);
     }
 
