@@ -1,0 +1,60 @@
+<div class="col-12 flex flex-column align-items-center">
+    <div class="col-12 xl:col-10 lg:col-10 md:col-10 sm:col-10">
+        <p class="font-bold text-2xl" style="color: var(--primary-color);">Configurações do sistema</p>
+        <form [formGroup]="form" (submit)="salvar()" class="flex flex-column">
+            <div class="flex flex-row flex-wrap">
+                <div class="col-12 flex flex-column">
+                    <p-checkbox [binary]="true" label="Habilitar o envio de e-mail:"  inputId="habilitarEnvioEmail" name="habilitarEnvioEmail" formControlName="habilitarEnvioEmail" ></p-checkbox>
+                    <div *ngIf="form.controls['habilitarEnvioEmail']?.invalid && (form.controls['habilitarEnvioEmail']?.dirty || form.controls['habilitarEnvioEmail']?.touched)">
+                        <small *ngIf="form.get('habilitarEnvioEmail')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
+                </div>
+                <div class="col-12 xl:col-8 lg:col-8 md:col-8 sm:col-12 flex flex-column">
+                    <label htmlFor="emailLogin">E-mail:</label>
+                    <input type="email" pInputText name="emailLogin" formControlName="emailLogin" />
+                    <div *ngIf="form.controls['emailLogin']?.invalid && (form.controls['emailLogin']?.dirty || form.controls['emailLogin']?.touched)">
+                        <small *ngIf="form.get('emailLogin')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('emailLogin')?.errors?.['maxlength']" class="p-error">Tamanho máximo 255 caracteres.</small>
+                    </div>
+                </div>
+                <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
+                    <label htmlFor="emailSenha">Senha:</label>
+                    <input type="password" pInputText name="emailSenha" formControlName="emailSenha" />
+                    <div *ngIf="form.controls['emailSenha']?.invalid && (form.controls['emailSenha']?.dirty || form.controls['emailSenha']?.touched)">
+                        <small *ngIf="form.get('emailSenha')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('emailSenha')?.errors?.['maxlength']" class="p-error">Tamanho máximo 255 caracteres.</small>
+                    </div>
+                </div>
+
+                <div class="col-12 flex flex-column">
+                    <p-checkbox [binary]="true" label="Habilitar o envio de whatsapp"  inputId="habilitarEnvioWhats" name="habilitarEnvioWhats" formControlName="habilitarEnvioWhats" ></p-checkbox>
+                    <div *ngIf="form.controls['habilitarEnvioWhats']?.invalid && (form.controls['habilitarEnvioWhats']?.dirty || form.controls['habilitarEnvioWhats']?.touched)">
+                        <small *ngIf="form.get('habilitarEnvioWhats')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                    </div>
+                </div>
+                <div class="col-12 xl:col-8 lg:col-8 md:col-8 sm:col-12 flex flex-column">
+                    <label htmlFor="whatsNumeroId">Id do número:</label>
+                    <input type="text" pInputText name="whatsNumeroId" formControlName="whatsNumeroId" />
+                    <div *ngIf="form.controls['whatsNumeroId']?.invalid && (form.controls['whatsNumeroId']?.dirty || form.controls['whatsNumeroId']?.touched)">
+                        <small *ngIf="form.get('whatsNumeroId')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('whatsNumeroId')?.errors?.['maxlength']" class="p-error">Tamanho máximo 255 caracteres.</small>
+                    </div>
+                </div>
+                <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
+                    <label htmlFor="whatsToken">Token:</label>
+                    <input type="text" pInputText name="whatsToken" formControlName="whatsToken" />
+                    <div *ngIf="form.controls['whatsToken']?.invalid && (form.controls['whatsToken']?.dirty || form.controls['whatsToken']?.touched)">
+                        <small *ngIf="form.get('whatsToken')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
+                        <small *ngIf="form.get('whatsToken')?.errors?.['maxlength']" class="p-error">Tamanho máximo 500 caracteres.</small>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="flex flex-row justify-content-end gap-2">
+                <button pButton class="p-button p-button-primary" type="submit">Salvar</button>
+                <button pButton class="p-button p-button-secondary">Limpar</button>
+            </div>
+        </form>
+    </div>
+    <p-toast></p-toast>
+</div>

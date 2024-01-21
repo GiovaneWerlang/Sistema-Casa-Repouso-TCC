@@ -69,6 +69,10 @@ export class MenuComponent {
       label: 'Usuário',
       icon: 'pi pi-users',
       routerLink: 'usuario/listar'
+    }, {
+      label: 'Configurações do Sistema',
+      icon: 'pi pi-cog',
+      routerLink: 'configuracaosistema'
     }
   ];
 }

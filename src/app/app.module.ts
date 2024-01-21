@@ -1,3 +1,4 @@
+import { ConfiguracaosistemaCadastrarComponent } from './components/configuracaosistema/configuracaosistema-cadastrar/configuracaosistema-cadastrar.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,6 +38,7 @@ import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
 import { ChartModule } from 'primeng/chart';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
@@ -112,6 +114,7 @@ import { DataHoraInterceptorService } from './shared/crud-service/datahorainterc
     AtividadeconsultaListarComponent,
     AtividadeexameListarComponent,
     AtividadeexameEditarComponent,
+    ConfiguracaosistemaCadastrarComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +141,8 @@ import { DataHoraInterceptorService } from './shared/crud-service/datahorainterc
     BlockUIModule,
     ChartModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    CheckboxModule,
   ],
   providers: [
     MessageService, 

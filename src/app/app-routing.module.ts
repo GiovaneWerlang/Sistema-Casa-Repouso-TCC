@@ -35,6 +35,7 @@ import { AtividadeexameEditarComponent } from './components/atividadesresidente/
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 import { AutenticacaoGuard } from './components/login/autenticacao.guard';
+import { ConfiguracaosistemaCadastrarComponent } from './components/configuracaosistema/configuracaosistema-cadastrar/configuracaosistema-cadastrar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AutenticacaoGuard], pathMatch: 'full' },
@@ -83,6 +84,7 @@ const routes: Routes = [
   { path: 'medicamentouso/cadastrar', component: MedicamentousoCadastrarComponent, canActivate: [AutenticacaoGuard] },
   { path: 'medicamentouso/editar/:id', component: MedicamentousoCadastrarComponent, canActivate: [AutenticacaoGuard] },
   { path: 'medicamentouso/listar', component: MedicamentousoListarComponent, canActivate: [AutenticacaoGuard] },
+  { path: 'configuracaosistema', component: ConfiguracaosistemaCadastrarComponent, canActivate: [AutenticacaoGuard] },
   { path: '**', component: NaoencontradoComponent },
 ];
 
