@@ -13,7 +13,7 @@ import { MessageService } from 'primeng/api';
   providers: [{ provide: CrudService, useExisting: ExameService }, MessageService]
 })
 export class ExameListarComponent {
-  cols: string[] = ["Id", "Nome", "DataHora", "Local", "Residente"];
+  cols: string[] = ["Id", "Descrição", "DataHora", "Local", "Residente"];
   public items: Exame[] = [];
 
   first: number = 0;

@@ -36,7 +36,7 @@ export class ExameCadastrarComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       id: [null],
-      nome: ['', [Validators.required, Validators.maxLength(255)]],
+      descricao: ['', [Validators.required, Validators.maxLength(255)]],
       dataHora: [null, Validators.required],
       local: ['', [Validators.required, Validators.maxLength(100)]],
       laudo: ['', Validators.maxLength(500)],

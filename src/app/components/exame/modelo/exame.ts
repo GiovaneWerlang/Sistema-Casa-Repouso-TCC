@@ -3,7 +3,7 @@ import { Profissional } from './../../profissional/modelo/profissional';
 import { Especialidade } from './../../especialidade/modelo/especialidade';
 export interface Exame {
     id?:number;
-    nome:string;
+    descricao:string;
     dataHora:Date;
     local:string;
     laudo?:string;
