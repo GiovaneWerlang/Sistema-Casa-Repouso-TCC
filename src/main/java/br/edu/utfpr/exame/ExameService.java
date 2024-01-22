@@ -3,7 +3,6 @@ package br.edu.utfpr.exame;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameResidenteRepository;
 import br.edu.utfpr.crud.CrudService;
-import br.edu.utfpr.enums.SituacaoAtividade;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -66,7 +65,7 @@ public class ExameService implements CrudService<ExameDTO> {
         }
 
         ExameModel model = new ExameModel();
-        model.setNome(exameDTO.getNome());
+        model.setDescricao(exameDTO.getDescricao());
         model.setDataHora(exameDTO.getDataHora());
         model.setLocal(exameDTO.getLocal());
         model.setLaudo(exameDTO.getLaudo());
@@ -114,7 +113,7 @@ public class ExameService implements CrudService<ExameDTO> {
 
         ExameModel model = repository.findById(id);
         if(model != null){
-            model.setNome(exameDTO.getNome());
+            model.setDescricao(exameDTO.getDescricao());
             model.setDataHora(exameDTO.getDataHora());
             model.setLocal(exameDTO.getLocal());
             model.setLaudo(exameDTO.getLaudo());
@@ -151,7 +150,7 @@ public class ExameService implements CrudService<ExameDTO> {
 
             if(atividadeExameResidenteRepository.findByExameId(model.getId()) != null){
                 AtividadeExameResidenteModel atividadeExameResidenteModel = atividadeExameResidenteRepository.findByExameId(model.getId());
-                atividadeExameResidenteModel.setDescricao(model.getNome());
+                atividadeExameResidenteModel.setDescricao(model.getDescricao());
                 atividadeExameResidenteModel.setDataHora(model.getDataHora());
                 atividadeExameResidenteModel.setExame(model);
 

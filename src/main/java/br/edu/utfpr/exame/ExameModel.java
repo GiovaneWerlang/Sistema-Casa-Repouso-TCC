@@ -18,8 +18,8 @@ public class ExameModel {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "descricao")
+    private String descricao;
 
     @Column(name = "datahora")
     private LocalDateTime dataHora;

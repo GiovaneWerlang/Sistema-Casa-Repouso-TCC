@@ -51,7 +51,7 @@ public class ExameResourceTest {
     @DisplayName("Deve criar exame com sucesso.")
     public void createExameTest() throws SQLException {
         ExameDTO exameDTO = new ExameDTO();
-        exameDTO.setNome("Teste");
+        exameDTO.setDescricao("Teste");
         exameDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         exameDTO.setLocal("local");
         exameDTO.setLaudo("prescrição");
@@ -141,7 +141,7 @@ public class ExameResourceTest {
     @DisplayName("Deve falhar ao criar exame.")
     public void createExameValidationErrorTest(){
         ExameDTO exameDTO = new ExameDTO();
-        exameDTO.setNome(null);
+        exameDTO.setDescricao(null);
         exameDTO.setDataHora(null);
         exameDTO.setLocal(null);
         exameDTO.setLaudo(null);
@@ -170,7 +170,7 @@ public class ExameResourceTest {
     public void updateExameTest() throws SQLException {
 
         ExameDTO exameDTO = new ExameDTO();
-        exameDTO.setNome("Teste");
+        exameDTO.setDescricao("Teste");
         exameDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         exameDTO.setLocal("local");
         exameDTO.setLaudo("prescrição");
@@ -261,7 +261,7 @@ public class ExameResourceTest {
     public void updateExameValidationErrorTest(){
 
         ExameDTO exameDTO = new ExameDTO();
-        exameDTO.setNome(null);
+        exameDTO.setDescricao(null);
         exameDTO.setDataHora(null);
         exameDTO.setLocal(null);
         exameDTO.setLaudo(null);

@@ -7,7 +7,7 @@ public class GerarAtividadeExame {
 
     public AtividadeExameResidenteModel gerar(ExameModel model){
         AtividadeExameResidenteModel atividadeExameResidenteModel = new AtividadeExameResidenteModel();
-        atividadeExameResidenteModel.setDescricao(model.getNome() +
+        atividadeExameResidenteModel.setDescricao(model.getDescricao() +
                 " - Residente: " + model.getResidente().getNome());
         atividadeExameResidenteModel.setDataHora(model.getDataHora());
         atividadeExameResidenteModel.setExame(model);

@@ -13,7 +13,7 @@ public class ExameDTO {
     @NotNull(message = "Não pode ser nulo")
     @NotBlank(message = "Não pode ser vazio")
     @Size(max = 255, message = "Não pode ter mais de 255 caracteres")
-    private String nome;
+    private String descricao;
 
     @NotNull(message = "Não pode ser nulo")
     private LocalDateTime dataHora;
