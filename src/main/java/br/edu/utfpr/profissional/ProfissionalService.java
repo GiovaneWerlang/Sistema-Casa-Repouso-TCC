@@ -4,6 +4,7 @@ import br.edu.utfpr.crud.CrudService;
 import br.edu.utfpr.endereco.EnderecoDTO;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.endereco.EnderecoRepository;
+import br.edu.utfpr.enums.Funcao;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -27,6 +28,7 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
     private EnderecoRepository enderecoRepository;
     private EspecialidadeRepository especialidadeRepository;
     private Validator validator;
+    private final String MENSAGEMNAOENCONTRADA = "Especialidade não encontrada.";
 
     @Inject
     public ProfissionalService(ProfissionalRepository repository, EnderecoRepository enderecoRepository, EspecialidadeRepository especialidadeRepository, Validator validator){
@@ -74,9 +76,11 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
             if (especialidadeRepository.findById(profissionalDTO.getEspecialidade()) != null) {
                 especialidadeModel = especialidadeRepository.findById(profissionalDTO.getEspecialidade());
             } else {
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
             }
             model.setEspecialidade(especialidadeModel);
+        }else if(Funcao.MEDICO.equals(profissionalDTO.getFuncao())){
+            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
         }
         EnderecoDTO enderecoDTO = new EnderecoDTO();
         if(!Copy.copyProperties(enderecoDTO, profissionalDTO.getEndereco())){
@@ -128,14 +132,17 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
             model.setSituacao(profissionalDTO.getSituacao());
             model.setFuncao(profissionalDTO.getFuncao());
 
-            EspecialidadeModel especialidadeModel;
-            if(especialidadeRepository.findById(profissionalDTO.getEspecialidade()) != null){
-                especialidadeModel = especialidadeRepository.findById(profissionalDTO.getEspecialidade());
-            }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+            if(profissionalDTO.getEspecialidade() != null) {
+                EspecialidadeModel especialidadeModel;
+                if (especialidadeRepository.findById(profissionalDTO.getEspecialidade()) != null) {
+                    especialidadeModel = especialidadeRepository.findById(profissionalDTO.getEspecialidade());
+                } else {
+                    return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
+                }
+                model.setEspecialidade(especialidadeModel);
+            }else if(Funcao.MEDICO.equals(profissionalDTO.getFuncao())){
+                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
             }
-            model.setEspecialidade(especialidadeModel);
-
             EnderecoDTO enderecoDTO = new EnderecoDTO();
             if(!Copy.copyProperties(enderecoDTO, profissionalDTO.getEndereco())){
                 return Response.status(418).build();
