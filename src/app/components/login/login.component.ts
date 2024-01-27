@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AutenticacaoService } from './service/autenticacao.service';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private messageService: MessageService,
+    private toastService: ToastService,
     private autenticacaoService: AutenticacaoService,
     private router: Router,
   ) {
@@ -32,12 +33,12 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         (error) => {
-          this.messageService.add({ severity: 'error', summary: 'Erro!', detail: error });
+          this.toastService.toastBase('error', 'Erro!', error);
         }
       );
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível logar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastBase('warn', 'Não foi possível logar!', 'Verifique os campos e tente novamente.');
     }
   }
 

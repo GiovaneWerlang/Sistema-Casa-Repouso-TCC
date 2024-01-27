@@ -9,17 +9,18 @@ import { EspecialidadeService } from '../../especialidade/service/especialidade.
 import { Especialidade } from '../../especialidade/modelo/especialidade';
 import { Profissional } from '../../profissional/modelo/profissional';
 import { Residente } from '../../residente/modelo/residente';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-exame-cadastrar',
   templateUrl: './exame-cadastrar.component.html',
   styleUrls: ['./exame-cadastrar.component.css'],
-  providers: [ExameService, MessageService]
+  providers: [ExameService]
 })
 export class ExameCadastrarComponent implements OnInit {
 
   form: FormGroup;
+  novo:boolean = false;
   opcoesEspecialidade: LabelValue[] = [];
   opcoesProfissional: LabelValue[] = [];
   opcoesResidente: LabelValue[] = [];
@@ -32,7 +33,7 @@ export class ExameCadastrarComponent implements OnInit {
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -52,9 +53,10 @@ export class ExameCadastrarComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -62,13 +64,14 @@ export class ExameCadastrarComponent implements OnInit {
     if (this.form.valid) {
       this.exameService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Exame  ${this.novo ? 'salvo' : 'atualizado'}  com sucesso.`);
           this.router.navigate(['/exame/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

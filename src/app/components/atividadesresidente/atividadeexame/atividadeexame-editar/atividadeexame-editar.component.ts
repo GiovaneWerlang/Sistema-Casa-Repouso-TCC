@@ -7,6 +7,7 @@ import { AutenticacaoService } from 'src/app/components/login/service/autenticac
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { SituacaoAtividade } from 'src/app/shared/situacaoatividade/situacaoatividade';
 import { AtividadeResidente } from '../../modelo/atividaderesidente';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-atividadeexame-editar',
@@ -15,7 +16,7 @@ import { AtividadeResidente } from '../../modelo/atividaderesidente';
 })
 export class AtividadeexameEditarComponent {
   form: FormGroup;
-
+  novo:boolean = false;
   opcoessituacao: LabelValue[] = SituacaoAtividade;
 
   constructor(
@@ -23,7 +24,7 @@ export class AtividadeexameEditarComponent {
     private atividadeExameService: AtividadeExameService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService,
+    private toastService: ToastService,
     private autenticacaoService: AutenticacaoService
   ) {
     this.form = this.formBuilder.group({
@@ -41,7 +42,7 @@ export class AtividadeexameEditarComponent {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
     })
@@ -54,13 +55,14 @@ export class AtividadeexameEditarComponent {
         this.montaAtividadeResidente()
       ).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess('Atividade de exame atualizada com sucesso.');
           this.router.navigate(['/atividadeexame/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível atualizar!', 'Verifique os campos e tente novamente.');
     }
   }
 

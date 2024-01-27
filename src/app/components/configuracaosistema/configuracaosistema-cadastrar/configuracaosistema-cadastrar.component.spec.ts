@@ -3,9 +3,10 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { ButtonModule } from "primeng/button";
-import { ToastModule } from "primeng/toast";
 import { TooltipModule } from "primeng/tooltip";
 import { ConfiguracaosistemaCadastrarComponent } from "./configuracaosistema-cadastrar.component";
+import { MessageService } from "primeng/api";
+import { CheckboxModule } from "primeng/checkbox";
 
 describe('ConfiguracaosistemaCadastrarComponent', () => {
     let component: ConfiguracaosistemaCadastrarComponent;
@@ -20,9 +21,10 @@ describe('ConfiguracaosistemaCadastrarComponent', () => {
           FormsModule,
           ReactiveFormsModule,
           ButtonModule,
-          ToastModule,
           TooltipModule,
+          CheckboxModule,
         ],
+        providers: [MessageService]
       });
       fixture = TestBed.createComponent(ConfiguracaosistemaCadastrarComponent);
       component = fixture.componentInstance;

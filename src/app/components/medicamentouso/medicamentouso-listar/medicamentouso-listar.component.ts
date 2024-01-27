@@ -3,13 +3,13 @@ import { MedicamentousoService } from '../service/medicamentouso.service';
 import { MedicamentoUso } from '../modelo/medicamentouso';
 import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-medicamentouso-listar',
   templateUrl: './medicamentouso-listar.component.html',
   styleUrls: ['./medicamentouso-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: MedicamentousoService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: MedicamentousoService }]
 })
 export class MedicamentousoListarComponent {
   cols: string[] = ["Id", "DataHora Início", "Residente", "Medicamento"];
@@ -28,7 +28,7 @@ export class MedicamentousoListarComponent {
   constructor(
     private service: CrudService<MedicamentoUso>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -59,7 +59,7 @@ export class MedicamentousoListarComponent {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -82,7 +82,7 @@ export class MedicamentousoListarComponent {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

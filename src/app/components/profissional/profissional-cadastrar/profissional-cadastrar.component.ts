@@ -9,17 +9,19 @@ import { EspecialidadeService } from '../../especialidade/service/especialidade.
 import { Especialidade } from '../../especialidade/modelo/especialidade';
 import { Estados } from 'src/app/shared/estados/estados';
 import { Paises } from 'src/app/shared/paises/paises'
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-profissional-cadastrar',
   templateUrl: './profissional-cadastrar.component.html',
   styleUrls: ['./profissional-cadastrar.component.css'],
-  providers: [ProfissionalService, MessageService]
+  providers: [ProfissionalService]
 })
 export class ProfissionalCadastrarComponent implements OnInit {
 
   form: FormGroup;
+  novo:boolean = false;
+
   formEndereco: FormGroup;
   opcoesSituacao: LabelValue[] = Situacoes;
   opcoesFuncao: LabelValue[] = Funcoes;
@@ -33,7 +35,7 @@ export class ProfissionalCadastrarComponent implements OnInit {
     private especialidadeService: EspecialidadeService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.formEndereco = this.formBuilder.group({
       logradouro: ['', [Validators.required, Validators.maxLength(150)]],
@@ -64,9 +66,10 @@ export class ProfissionalCadastrarComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -74,13 +77,14 @@ export class ProfissionalCadastrarComponent implements OnInit {
     if (this.form.valid) {
       this.profissionalService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Profissional ${this.novo ? 'salvo(a)' : 'atualizado(a)'} com sucesso.`);
           this.router.navigate(['/profissional/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

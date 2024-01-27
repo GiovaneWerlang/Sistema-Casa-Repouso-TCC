@@ -5,13 +5,13 @@ import { MovimentacaoEstoque } from '../modelo/movimentacaoestoque';
 import { Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { TipoMovimentacao } from 'src/app/shared/tipomovimentacao/tipomovimentacao';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-movimentacaoestoque-listar',
   templateUrl: './movimentacaoestoque-listar.component.html',
   styleUrls: ['./movimentacaoestoque-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: MovimentacaoestoqueService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: MovimentacaoestoqueService }]
 })
 export class MovimentacaoestoqueListarComponent {
   cols: string[] = ["Id", "Quantidade", "Tipo", "Medicamento"];
@@ -32,7 +32,7 @@ export class MovimentacaoestoqueListarComponent {
   constructor(
     private service: CrudService<MovimentacaoEstoque>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -63,7 +63,7 @@ export class MovimentacaoestoqueListarComponent {
       },
       error: (error) => {
         this.carregando = false
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -86,7 +86,7 @@ export class MovimentacaoestoqueListarComponent {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

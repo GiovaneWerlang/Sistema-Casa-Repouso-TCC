@@ -9,16 +9,17 @@ import { ResidenteService } from '../../residente/service/residente.service';
 import { Especialidade } from '../../especialidade/modelo/especialidade';
 import { Profissional } from '../../profissional/modelo/profissional';
 import { Residente } from '../../residente/modelo/residente';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-consulta-cadastrar',
   templateUrl: './consulta-cadastrar.component.html',
   styleUrls: ['./consulta-cadastrar.component.css'],
-  providers: [ConsultaService, MessageService]
+  providers: [ConsultaService]
 })
 export class ConsultaCadastrarComponent {
   form: FormGroup;
+  novo:boolean = false;
   opcoesEspecialidade: LabelValue[] = [];
   opcoesProfissional: LabelValue[] = [];
   opcoesResidente: LabelValue[] = [];
@@ -31,7 +32,7 @@ export class ConsultaCadastrarComponent {
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -51,9 +52,10 @@ export class ConsultaCadastrarComponent {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -61,13 +63,14 @@ export class ConsultaCadastrarComponent {
     if (this.form.valid) {
       this.consultaService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Consulta  ${this.novo ? 'salva' : 'atualizada'} com sucesso.`);
           this.router.navigate(['/consulta/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

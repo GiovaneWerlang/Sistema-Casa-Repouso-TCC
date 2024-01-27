@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 import { Funcoes } from 'src/app/shared/funcoes/funcoes';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-profissional-listar',
   templateUrl: './profissional-listar.component.html',
   styleUrls: ['./profissional-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: ProfissionalService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: ProfissionalService }]
 })
 export class ProfissionalListarComponent {
   cols: string[] = ["Id", "Nome", "CPF", "Função", "Situação"];
@@ -34,7 +34,7 @@ export class ProfissionalListarComponent {
   constructor(
     private service: CrudService<Profissional>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -65,7 +65,7 @@ export class ProfissionalListarComponent {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -88,7 +88,7 @@ export class ProfissionalListarComponent {
         },
         error: (error) => {
           this.carregando = false
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

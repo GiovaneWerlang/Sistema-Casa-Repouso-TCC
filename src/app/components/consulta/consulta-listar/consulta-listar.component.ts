@@ -4,12 +4,13 @@ import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { Consulta } from '../modelo/consulta';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-consulta-listar',
   templateUrl: './consulta-listar.component.html',
   styleUrls: ['./consulta-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: ConsultaService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: ConsultaService }]
 })
 export class ConsultaListarComponent {
   cols: string[] = ["Id", "Descrição", "DataHora", "Local", "Residente"];
@@ -28,7 +29,7 @@ export class ConsultaListarComponent {
   constructor(
     private service: CrudService<Consulta>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -59,7 +60,7 @@ export class ConsultaListarComponent {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -82,7 +83,7 @@ export class ConsultaListarComponent {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

@@ -6,13 +6,13 @@ import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { TipoEstadia } from 'src/app/shared/tipoestadia/tipoestadia';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-residente-listar',
   templateUrl: './residente-listar.component.html',
   styleUrls: ['./residente-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: ResidenteService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: ResidenteService }]
 })
 export class ResidenteListarComponent {
   cols: string[] = ["Id", "Nome", "CPF", "Estadia", "Situação"];
@@ -34,7 +34,7 @@ export class ResidenteListarComponent {
   constructor(
     private service: CrudService<Residente>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -65,7 +65,7 @@ export class ResidenteListarComponent {
       },
       error: (error) => {
         this.carregando = false
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -88,7 +88,7 @@ export class ResidenteListarComponent {
         },
         error: (error) => {
           this.carregando = false
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

@@ -6,15 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResidenteService } from '../../residente/service/residente.service';
 import { Residente } from '../../residente/modelo/residente';
 import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-entradasaida-cadastrar',
   templateUrl: './entradasaida-cadastrar.component.html',
   styleUrls: ['./entradasaida-cadastrar.component.css'],
-  providers: [EntradasaidaService, MessageService]
+  providers: [EntradasaidaService]
 })
 export class EntradasaidaCadastrarComponent {
   form: FormGroup;
+  novo:boolean = false;
   opcoesResidente: LabelValue[] = [];
 
   constructor(
@@ -23,7 +25,7 @@ export class EntradasaidaCadastrarComponent {
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -38,9 +40,10 @@ export class EntradasaidaCadastrarComponent {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -48,13 +51,14 @@ export class EntradasaidaCadastrarComponent {
     if (this.form.valid) {
       this.entradaSaidaService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Entrada e Saída  ${this.novo ? 'salva' : 'atualizada'}  com sucesso.`);
           this.router.navigate(['/entradasaida/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 
@@ -68,6 +72,7 @@ export class EntradasaidaCadastrarComponent {
 
   private carrega(id: number) {
     this.entradaSaidaService.findByID(id).subscribe((entradaSaida) => {
+      this.form.patchValue(entradaSaida);
       this.form.get('descricao')?.patchValue(entradaSaida?.descricao);
       this.form.get('residente')?.patchValue(entradaSaida?.residente?.id);
       if (entradaSaida?.dataHoraEntrada) {

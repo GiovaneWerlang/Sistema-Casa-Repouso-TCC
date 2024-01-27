@@ -6,9 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { CalendarModule } from 'primeng/calendar';
+import { MessageService } from 'primeng/api';
 
 describe('ExameCadastrarComponent', () => {
   let component: ExameCadastrarComponent;
@@ -24,10 +24,10 @@ describe('ExameCadastrarComponent', () => {
         ReactiveFormsModule,
         DropdownModule,
         ButtonModule,
-        ToastModule,
         TooltipModule,
         CalendarModule,
       ],
+      providers: [MessageService]
     });
     fixture = TestBed.createComponent(ExameCadastrarComponent);
     component = fixture.componentInstance;

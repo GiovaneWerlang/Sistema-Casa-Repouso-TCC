@@ -4,23 +4,24 @@ import { EspecialidadeService } from '../service/especialidade.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-especialidade-cadastrar',
   templateUrl: './especialidade-cadastrar.component.html',
   styleUrls: ['./especialidade-cadastrar.component.css'],
-  providers: [EspecialidadeService, MessageService]
+  providers: [EspecialidadeService]
 })
 export class EspecialidadeCadastrarComponent implements OnInit {
 
   form: FormGroup;
-
+  novo:boolean = false;
   constructor(
     private route: ActivatedRoute,
     private especialidadeService: EspecialidadeService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -31,23 +32,25 @@ export class EspecialidadeCadastrarComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carregaEspecialidade(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
   salvar() {
     if (this.form.valid) {
       this.especialidadeService.save(this.form.getRawValue()).subscribe((res) => {
-        if (res) {
+        if (res) { 
+          this.toastService.toastSuccess(`Especialidade  ${this.novo ? 'salva' : 'atualizada'}  com sucesso.`);
           this.router.navigate(['/especialidade/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

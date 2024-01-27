@@ -5,12 +5,13 @@ import { EntradaSaida } from '../modelo/entradasaida';
 import { Router } from '@angular/router';
 import { ResidenteService } from '../../residente/service/residente.service';
 import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-entradasaida-listar',
   templateUrl: './entradasaida-listar.component.html',
   styleUrls: ['./entradasaida-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: EntradasaidaService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: EntradasaidaService }]
 
 })
 export class EntradasaidaListarComponent {
@@ -29,7 +30,7 @@ export class EntradasaidaListarComponent {
   constructor(
     private service: CrudService<EntradaSaida>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -60,7 +61,7 @@ export class EntradasaidaListarComponent {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -83,7 +84,7 @@ export class EntradasaidaListarComponent {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

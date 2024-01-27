@@ -6,12 +6,13 @@ import { AtividadeMedicamento } from '../modelo/atividademedicamento';
 import { AtividadeMedicamentoService } from '../service/atividademedicamento.service';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { SituacaoAtividade } from 'src/app/shared/situacaoatividade/situacaoatividade';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-atividademedicamento-listar',
   templateUrl: './atividademedicamento-listar.component.html',
   styleUrls: ['./atividademedicamento-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: AtividadeMedicamentoService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: AtividadeMedicamentoService }]
 })
 export class AtividademedicamentoListarComponent {
   cols: string[] = ["Id", "Descrição", "DataHora", "Situação"];
@@ -32,7 +33,7 @@ export class AtividademedicamentoListarComponent {
   constructor(
     private service: CrudService<AtividadeMedicamento>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -59,7 +60,7 @@ export class AtividademedicamentoListarComponent {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -82,7 +83,7 @@ export class AtividademedicamentoListarComponent {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

@@ -7,17 +7,18 @@ import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MedicamentoEstoque } from '../../medicamentoestoque/modelo/medicamentoestoque';
 import { Residente } from '../../residente/modelo/residente';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-medicamentouso-cadastrar',
   templateUrl: './medicamentouso-cadastrar.component.html',
   styleUrls: ['./medicamentouso-cadastrar.component.css'],
-  providers: [MedicamentousoService, MessageService]
+  providers: [MedicamentousoService]
 })
 export class MedicamentousoCadastrarComponent implements OnInit {
 
   form: FormGroup;
+  novo:boolean = false;
   opcoesMedicamento: LabelValue[] = [];
   opcoesResidente: LabelValue[] = [];
 
@@ -28,7 +29,7 @@ export class MedicamentousoCadastrarComponent implements OnInit {
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -48,9 +49,10 @@ export class MedicamentousoCadastrarComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -58,13 +60,14 @@ export class MedicamentousoCadastrarComponent implements OnInit {
     if (this.form.valid) {
       this.medicamentoUsoService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Medicamento em uso  ${this.novo ? 'salvo' : 'atualizado'} com sucesso.`);
           this.router.navigate(['/medicamentouso/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

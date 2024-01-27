@@ -6,17 +6,18 @@ import { MedicamentoestoqueService } from '../../medicamentoestoque/service/medi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { MedicamentoEstoque } from '../../medicamentoestoque/modelo/medicamentoestoque';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-movimentacaoestoque-cadastrar',
   templateUrl: './movimentacaoestoque-cadastrar.component.html',
   styleUrls: ['./movimentacaoestoque-cadastrar.component.css'],
-  providers: [MovimentacaoestoqueService, MessageService]
+  providers: [MovimentacaoestoqueService]
 })
 export class MovimentacaoestoqueCadastrarComponent implements OnInit {
 
   form: FormGroup;
+  novo:boolean = false;
   opcoesTipo: LabelValue[] = TipoMovimentacao;
   opcoesMedicamento: LabelValue[] = [];
 
@@ -26,7 +27,7 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
     private medicamentoEstoqueService: MedicamentoestoqueService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -40,9 +41,10 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -50,13 +52,14 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
     if (this.form.valid) {
       this.movimentacaoEstoqueService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Movimentação de medicamento ${this.novo ? 'salva' : 'atualizada'} com sucesso.`);
           this.router.navigate(['/movimentacaoestoque/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

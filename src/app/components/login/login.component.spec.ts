@@ -4,9 +4,9 @@ import { LoginComponent } from './login.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CardModule } from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,9 +20,9 @@ describe('LoginComponent', () => {
         HttpClientTestingModule, 
         CardModule,
         ReactiveFormsModule,
-        ToastModule,
         ButtonModule,
       ],
+      providers: [MessageService]
     });
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;

@@ -6,8 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 describe('AtividadeludicaCadastrarComponent', () => {
   let component: AtividadeludicaCadastrarComponent;
@@ -24,10 +24,10 @@ describe('AtividadeludicaCadastrarComponent', () => {
         CalendarModule, 
         ButtonModule,
         DropdownModule,
-        ToastModule,
         FormsModule,
         ReactiveFormsModule
       ],
+      providers: [MessageService]
     });
     fixture = TestBed.createComponent(AtividadeludicaCadastrarComponent);
     component = fixture.componentInstance;

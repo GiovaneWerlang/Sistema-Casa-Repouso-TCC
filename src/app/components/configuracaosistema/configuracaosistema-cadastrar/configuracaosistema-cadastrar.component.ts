@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { ConfiguracaoSistemaService } from '../service/configuracaosistema.service';
-import { MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-configuracaosistema-cadastrar',
   templateUrl: './configuracaosistema-cadastrar.component.html',
   styleUrls: ['./configuracaosistema-cadastrar.component.css'],
-  providers: [ConfiguracaoSistemaService, MessageService]
+  providers: [ConfiguracaoSistemaService]
 })
 export class ConfiguracaosistemaCadastrarComponent {
   form: FormGroup;
-
+  novo:boolean = false;
   constructor(
     private route: ActivatedRoute,
     private configuracaoSistemaService: ConfiguracaoSistemaService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -79,14 +79,14 @@ export class ConfiguracaosistemaCadastrarComponent {
     if (this.form.valid) {
       this.configuracaoSistemaService.update(this.form.getRawValue()).subscribe((res) => {
         if (res) {
-          this.messageService.add({ severity: 'success', summary: 'Sucesso!', detail: 'Configuração salva com sucesso.' });
+          this.toastService.toastSuccess('Configuração salva com sucesso.');
           this.carrega();
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

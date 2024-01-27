@@ -6,13 +6,13 @@ import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 import { Funcoes } from 'src/app/shared/funcoes/funcoes';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-usuario-listar',
   templateUrl: './usuario-listar.component.html',
   styleUrls: ['./usuario-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: UsuarioService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: UsuarioService }]
 })
 export class UsuarioListarComponent {
   cols: string[] = ["Id", "Login", "Nome", "Função", "Situação"];
@@ -34,7 +34,7 @@ export class UsuarioListarComponent {
   constructor(
     private service: CrudService<Usuario>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -65,7 +65,7 @@ export class UsuarioListarComponent {
       },
       error: (error) => {
         this.carregando = false
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -88,7 +88,7 @@ export class UsuarioListarComponent {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

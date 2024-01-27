@@ -6,10 +6,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { CalendarModule } from 'primeng/calendar';
 import { InputMaskModule } from 'primeng/inputmask';
+import { MessageService } from 'primeng/api';
 
 describe('ResidenteCadastrarComponent', () => {
   let component: ResidenteCadastrarComponent;
@@ -26,10 +26,10 @@ describe('ResidenteCadastrarComponent', () => {
         DropdownModule,
         CalendarModule,
         ButtonModule,
-        ToastModule,
         TooltipModule,
         InputMaskModule,
       ],
+      providers: [MessageService]
     });
     fixture = TestBed.createComponent(ResidenteCadastrarComponent);
     component = fixture.componentInstance;

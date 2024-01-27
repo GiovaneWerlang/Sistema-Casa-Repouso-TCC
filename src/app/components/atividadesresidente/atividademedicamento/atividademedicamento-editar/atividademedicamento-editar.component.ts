@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { SituacaoAtividade } from 'src/app/shared/situacaoatividade/situacaoatividade';
 import { AtividadeResidente } from '../../modelo/atividaderesidente';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-atividademedicamento-editar',
@@ -15,7 +16,7 @@ import { AtividadeResidente } from '../../modelo/atividaderesidente';
 })
 export class AtividademedicamentoEditarComponent {
   form: FormGroup;
-
+  novo:boolean = false;
   opcoessituacao: LabelValue[] = SituacaoAtividade;
 
   constructor(
@@ -23,7 +24,7 @@ export class AtividademedicamentoEditarComponent {
     private atividadeMedicamentoService: AtividadeMedicamentoService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService,
+    private toastService: ToastService,
     private autenticacaoService: AutenticacaoService
   ) {
     this.form = this.formBuilder.group({
@@ -40,7 +41,7 @@ export class AtividademedicamentoEditarComponent {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
     })
@@ -53,13 +54,14 @@ export class AtividademedicamentoEditarComponent {
         this.montaAtividadeResidente()
       ).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess('Atividade de medicamento atualizada com sucesso.');
           this.router.navigate(['/atividademedicamento/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível atualizar!', 'Verifique os campos e tente novamente.');
     }
   }
 

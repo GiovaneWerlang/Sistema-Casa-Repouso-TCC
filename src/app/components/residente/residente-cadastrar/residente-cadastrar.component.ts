@@ -1,4 +1,3 @@
-import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { ResidenteService } from '../service/residente.service';
 import { TipoEstadia } from 'src/app/shared/tipoestadia/tipoestadia';
@@ -8,16 +7,18 @@ import { Paises } from 'src/app/shared/paises/paises';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-residente-cadastrar',
   templateUrl: './residente-cadastrar.component.html',
   styleUrls: ['./residente-cadastrar.component.css'],
-  providers: [ResidenteService, MessageService]
+  providers: [ResidenteService]
 })
 export class ResidenteCadastrarComponent implements OnInit {
 
   form: FormGroup;
+  novo:boolean = false;
   formEndereco: FormGroup;
   opcoesSituacao: LabelValue[] = Situacoes;
   tiposEstadia: LabelValue[] = TipoEstadia;
@@ -29,7 +30,7 @@ export class ResidenteCadastrarComponent implements OnInit {
     private residenteService: ResidenteService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.formEndereco = this.formBuilder.group({
       logradouro: ['', [Validators.required, Validators.maxLength(150)]],
@@ -58,9 +59,10 @@ export class ResidenteCadastrarComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
+      if (id) {
         this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -68,13 +70,14 @@ export class ResidenteCadastrarComponent implements OnInit {
     if (this.form.valid) {
       this.residenteService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Residente ${this.novo ? 'salvo(a)' : 'atualizado(a)'} com sucesso.`);
           this.router.navigate(['/residente/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 

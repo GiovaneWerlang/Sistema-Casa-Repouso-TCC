@@ -2,13 +2,12 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CrudService } from '../../crud-service/crud-service';
 import { LabelValue } from '../../labelvalue/labelvalue';
-import { MessageService } from 'primeng/api';
+import { ToastService } from '../../toast-service/toast.service';
 
 @Component({
   selector: 'app-crud-table',
   templateUrl: './crud-table.component.html',
-  styleUrls: ['./crud-table.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./crud-table.component.css']
 })
 export class CrudTableComponent<T> {
   cols: LabelValue[] = [];
@@ -32,7 +31,7 @@ export class CrudTableComponent<T> {
   constructor(
     private service: CrudService<T>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -63,7 +62,7 @@ export class CrudTableComponent<T> {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error );
       }
     })
   }
@@ -86,7 +85,7 @@ export class CrudTableComponent<T> {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error );
         }
       })
     }

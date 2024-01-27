@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 describe('ProfissionalListarComponent', () => {
   let component: ProfissionalListarComponent;
@@ -25,8 +25,8 @@ describe('ProfissionalListarComponent', () => {
         PaginatorModule, 
         BlockUIModule,
         ProgressSpinnerModule,
-        ToastModule,
       ],
+      providers: [MessageService]
     });
     fixture = TestBed.createComponent(ProfissionalListarComponent);
     component = fixture.componentInstance;

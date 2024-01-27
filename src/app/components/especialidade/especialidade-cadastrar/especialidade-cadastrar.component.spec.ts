@@ -7,8 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { MessageService } from 'primeng/api';
 
 describe('EspecialidadeCadastrarComponent', () => {
   let component: EspecialidadeCadastrarComponent;
@@ -24,9 +24,9 @@ describe('EspecialidadeCadastrarComponent', () => {
         ReactiveFormsModule,
         DropdownModule,
         ButtonModule,
-        ToastModule,
         TooltipModule,
       ],
+      providers: [MessageService]
     })
     .compileComponents();
   }));

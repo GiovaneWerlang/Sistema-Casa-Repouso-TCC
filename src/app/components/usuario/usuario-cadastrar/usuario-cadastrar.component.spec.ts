@@ -7,8 +7,8 @@ import { UsuarioService } from '../service/usuario.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { MessageService } from 'primeng/api';
 
 describe('UsuarioCadastrarComponent', () => {
   let component: UsuarioCadastrarComponent;
@@ -25,10 +25,9 @@ describe('UsuarioCadastrarComponent', () => {
         ReactiveFormsModule,
         DropdownModule,
         ButtonModule,
-        ToastModule,
         TooltipModule,
       ],
-      providers: [{ provide: UsuarioService, useValue: userServiceStub }]
+      providers: [{ provide: UsuarioService, useValue: userServiceStub }, MessageService]
     });
     fixture = TestBed.createComponent(UsuarioCadastrarComponent);
     component = fixture.componentInstance;

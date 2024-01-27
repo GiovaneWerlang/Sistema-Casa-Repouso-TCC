@@ -8,8 +8,8 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
-import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { MessageService } from 'primeng/api';
 
 describe('ProfissionalCadastrarComponent', () => {
   let component: ProfissionalCadastrarComponent;
@@ -26,10 +26,10 @@ describe('ProfissionalCadastrarComponent', () => {
         DropdownModule,
         CalendarModule,
         ButtonModule,
-        ToastModule,
         TooltipModule,
         InputMaskModule,
       ],
+      providers: [MessageService]
     });
     fixture = TestBed.createComponent(ProfissionalCadastrarComponent);
     component = fixture.componentInstance;

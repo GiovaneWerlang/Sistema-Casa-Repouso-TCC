@@ -2,24 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { MedicamentoestoqueService } from '../service/medicamentoestoque.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-medicamentoestoque-cadastrar',
   templateUrl: './medicamentoestoque-cadastrar.component.html',
   styleUrls: ['./medicamentoestoque-cadastrar.component.css'],
-  providers: [MedicamentoestoqueService, MessageService]
+  providers: [MedicamentoestoqueService]
 })
 export class MedicamentoestoqueCadastrarComponent implements OnInit {
 
   form: FormGroup;
-
+  novo:boolean = false;
   constructor(
     private route: ActivatedRoute,
     private medicamentoEstoqueService: MedicamentoestoqueService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
       id: [null],
@@ -32,9 +32,10 @@ export class MedicamentoestoqueCadastrarComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(c => {
       let id = c['id'];
-      if (id != null) {
-        this.carregaMedicamentoEstoque(Number(id));
+      if (id) {
+        this.carrega(Number(id));
       }
+      this.novo = id ? false : true;
     })
   }
 
@@ -42,13 +43,14 @@ export class MedicamentoestoqueCadastrarComponent implements OnInit {
     if (this.form.valid) {
       this.medicamentoEstoqueService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
+          this.toastService.toastSuccess(`Medicamento  ${this.novo ? 'salvo' : 'atualizado'}  com sucesso.`);
           this.router.navigate(['/medicamentoestoque/listar']);
         }
       })
       this.limpar();
     } else {
       this.form.markAllAsTouched();
-      this.messageService.add({ severity: 'warn', summary: 'Não foi possível salvar!', detail: 'Verifique os campos e tente novamente.' });
+      this.toastService.toastWarning('Não foi possível salvar!', 'Verifique os campos e tente novamente.');
     }
   }
 
@@ -60,7 +62,7 @@ export class MedicamentoestoqueCadastrarComponent implements OnInit {
     this.router.navigate(['/medicamentoestoque/listar']);
   }
 
-  private carregaMedicamentoEstoque(id: number) {
+  private carrega(id: number) {
     this.medicamentoEstoqueService.findByID(id).subscribe((medicamentoEstoque) => this.form.setValue(medicamentoEstoque));
   }
 }

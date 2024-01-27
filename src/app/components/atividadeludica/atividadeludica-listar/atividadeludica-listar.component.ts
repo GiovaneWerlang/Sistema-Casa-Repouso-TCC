@@ -6,12 +6,13 @@ import { Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-atividadeludica',
   templateUrl: './atividadeludica-listar.component.html',
   styleUrls: ['./atividadeludica-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: AtividadeLudicaService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: AtividadeLudicaService }]
 })
 export class AtividadeludicaListarComponent {
 
@@ -32,7 +33,7 @@ export class AtividadeludicaListarComponent {
   constructor(
     private service: CrudService<AtividadeLudica>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) { }
 
   novo() {
@@ -62,7 +63,7 @@ export class AtividadeludicaListarComponent {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -86,7 +87,7 @@ export class AtividadeludicaListarComponent {
         },
         error: (error) => {
           this.carregando = false
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

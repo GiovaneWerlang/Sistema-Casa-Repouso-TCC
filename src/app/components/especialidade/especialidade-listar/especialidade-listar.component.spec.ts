@@ -8,7 +8,6 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-table.component';
 
@@ -27,7 +26,6 @@ describe('EspecialidadeListarComponent', () => {
         PaginatorModule, 
         BlockUIModule,
         ProgressSpinnerModule,
-        ToastModule,
       ],
       providers: [MessageService]
     })

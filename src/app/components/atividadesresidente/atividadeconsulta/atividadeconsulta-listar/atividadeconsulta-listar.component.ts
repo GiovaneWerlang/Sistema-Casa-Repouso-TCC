@@ -6,12 +6,13 @@ import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { SituacaoAtividade } from 'src/app/shared/situacaoatividade/situacaoatividade';
 import { AtividadeConsultaService } from '../service/atividadeconsulta.service';
+import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({
   selector: 'app-atividadeconsulta-listar',
   templateUrl: './atividadeconsulta-listar.component.html',
   styleUrls: ['./atividadeconsulta-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: AtividadeConsultaService }, MessageService]
+  providers: [{ provide: CrudService, useExisting: AtividadeConsultaService }]
 })
 export class AtividadeconsultaListarComponent {
   cols: string[] = ["Id", "Descrição", "DataHora", "Situação"];
@@ -32,7 +33,7 @@ export class AtividadeconsultaListarComponent {
   constructor(
     private service: CrudService<AtividadeConsulta>,
     private router: Router,
-    private messageService: MessageService
+    private toastService: ToastService
   ) {
   }
 
@@ -59,7 +60,7 @@ export class AtividadeconsultaListarComponent {
       },
       error: (error) => {
         this.carregando = false;
-        this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
@@ -82,7 +83,7 @@ export class AtividadeconsultaListarComponent {
         },
         error: (error) => {
           this.carregando = false;
-          this.messageService.add({ severity: 'warn', summary: 'Não foi possível carregar!', detail: error });
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

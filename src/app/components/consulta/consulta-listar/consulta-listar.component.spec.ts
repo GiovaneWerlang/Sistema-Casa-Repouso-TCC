@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 describe('ConsultaListarComponent', () => {
   let component: ConsultaListarComponent;
@@ -25,8 +25,8 @@ describe('ConsultaListarComponent', () => {
         PaginatorModule, 
         BlockUIModule,
         ProgressSpinnerModule,
-        ToastModule,
       ],
+      providers: [MessageService]
     });
     fixture = TestBed.createComponent(ConsultaListarComponent);
     component = fixture.componentInstance;
