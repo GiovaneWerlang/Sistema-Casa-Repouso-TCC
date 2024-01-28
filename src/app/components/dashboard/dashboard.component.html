@@ -1,8 +1,30 @@
 <div class="flex flex-row flex-wrap justify-content-center col-12">
-    <div *ngFor="let dado of data" class="col-12 lg:col-5 xl:col-5 chart-container pt-0 text-center">
+    <div class="col-8 sm:col-8 md:col-12 lg:col-5 xl:col-5 list-container pt-0 text-center">
+        <p-table [value]="atividades" [scrollable]="true" scrollHeight="450px">
+            <ng-template pTemplate="header" style="background-color: #fdfdfd;">
+                <tr style="background-color: #fdfdfd;">
+                    <th style="background-color: #fdfdfd;">Descrição</th>
+                    <th style="background-color: #fdfdfd;">Data e hora</th>
+                    <th style="background-color: #fdfdfd;">Ações</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-atividade>
+                <tr style="background-color: #fdfdfd;">
+                    <td style="background-color: #fdfdfd;">{{ atividade?.descricao }}</td>
+                    <td style="background-color: #fdfdfd;">{{ atividade?.dataHora | date:"dd/MM/yyyy HH:mm" }}</td>
+                    <td style="background-color: #fdfdfd;">
+                        <div class="flex gap-1">
+                            <p-button class="tablebutton" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(atividade)"></p-button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div *ngFor="let dado of data" class="col-8 sm:col-8 md:col-12 lg:col-5 xl:col-5 chart-container pt-0 text-center">
         <p class="font-bold text-blue-600">{{dado?.titulo}}</p>
-        <p-chart type="doughnut" *ngIf="dado?.datasets" [data]="dado" [options]="options"></p-chart>
-        <div *ngIf="!dado?.datasets" class="flex justify-content-center align-items-center" style="height: 331px;">
+        <p-chart type="doughnut" *ngIf="dado?.datasets" [data]="dado" [options]="options" [responsive]="true"></p-chart>
+        <div *ngIf="!dado?.datasets" class="flex justify-content-center align-items-center">
             <span class="pi pi-info-circle flex flex-column font-bold">Não há informações para exibir</span>            
         </div>
     </div>
