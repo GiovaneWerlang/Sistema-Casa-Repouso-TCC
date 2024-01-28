@@ -8,8 +8,9 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-table.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('EspecialidadeListarComponent', () => {
   let component: EspecialidadeListarComponent;
@@ -26,8 +27,9 @@ describe('EspecialidadeListarComponent', () => {
         PaginatorModule, 
         BlockUIModule,
         ProgressSpinnerModule,
+        ConfirmDialogModule,
       ],
-      providers: [MessageService]
+      providers: [MessageService, ConfirmationService]
     })
     .compileComponents();
   }));

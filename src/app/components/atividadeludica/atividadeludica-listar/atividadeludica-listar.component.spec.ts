@@ -9,6 +9,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('AtividadeludicaListarComponent', () => {
   let component: AtividadeludicaListarComponent;
@@ -25,6 +26,7 @@ describe('AtividadeludicaListarComponent', () => {
         PaginatorModule, 
         BlockUIModule,
         ProgressSpinnerModule,
+        ConfirmDialogModule,
       ],
       providers: [MessageService]
     });

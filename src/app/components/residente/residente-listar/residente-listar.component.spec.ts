@@ -9,6 +9,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('ResidenteListarComponent', () => {
   let component: ResidenteListarComponent;
@@ -25,6 +26,7 @@ describe('ResidenteListarComponent', () => {
         PaginatorModule, 
         BlockUIModule,
         ProgressSpinnerModule,
+        ConfirmDialogModule,
       ],
       providers: [MessageService]
     });

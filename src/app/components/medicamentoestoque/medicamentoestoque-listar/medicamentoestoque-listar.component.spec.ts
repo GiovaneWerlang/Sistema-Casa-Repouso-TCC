@@ -10,6 +10,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-table.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('MedicamentoestoqueListarComponent', () => {
   let component: MedicamentoestoqueListarComponent;
@@ -26,6 +27,7 @@ describe('MedicamentoestoqueListarComponent', () => {
         PaginatorModule, 
         BlockUIModule,
         ProgressSpinnerModule,
+        ConfirmDialogModule,
       ],
       providers: [MessageService]
     });

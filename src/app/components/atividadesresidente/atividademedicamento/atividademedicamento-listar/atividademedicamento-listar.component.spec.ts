@@ -9,6 +9,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('AtividademedicamentoListarComponent', () => {
   let component: AtividademedicamentoListarComponent;
@@ -17,7 +18,16 @@ describe('AtividademedicamentoListarComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [AtividademedicamentoListarComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule, TableModule, PaginatorModule, BlockUIModule, CalendarModule, ProgressSpinnerModule],
+      imports: [
+        HttpClientTestingModule, 
+        RouterTestingModule, 
+        TableModule, 
+        PaginatorModule, 
+        BlockUIModule, 
+        CalendarModule, 
+        ProgressSpinnerModule,
+        ConfirmDialogModule,
+      ],
       providers:[MessageService]
     });
     fixture = TestBed.createComponent(AtividademedicamentoListarComponent);
