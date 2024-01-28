@@ -7,12 +7,13 @@ import { TipoEstadia } from 'src/app/shared/tipoestadia/tipoestadia';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-residente-listar',
   templateUrl: './residente-listar.component.html',
   styleUrls: ['./residente-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: ResidenteService }]
+  providers: [{ provide: CrudService, useExisting: ResidenteService }, ConfirmationService]
 })
 export class ResidenteListarComponent {
   cols: string[] = ["Id", "Nome", "CPF", "Estadia", "Situação"];
@@ -34,7 +35,8 @@ export class ResidenteListarComponent {
   constructor(
     private service: CrudService<Residente>,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -46,9 +48,22 @@ export class ResidenteListarComponent {
   }
 
   delete(id: any) {
-    this.service.delete(id).subscribe((res) => {
-      this.carregarLista(0, this.rows);
-    })
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.service.delete(id).subscribe((res) => {
+          this.carregarLista(0, this.rows);
+        })
+      },
+      reject: () => {
+      }
+    });
   }
 
   edit(id: number) {
@@ -64,7 +79,9 @@ export class ResidenteListarComponent {
         this.carregando = false;
       },
       error: (error) => {
-        this.carregando = false
+        this.carregando = false;
+        this.total = 0;
+        this.items = [];
         this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })

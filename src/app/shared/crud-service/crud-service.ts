@@ -18,10 +18,7 @@ export class CrudService<T> {
     }
 
     list() {
-        return this.http.get<T[]>(`${this.API_URL}${this.T_URL}`)
-            .pipe(
-                tap(console.log)
-            );
+        return this.http.get<T[]>(`${this.API_URL}${this.T_URL}`);
     }
 
     page(page:number, size: number): Observable<any[]> {

@@ -114,7 +114,7 @@ export class ProfissionalCadastrarComponent implements OnInit {
   }
 
   private carregarOpcoesEspecialidade() {
-    this.especialidadeService.list().subscribe((res) =>
+    this.especialidadeService.list().subscribe((res:any) =>
       this.opcoesEspecialidade = res?.map((i: Especialidade) => ({ label: i.nome, value: i.id }))
     );
   }

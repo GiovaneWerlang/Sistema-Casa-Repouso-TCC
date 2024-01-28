@@ -38,7 +38,6 @@ export class ConfiguracaosistemaCadastrarComponent {
 
   monitoraCampoHabilitaEnvioEmail(){
     this.form.get('habilitarEnvioEmail')?.valueChanges.subscribe((habilitaEmail) => {
-      console.log('email',habilitaEmail)
       if(habilitaEmail){
         this.form.get('emailLogin')?.addValidators(Validators.required);
         this.form.get('emailLogin')?.updateValueAndValidity();
@@ -57,7 +56,6 @@ export class ConfiguracaosistemaCadastrarComponent {
 
   monitoraCampoHabilitaEnvioWhats(){
     this.form.get('habilitarEnvioWhats')?.valueChanges.subscribe((habilitaWhats) => {
-      console.log('whats',habilitaWhats)
       if(habilitaWhats){
         this.form.get('whatsNumeroId')?.addValidators(Validators.required);
         this.form.get('whatsNumeroId')?.updateValueAndValidity();

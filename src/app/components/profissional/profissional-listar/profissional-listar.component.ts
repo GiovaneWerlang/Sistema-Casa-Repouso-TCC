@@ -7,12 +7,13 @@ import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 import { Funcoes } from 'src/app/shared/funcoes/funcoes';
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-profissional-listar',
   templateUrl: './profissional-listar.component.html',
   styleUrls: ['./profissional-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: ProfissionalService }]
+  providers: [{ provide: CrudService, useExisting: ProfissionalService }, ConfirmationService]
 })
 export class ProfissionalListarComponent {
   cols: string[] = ["Id", "Nome", "CPF", "Função", "Situação"];
@@ -34,7 +35,8 @@ export class ProfissionalListarComponent {
   constructor(
     private service: CrudService<Profissional>,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -46,9 +48,22 @@ export class ProfissionalListarComponent {
   }
 
   delete(id: any) {
-    this.service.delete(id).subscribe((res) => {
-      this.carregarLista(0, this.rows);
-    })
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.service.delete(id).subscribe((res) => {
+          this.carregarLista(0, this.rows);
+        })
+      },
+      reject: () => {
+      }
+    });
   }
 
   edit(id: number) {
@@ -65,6 +80,8 @@ export class ProfissionalListarComponent {
       },
       error: (error) => {
         this.carregando = false;
+        this.total = 0;
+        this.items = [];
         this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })

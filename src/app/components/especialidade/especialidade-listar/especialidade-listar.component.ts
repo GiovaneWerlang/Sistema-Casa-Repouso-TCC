@@ -4,12 +4,13 @@ import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-ta
 import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { EspecialidadeService } from '../service/especialidade.service';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-especialidade-listar',
   templateUrl: './especialidade-listar.component.html',
   styleUrls: ['./especialidade-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: EspecialidadeService }]
+  providers: [{ provide: CrudService, useExisting: EspecialidadeService }, ConfirmationService]
 })
 export class EspecialidadeListarComponent extends CrudTableComponent<Especialidade> {
   override cols: LabelValue[] = [

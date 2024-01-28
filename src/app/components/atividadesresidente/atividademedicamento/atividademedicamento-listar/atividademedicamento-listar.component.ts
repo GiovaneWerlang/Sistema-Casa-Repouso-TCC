@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { AtividadeMedicamento } from '../modelo/atividademedicamento';
 import { AtividadeMedicamentoService } from '../service/atividademedicamento.service';
@@ -12,7 +12,7 @@ import { ToastService } from 'src/app/shared/toast-service/toast.service';
   selector: 'app-atividademedicamento-listar',
   templateUrl: './atividademedicamento-listar.component.html',
   styleUrls: ['./atividademedicamento-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: AtividadeMedicamentoService }]
+  providers: [{ provide: CrudService, useExisting: AtividadeMedicamentoService }, ConfirmationService]
 })
 export class AtividademedicamentoListarComponent {
   cols: string[] = ["Id", "Descrição", "DataHora", "Situação"];
@@ -33,7 +33,8 @@ export class AtividademedicamentoListarComponent {
   constructor(
     private service: CrudService<AtividadeMedicamento>,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -41,9 +42,22 @@ export class AtividademedicamentoListarComponent {
   }
 
   delete(id: any) {
-    this.service.delete(id).subscribe((res) => {
-      this.carregarLista(0, this.rows);
-    })
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.service.delete(id).subscribe((res) => {
+          this.carregarLista(0, this.rows);
+        })
+      },
+      reject: () => {
+      }
+    });
   }
 
   edit(id: number) {
@@ -60,6 +74,8 @@ export class AtividademedicamentoListarComponent {
       },
       error: (error) => {
         this.carregando = false;
+        this.total = 0;
+        this.items = [];
         this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })

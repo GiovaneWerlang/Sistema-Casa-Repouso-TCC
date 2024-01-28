@@ -6,12 +6,13 @@ import { Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { TipoMovimentacao } from 'src/app/shared/tipomovimentacao/tipomovimentacao';
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-movimentacaoestoque-listar',
   templateUrl: './movimentacaoestoque-listar.component.html',
   styleUrls: ['./movimentacaoestoque-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: MovimentacaoestoqueService }]
+  providers: [{ provide: CrudService, useExisting: MovimentacaoestoqueService }, ConfirmationService]
 })
 export class MovimentacaoestoqueListarComponent {
   cols: string[] = ["Id", "Quantidade", "Tipo", "Medicamento"];
@@ -32,7 +33,8 @@ export class MovimentacaoestoqueListarComponent {
   constructor(
     private service: CrudService<MovimentacaoEstoque>,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -44,9 +46,22 @@ export class MovimentacaoestoqueListarComponent {
   }
 
   delete(id: any) {
-    this.service.delete(id).subscribe((res) => {
-      this.carregarLista(0, this.rows);
-    })
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.service.delete(id).subscribe((res) => {
+          this.carregarLista(0, this.rows);
+        })
+      },
+      reject: () => {
+      }
+    });
   }
 
   edit(id: number) {
@@ -62,7 +77,9 @@ export class MovimentacaoestoqueListarComponent {
         this.carregando = false;
       },
       error: (error) => {
-        this.carregando = false
+        this.carregando = false;
+        this.total = 0;
+        this.items = [];
         this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })

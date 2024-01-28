@@ -39,6 +39,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
 
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
@@ -143,6 +145,7 @@ import { DataHoraInterceptorService } from './shared/crud-service/datahorainterc
     NgxMaskDirective,
     NgxMaskPipe,
     CheckboxModule,
+    ConfirmDialogModule,
   ],
   providers: [
     MessageService, 

@@ -5,12 +5,13 @@ import { Exame } from '../modelo/exame';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-exame-listar',
   templateUrl: './exame-listar.component.html',
   styleUrls: ['./exame-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: ExameService }]
+  providers: [{ provide: CrudService, useExisting: ExameService }, ConfirmationService]
 })
 export class ExameListarComponent {
   cols: string[] = ["Id", "Descrição", "DataHora", "Local", "Residente"];
@@ -29,7 +30,8 @@ export class ExameListarComponent {
   constructor(
     private service: CrudService<Exame>,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -41,9 +43,22 @@ export class ExameListarComponent {
   }
 
   delete(id: any) {
-    this.service.delete(id).subscribe((res) => {
-      this.carregarLista(0, this.rows);
-    })
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.service.delete(id).subscribe((res) => {
+          this.carregarLista(0, this.rows);
+        })
+      },
+      reject: () => {
+      }
+    });
   }
 
   edit(id: number) {
@@ -60,6 +75,8 @@ export class ExameListarComponent {
       },
       error: (error) => {
         this.carregando = false;
+        this.total = 0;
+        this.items = [];
         this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })

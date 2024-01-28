@@ -4,12 +4,13 @@ import { MedicamentoUso } from '../modelo/medicamentouso';
 import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-medicamentouso-listar',
   templateUrl: './medicamentouso-listar.component.html',
   styleUrls: ['./medicamentouso-listar.component.css'],
-  providers: [{ provide: CrudService, useExisting: MedicamentousoService }]
+  providers: [{ provide: CrudService, useExisting: MedicamentousoService }, ConfirmationService]
 })
 export class MedicamentousoListarComponent {
   cols: string[] = ["Id", "DataHora Início", "Residente", "Medicamento"];
@@ -28,7 +29,8 @@ export class MedicamentousoListarComponent {
   constructor(
     private service: CrudService<MedicamentoUso>,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -40,9 +42,22 @@ export class MedicamentousoListarComponent {
   }
 
   delete(id: any) {
-    this.service.delete(id).subscribe((res) => {
-      this.carregarLista(0, this.rows);
-    })
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.service.delete(id).subscribe((res) => {
+          this.carregarLista(0, this.rows);
+        })
+      },
+      reject: () => {
+      }
+    });
   }
 
   edit(id: number) {
@@ -59,6 +74,8 @@ export class MedicamentousoListarComponent {
       },
       error: (error) => {
         this.carregando = false;
+        this.total = 0;
+        this.items = [];
         this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })

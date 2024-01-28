@@ -4,12 +4,13 @@ import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-ta
 import { CrudService } from 'src/app/shared/crud-service/crud-service';
 import { MedicamentoestoqueService } from '../service/medicamentoestoque.service';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-medicamentoestoque-listar',
   templateUrl: './medicamentoestoque-listar.component.html',
   styleUrls: ['./medicamentoestoque-listar.component.css'],
-  providers: [  { provide: CrudService, useExisting: MedicamentoestoqueService }]
+  providers: [  { provide: CrudService, useExisting: MedicamentoestoqueService }, ConfirmationService]
 })
 export class MedicamentoestoqueListarComponent extends CrudTableComponent<MedicamentoEstoque> {
   override cols:LabelValue[] = [

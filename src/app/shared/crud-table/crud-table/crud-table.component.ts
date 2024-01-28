@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { CrudService } from '../../crud-service/crud-service';
 import { LabelValue } from '../../labelvalue/labelvalue';
 import { ToastService } from '../../toast-service/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-crud-table',
   templateUrl: './crud-table.component.html',
-  styleUrls: ['./crud-table.component.css']
+  styleUrls: ['./crud-table.component.css'],
+  providers: [ConfirmationService]
 })
 export class CrudTableComponent<T> {
   cols: LabelValue[] = [];
@@ -31,7 +33,8 @@ export class CrudTableComponent<T> {
   constructor(
     private service: CrudService<T>,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
   }
 
@@ -43,9 +46,22 @@ export class CrudTableComponent<T> {
   }
 
   delete(id: any) {
-    this.service.delete(id).subscribe((res) => {
-      this.carregarLista(0, this.rows);
-    })
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.service.delete(id).subscribe((res) => {
+          this.carregarLista(0, this.rows);
+        })
+      },
+      reject: () => {
+      }
+    });
   }
 
   edit(id: number) {
@@ -62,6 +78,8 @@ export class CrudTableComponent<T> {
       },
       error: (error) => {
         this.carregando = false;
+        this.total = 0;
+        this.items = [];
         this.toastService.toastBase('warn', 'Não foi possível carregar!', error );
       }
     })
