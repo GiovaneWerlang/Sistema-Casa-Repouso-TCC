@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UsuarioService } from '../service/usuario.service';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { Usuario } from '../modelo/usuario';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';
 import { Funcoes } from 'src/app/shared/funcoes/funcoes';

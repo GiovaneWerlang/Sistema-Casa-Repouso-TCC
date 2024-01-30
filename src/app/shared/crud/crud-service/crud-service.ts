@@ -1,5 +1,5 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
-import { tap, Observable, catchError, throwError } from "rxjs";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { Observable, catchError, throwError } from "rxjs";
 import { environment } from "src/environments/environment.development";
 
 export class CrudService<T> {

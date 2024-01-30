@@ -22,7 +22,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
-import { CrudTableComponent } from './shared/crud-table/crud-table/crud-table.component';
+import { CrudTableComponent } from './shared/crud/crud-table/crud-table.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuComponent } from './components/menu/menu.component';
@@ -73,7 +73,7 @@ import { AtividadeconsultaEditarComponent } from './components/atividadesresiden
 import { AtividadeconsultaListarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-listar/atividadeconsulta-listar.component';
 import { AtividadeexameListarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-listar/atividadeexame-listar.component';
 import { AtividadeexameEditarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-editar/atividadeexame-editar.component';
-import { DataHoraInterceptorService } from './shared/crud-service/datahorainterceptor.service';
+import { DataHoraInterceptorService } from './shared/crud/crud-service/datahorainterceptor.service';
 
 @NgModule({
   declarations: [

@@ -1,4 +1,4 @@
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { MovimentacaoestoqueService } from './../service/movimentacaoestoque.service';
 import { Component } from '@angular/core';
 import { MovimentacaoEstoque } from '../modelo/movimentacaoestoque';

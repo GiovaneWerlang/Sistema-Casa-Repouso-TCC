@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { AtividadeMedicamento } from '../modelo/atividademedicamento';
 import { AtividadeMedicamentoService } from '../service/atividademedicamento.service';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';

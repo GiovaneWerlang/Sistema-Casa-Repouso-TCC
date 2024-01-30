@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ExameService } from '../service/exame.service';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { Exame } from '../modelo/exame';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Router } from '@angular/router';

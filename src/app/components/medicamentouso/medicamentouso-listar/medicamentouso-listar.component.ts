@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MedicamentousoService } from '../service/medicamentouso.service';
 import { MedicamentoUso } from '../modelo/medicamentouso';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
 import { ConfirmationService } from 'primeng/api';

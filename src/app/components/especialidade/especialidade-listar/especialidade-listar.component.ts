@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Especialidade } from '../modelo/especialidade';
-import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-table.component';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudTableComponent } from 'src/app/shared/crud/crud-table/crud-table.component';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { EspecialidadeService } from '../service/especialidade.service';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { ConfirmationService } from 'primeng/api';

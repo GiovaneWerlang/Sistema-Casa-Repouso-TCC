@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { CrudService } from '../../crud-service/crud-service';
+import { CrudService } from '../crud-service/crud-service';
 import { LabelValue } from '../../labelvalue/labelvalue';
 import { ToastService } from '../../toast-service/toast.service';
 import { ConfirmationService } from 'primeng/api';
@@ -55,7 +55,7 @@ export class CrudTableComponent<T> {
       acceptIcon: "none",
       rejectIcon: "none",
       accept: () => {
-        this.service.delete(id).subscribe((res) => {
+        this.service.delete(id).subscribe((res: any) => {
           this.carregarLista(0, this.rows);
         })
       },
@@ -76,7 +76,7 @@ export class CrudTableComponent<T> {
         this.total = page.total;
         this.carregando = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         this.carregando = false;
         this.total = 0;
         this.items = [];
@@ -101,7 +101,7 @@ export class CrudTableComponent<T> {
           this.total = page.total;
           this.carregando = false;
         },
-        error: (error) => {
+        error: (error:any) => {
           this.carregando = false;
           this.toastService.toastBase('warn', 'Não foi possível carregar!', error );
         }

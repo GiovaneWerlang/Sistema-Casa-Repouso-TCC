@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ConsultaService } from '../service/consulta.service';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { Consulta } from '../modelo/consulta';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';

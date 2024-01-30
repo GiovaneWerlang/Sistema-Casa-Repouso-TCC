@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntradaSaida } from '../modelo/entradasaida';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

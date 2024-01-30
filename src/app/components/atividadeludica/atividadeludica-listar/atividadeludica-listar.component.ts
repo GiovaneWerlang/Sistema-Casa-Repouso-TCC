@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AtividadeLudica } from '../modelo/atividadeludica';
 import { AtividadeLudicaService } from '../service/atividadeludica.service';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { Router } from '@angular/router';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
 import { Situacoes } from 'src/app/shared/situacoes/situacoes';

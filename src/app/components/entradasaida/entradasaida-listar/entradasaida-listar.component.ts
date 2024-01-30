@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EntradasaidaService } from '../service/entradasaida.service';
-import { CrudService } from 'src/app/shared/crud-service/crud-service';
+import { CrudService } from 'src/app/shared/crud/crud-service/crud-service';
 import { EntradaSaida } from '../modelo/entradasaida';
 import { Router } from '@angular/router';
 import { ResidenteService } from '../../residente/service/residente.service';
