@@ -17,8 +17,8 @@
                 <td>{{item.situacao  | Enum:situacoes}}</td>
                 <td>
                     <div class="flex gap-1">
-                        <p-button class="tablebutton" icon="pi pi-pencil" styleClass="p-button-rounded p-button-outlined p-button-secondary" (click)="edit(item.id)"></p-button>
-                        <p-button class="tablebutton" icon="pi pi-trash" styleClass="p-button-rounded p-button-outlined p-button-danger" (click)="delete(item.id)"></p-button>
+                        <p-button class="tablebutton" icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="secondary" (click)="edit(item.id)"></p-button>
+                        <p-button class="tablebutton" icon="pi pi-trash" [rounded]="true" [outlined]="true" severity="danger" (click)="delete(item.id)"></p-button>
                     </div>
                 </td>
             </tr>
