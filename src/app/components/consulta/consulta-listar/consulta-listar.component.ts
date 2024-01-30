@@ -13,7 +13,6 @@ import { ToastService } from 'src/app/shared/toast-service/toast.service';
   providers: [{ provide: CrudService, useExisting: ConsultaService }, ConfirmationService]
 })
 export class ConsultaListarComponent {
-  cols: string[] = ["Id", "Descrição", "DataHora", "Local", "Residente"];
   public items: Consulta[] = [];
 
   first: number = 0;
