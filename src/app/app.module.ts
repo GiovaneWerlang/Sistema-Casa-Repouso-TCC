@@ -1,5 +1,5 @@
 import { ConfiguracaosistemaCadastrarComponent } from './components/configuracaosistema/configuracaosistema-cadastrar/configuracaosistema-cadastrar.component';
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -74,6 +74,7 @@ import { AtividadeconsultaListarComponent } from './components/atividadesresiden
 import { AtividadeexameListarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-listar/atividadeexame-listar.component';
 import { AtividadeexameEditarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-editar/atividadeexame-editar.component';
 import { DataHoraInterceptorService } from './shared/crud/crud-service/datahorainterceptor.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
     declarations: [
@@ -146,6 +147,12 @@ import { DataHoraInterceptorService } from './shared/crud/crud-service/datahorai
         NgxMaskPipe,
         CheckboxModule,
         ConfirmDialogModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        }),
     ],
     providers: [
         MessageService,

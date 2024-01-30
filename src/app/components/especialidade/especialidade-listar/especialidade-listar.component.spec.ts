@@ -9,7 +9,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CrudTableComponent } from 'src/app/shared/crud-table/crud-table/crud-table.component';
+import { CrudTableComponent } from 'src/app/shared/crud/crud-table/crud-table.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('EspecialidadeListarComponent', () => {
