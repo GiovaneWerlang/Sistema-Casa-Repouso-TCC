@@ -7,48 +7,48 @@ import { AutenticacaoService } from '../login/service/autenticacao.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'client';
-  desktop: boolean = true;
-  autenticado: boolean = false;
+    title = 'client';
+    desktop: boolean = true;
+    autenticado: boolean = false;
 
-  breakPointSubscription: Subscription = new Subscription;
-  autenticacaoSubscription: Subscription = new Subscription;
+    breakPointSubscription: Subscription = new Subscription;
+    autenticacaoSubscription: Subscription = new Subscription;
 
-  constructor(
-    private config: PrimeNGConfig,
-    breakpointService: BreakpointserviceService,
-    private _autenticacaoService: AutenticacaoService) {
-    config.setTranslation(Translate);
-    this.monitoraBreakspoints(breakpointService);
-    this.monitoraAutenticado();
-  }
+    constructor(
+        private config: PrimeNGConfig,
+        breakpointService: BreakpointserviceService,
+        private _autenticacaoService: AutenticacaoService) {
+        config.setTranslation(Translate);
+        this.monitoraBreakspoints(breakpointService);
+        this.monitoraAutenticado();
+    }
 
-  ngOnInit(): void {
-    this._autenticacaoService.autoLogin();
-  }
+    ngOnInit(): void {
+        this._autenticacaoService.autoLogin();
+    }
 
-  monitoraBreakspoints(breakpointService: BreakpointserviceService) {
-    this.breakPointSubscription = breakpointService.getBreakpoints().subscribe((breakpoint: BreakpointState) => {
-      const breakpoints = breakpoint.breakpoints;
-      this.desktop = breakpoints[Breakpoints.Web] || breakpoints[Breakpoints.WebLandscape];
-    });
-  }
+    monitoraBreakspoints(breakpointService: BreakpointserviceService) {
+        this.breakPointSubscription = breakpointService.getBreakpoints().subscribe((breakpoint: BreakpointState) => {
+            const breakpoints = breakpoint.breakpoints;
+            this.desktop = breakpoints[Breakpoints.Web] || breakpoints[Breakpoints.WebLandscape];
+        });
+    }
 
-  monitoraAutenticado() {
-    this.autenticacaoSubscription = this._autenticacaoService.dadoUsuario.asObservable().subscribe(
-      dado => {
-        this.autenticado = !!dado;
-      }
-    );
-  }
+    monitoraAutenticado() {
+        this.autenticacaoSubscription = this._autenticacaoService.dadoUsuario.asObservable().subscribe(
+            dado => {
+                this.autenticado = !!dado;
+            }
+        );
+    }
 
-  ngOnDestroy(): void {
-    this.breakPointSubscription.unsubscribe();
-    this.autenticacaoSubscription.unsubscribe();
-  }
+    ngOnDestroy(): void {
+        this.breakPointSubscription.unsubscribe();
+        this.autenticacaoSubscription.unsubscribe();
+    }
 }
