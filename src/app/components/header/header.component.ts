@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     }
   ]
+
   constructor(
     private _router: Router,
     private breakpointService: BreakpointserviceService,
@@ -34,6 +35,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.usuarioSub = this.autenticacaoService.dadoUsuario.subscribe(usuario => {
       this.estaAutenticado = !!usuario;
     });
+    // let elements = document.getElementsByClassName("p-menuitem-link");
+    // for (let i = 0; i < elements.length; i++) {
+    //     elements[i].ariaLabel = this.items[i].label;
+    // }
   }
 
   ngOnInit() {

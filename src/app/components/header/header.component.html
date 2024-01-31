@@ -1,8 +1,8 @@
 <div class="header flex col-12 justify-content-between">    
-    <app-side-menu *ngIf="!desktop"></app-side-menu>
-    <p-button *ngIf="desktop" icon="pi pi-home" [rounded]="true" [text]="true" severity="info" size="large" (click)="home()" aria-label="Home"></p-button>
+    <app-side-menu *ngIf="!desktop" aria-label="Menu"></app-side-menu>
+    <p-button *ngIf="desktop" icon="pi pi-home" [rounded]="true" [text]="true" severity="info" size="large" (click)="home()" aria-label="Home" ariaLabel="Home"></p-button>
     <div class="flex flex-column">
-        <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="info" size="large" (click)="menu.toggle($event)" aria-label="Usuário"></p-button>
-        <p-menu #menu [model]="items" [popup]="true"></p-menu>
+        <p-button icon="pi pi-user" [rounded]="true" [text]="true" severity="info" size="large" (click)="menu.toggle($event)" aria-label="Usuário" ariaLabel="Usuário"></p-button>
+        <p-menu #menu [model]="items" [popup]="true" aria-label="Menu"></p-menu>
     </div>
 </div>
