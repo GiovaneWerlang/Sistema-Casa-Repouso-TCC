@@ -1,5 +1,5 @@
 <div>
-    <p-button (click)="novo()" icon="pi pi-plus" pTooltip="Novo" tooltipPosition="bottom" icon="pi pi-plus" [rounded]="true" [text]="true" severity="info" size="large"></p-button>
+    <p-button (click)="novo()" icon="pi pi-plus" pTooltip="Novo" tooltipPosition="bottom" icon="pi pi-plus" [rounded]="true" [text]="true" severity="info" size="large" aria-label="Novo"></p-button>
     <p-table [value]="items" (sortFunction)="customSort($event)" [customSort]="true" [lazy]="true" (onLazyLoad)="customSort($event)">
         <ng-template pTemplate="header">
             <tr>
@@ -20,8 +20,8 @@
                 <td>{{item.residente.nome}}</td>
                 <td>
                     <div class="flex gap-1">
-                        <p-button class="tablebutton" icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="secondary" (click)="edit(item.id)"></p-button>
-                        <p-button class="tablebutton" icon="pi pi-trash" [rounded]="true" [outlined]="true" severity="danger" (click)="delete(item.id)"></p-button>
+                        <p-button class="tablebutton" icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="secondary" (click)="edit(item.id)" aria-label="Editar"></p-button>
+                        <p-button class="tablebutton" icon="pi pi-trash" [rounded]="true" [outlined]="true" severity="danger" (click)="delete(item.id)" aria-label="Deletar"></p-button>
                     </div>
                 </td>
             </tr>

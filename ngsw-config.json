@@ -26,5 +26,22 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name":"gets",
+      "urls": [
+        "http://localhost:8080/consulta",
+        "http://localhost:8080/atividadeexame",
+        "http://localhost:8080/atividademedicamento",
+        "http://localhost:8080/dashboard"
+      ],
+      "cacheConfig": {
+        "maxSize": 20,
+        "maxAge": "1h",
+        "timeout": "3s",
+        "strategy": "freshness"
+      }
+    }
   ]
 }

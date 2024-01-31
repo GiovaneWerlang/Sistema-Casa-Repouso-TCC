@@ -14,7 +14,7 @@
                     <td style="background-color: #fdfdfd;">{{ atividade?.dataHora | date:"dd/MM/yyyy HH:mm" }}</td>
                     <td style="background-color: #fdfdfd;">
                         <div class="flex gap-1">
-                            <p-button class="tablebutton" icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="secondary" (click)="edit(atividade)"></p-button>
+                            <p-button class="tablebutton" icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="secondary" (click)="edit(atividade)" aria-label="Editar"></p-button>
                         </div>
                     </td>
                 </tr>
