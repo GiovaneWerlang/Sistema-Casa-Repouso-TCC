@@ -1,13 +1,11 @@
-import { Subscription } from 'rxjs';
 import { AtividadeConsultaService } from '../atividadesresidente/atividadeconsulta/service/atividadeconsulta.service';
 import { AtividadeExameService } from '../atividadesresidente/atividadeexame/service/atividadeexame.service';
 import { AtividadeMedicamentoService } from '../atividadesresidente/atividademedicamento/service/atividademedicamento.service';
 import { DashboardService } from './service/dashboard.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AtividadeDashDTO } from './modelo/atividades';
 import { GraficoDadoDTO } from './modelo/graficodado';
-import { DashboardDTO } from './modelo/dashboard';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,17 +13,18 @@ import { DashboardDTO } from './modelo/dashboard';
   styleUrls: ['./dashboard.component.css'],
   providers: [DashboardService, AtividadeConsultaService, AtividadeExameService, AtividadeMedicamentoService]
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-  data: DashboardDTO | undefined;
-  atividades:AtividadeDashDTO[] = [];
-  dados: GraficoDadoDTO[] = [];
+export class DashboardComponent {
+  //data: DashboardDTO | undefined;
+  @Input() atividades:AtividadeDashDTO[] = [];
+  @Input() dados: GraficoDadoDTO[] = [];
 
   options: any;
-  carregando: boolean = false;
+  // carregando: boolean = false;
 
-  dashBoardSubscription: Subscription = new Subscription;
+  // dashBoardSubscription: Subscription = new Subscription;
 
-  constructor(private _dashboardService: DashboardService,
+  constructor(
+    // private _dashboardService: DashboardService,
     private _atividadeConsultaService: AtividadeConsultaService,
     private _atividadeExameService: AtividadeExameService,
     private _atividadeMedicamentoService: AtividadeMedicamentoService,
@@ -35,12 +34,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       cutout: '50%',
       animation: false
     };
-    this.carregando = true;
+    // this.carregando = true;
   }
 
-  ngOnInit(): void {
-    this.carregarDadosDashboard();
-  }
+  // ngOnInit(): void {
+    // this.carregarDadosDashboard();
+  // }
 
   edit(atividade:any){
     if(atividade.tipo === 'Consulta'){
@@ -52,16 +51,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  carregarDadosDashboard() {
-    this.dashBoardSubscription = this._dashboardService.list().subscribe((dados:any) => {
-      this.atividades = dados?.atividades;
-      this.dados = dados?.dados;
-      this.carregando = false;
-    });
-  }  
+  // carregarDadosDashboard() {
+  //   this.dashBoardSubscription = this._dashboardService.list().subscribe((dados:any) => {
+  //     this.atividades = dados?.atividades;
+  //     this.dados = dados?.dados;
+  //     this.carregando = false;
+  //   });
+  // }  
 
-  ngOnDestroy(): void {
-    this.dashBoardSubscription.unsubscribe();
+  // ngOnDestroy(): void {
+  //   this.dashBoardSubscription.unsubscribe();
+  // }
+
+  trackByTitle(index:any, item:any){
+    return item?.titulo;
   }
 
+  trackById(index:any, item:any){
+    return item?.id;
+  }
 }

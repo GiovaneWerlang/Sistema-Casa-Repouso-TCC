@@ -1,4 +1,3 @@
-import { ConfiguracaosistemaCadastrarComponent } from './components/configuracaosistema/configuracaosistema-cadastrar/configuracaosistema-cadastrar.component';
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,20 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './components/app-root/app.component';
 import { HomeComponent } from './components/home/home.component';
-import { EspecialidadeCadastrarComponent } from './components/especialidade/especialidade-cadastrar/especialidade-cadastrar.component';
-import { EspecialidadeListarComponent } from './components/especialidade/especialidade-listar/especialidade-listar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import { AtividadeludicaCadastrarComponent } from './components/atividadeludica/atividadeludica-cadastrar/atividadeludica-cadastrar.component';
-import { AtividadeludicaListarComponent } from './components/atividadeludica/atividadeludica-listar/atividadeludica-listar.component';
-import { ProfissionalListarComponent } from './components/profissional/profissional-listar/profissional-listar.component';
-import { ProfissionalCadastrarComponent } from './components/profissional/profissional-cadastrar/profissional-cadastrar.component';
 
 import { MenuModule } from 'primeng/menu';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
-import { CrudTableComponent } from './shared/crud/crud-table/crud-table.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuComponent } from './components/menu/menu.component';
@@ -41,83 +33,44 @@ import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
-import { EnumPipe } from './shared/enum-pipe/enum-pipe.pipe';
-import { CpfPipe } from './shared/cpf-pipe/cpf-pipe.pipe';
-import { ResidenteListarComponent } from './components/residente/residente-listar/residente-listar.component';
-import { ResidenteCadastrarComponent } from './components/residente/residente-cadastrar/residente-cadastrar.component';
-import { UsuarioListarComponent } from './components/usuario/usuario-listar/usuario-listar.component';
-import { UsuarioCadastrarComponent } from './components/usuario/usuario-cadastrar/usuario-cadastrar.component';
-import { EntradasaidaListarComponent } from './components/entradasaida/entradasaida-listar/entradasaida-listar.component';
-import { EntradasaidaCadastrarComponent } from './components/entradasaida/entradasaida-cadastrar/entradasaida-cadastrar.component';
-import { ExameListarComponent } from './components/exame/exame-listar/exame-listar.component';
-import { ExameCadastrarComponent } from './components/exame/exame-cadastrar/exame-cadastrar.component';
-import { ConsultaListarComponent } from './components/consulta/consulta-listar/consulta-listar.component';
-import { ConsultaCadastrarComponent } from './components/consulta/consulta-cadastrar/consulta-cadastrar.component';
-import { MedicamentoestoqueListarComponent } from './components/medicamentoestoque/medicamentoestoque-listar/medicamentoestoque-listar.component';
-import { MedicamentoestoqueCadastrarComponent } from './components/medicamentoestoque/medicamentoestoque-cadastrar/medicamentoestoque-cadastrar.component';
-import { MovimentacaoestoqueListarComponent } from './components/movimentacaoestoque/movimentacaoestoque-listar/movimentacaoestoque-listar.component';
-import { MovimentacaoestoqueCadastrarComponent } from './components/movimentacaoestoque/movimentacaoestoque-cadastrar/movimentacaoestoque-cadastrar.component';
-import { MedicamentousoListarComponent } from './components/medicamentouso/medicamentouso-listar/medicamentouso-listar.component';
-import { MedicamentousoCadastrarComponent } from './components/medicamentouso/medicamentouso-cadastrar/medicamentouso-cadastrar.component';
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 import { MessageService } from 'primeng/api';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AutenticacaoInterceptorService } from './components/login/autenticacaointerceptor.service';
-import { AtividademedicamentoListarComponent } from './components/atividadesresidente/atividademedicamento/atividademedicamento-listar/atividademedicamento-listar.component';
-import { AtividademedicamentoEditarComponent } from './components/atividadesresidente/atividademedicamento/atividademedicamento-editar/atividademedicamento-editar.component';
-import { AtividadeconsultaEditarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-editar/atividadeconsulta-editar.component';
-import { AtividadeconsultaListarComponent } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta-listar/atividadeconsulta-listar.component';
-import { AtividadeexameListarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-listar/atividadeexame-listar.component';
-import { AtividadeexameEditarComponent } from './components/atividadesresidente/atividadeexame/atividadeexame-editar/atividadeexame-editar.component';
 import { DataHoraInterceptorService } from './shared/crud/crud-service/datahorainterceptor.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AtividadeLudicaModule } from './components/atividadeludica/atividadeludica.module';
+import { AtividadeConsultaModule } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta.module';
+import { AtividadeExameModule } from './components/atividadesresidente/atividadeexame/atividadexame.module';
+import { AtividadeMedicamentoModule } from './components/atividadesresidente/atividademedicamento/atividademedicamento.module';
+import { ConsultaModule } from './components/consulta/consulta.module';
+import { ConfiguracaoSistemaModule } from './components/configuracaosistema/configuracaosistema.module';
+import { EntradaSaidaModule } from './components/entradasaida/entradasaida.module';
+import { EspecialidadeModule } from './components/especialidade/especialidade.module';
+import { MedicamentoEstoqueModule } from './components/medicamentoestoque/medicamentoestoque.module';
+import { ExameModule } from './components/exame/exame.module';
+import { MedicamentoUsoModule } from './components/medicamentouso/medicamentouso.module';
+import { MovimentacaoEstoqueModule } from './components/movimentacaoestoque/movimentacaoestoque.module';
+import { ProfissionalModule } from './components/profissional/profissional.module';
+import { ResidenteModule } from './components/residente/residente.module';
+import { UsuarioModule } from './components/usuario/usuario.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        EspecialidadeCadastrarComponent,
-        EspecialidadeListarComponent,
         SideMenuComponent,
-        CrudTableComponent,
         HeaderComponent,
         MenuComponent,
-        AtividadeludicaListarComponent,
-        AtividadeludicaCadastrarComponent,
-        ProfissionalListarComponent,
-        EnumPipe,
-        CpfPipe,
-        ProfissionalCadastrarComponent,
-        ResidenteListarComponent,
-        ResidenteCadastrarComponent,
-        UsuarioListarComponent,
-        UsuarioCadastrarComponent,
-        EntradasaidaListarComponent,
-        EntradasaidaCadastrarComponent,
-        ExameListarComponent,
-        ExameCadastrarComponent,
-        ConsultaListarComponent,
-        ConsultaCadastrarComponent,
-        MedicamentoestoqueListarComponent,
-        MedicamentoestoqueCadastrarComponent,
-        MovimentacaoestoqueListarComponent,
-        MovimentacaoestoqueCadastrarComponent,
-        MedicamentousoListarComponent,
-        MedicamentousoCadastrarComponent,
+
         LoginComponent,
         NaoencontradoComponent,
         DashboardComponent,
-        AtividademedicamentoListarComponent,
-        AtividademedicamentoEditarComponent,
-        AtividadeconsultaEditarComponent,
-        AtividadeconsultaListarComponent,
-        AtividadeexameListarComponent,
-        AtividadeexameEditarComponent,
-        ConfiguracaosistemaCadastrarComponent
     ],
     imports: [
         BrowserModule,
@@ -127,32 +80,49 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         ReactiveFormsModule,
         ButtonModule,
         MenuModule,
-        InputTextModule,
+        // InputTextModule,
         SidebarModule,
         TableModule,
         DividerModule,
         TooltipModule,
-        PaginatorModule,
-        CalendarModule,
-        DropdownModule,
-        KeyFilterModule,
-        InputMaskModule,
-        InputTextareaModule,
+        // PaginatorModule,
+        // CalendarModule,
+        // DropdownModule,
+        // KeyFilterModule,
+        // InputMaskModule,
+        // InputTextareaModule,
         ToastModule,
         CardModule,
         ProgressSpinnerModule,
         BlockUIModule,
         ChartModule,
-        NgxMaskDirective,
-        NgxMaskPipe,
-        CheckboxModule,
-        ConfirmDialogModule,
+        // NgxMaskDirective,
+        // NgxMaskPipe,
+        // CheckboxModule,
+        // ConfirmDialogModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
           // Register the ServiceWorker as soon as the application is stable
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'
         }),
+
+        AtividadeLudicaModule,
+        AtividadeConsultaModule,
+        AtividadeExameModule,
+        AtividadeMedicamentoModule,
+        ConsultaModule,
+        ConfiguracaoSistemaModule,
+        EntradaSaidaModule,
+        EspecialidadeModule,
+        ExameModule,
+
+        MedicamentoEstoqueModule,
+        MedicamentoUsoModule,
+        MovimentacaoEstoqueModule,
+        ProfissionalModule,
+        ResidenteModule,
+        UsuarioModule,
     ],
     providers: [
         MessageService,
