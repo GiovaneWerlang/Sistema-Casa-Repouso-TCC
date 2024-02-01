@@ -59,45 +59,56 @@ public class DashboardService extends MontaGrafico {
 
     public Response getAll(){
 
-        List<DashboardDTO> lista = new ArrayList<>();
+        DashboardDTO retorno = new DashboardDTO();
+
+        List<GraficoDTO> listaDados = new ArrayList<>();
+        List<AtividadeDashDTO> listaAtividades = new ArrayList<>();
 
         List<DadoDTO> dadosProfissional = profissionalRepository.getDadosFuncaoDash();
-        lista.add(montaGrafico(dadosProfissional, "Profissionais"));
+        listaDados.add(montaGrafico(dadosProfissional, "Profissionais"));
 
         List<DadoDTO> dadosEstadiaResidente = residenteRepository.getDadosEstadiaDash();
-        lista.add(montaGrafico(dadosEstadiaResidente, "Residentes por tipo de estadia"));
+        listaDados.add(montaGrafico(dadosEstadiaResidente, "Residentes por tipo de estadia"));
 
         List<DadoDTO> dadosIngresso30DiasResidente = residenteRepository.getDadosIngresso30diasDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
-        lista.add(montaGrafico(dadosIngresso30DiasResidente, "Residentes novos últimos 30 dias"));
+        listaDados.add(montaGrafico(dadosIngresso30DiasResidente, "Residentes novos últimos 30 dias"));
 
         List<DadoDTO> dadosMenorQtdeMedicamentoEstoque = medicamentoEstoqueRepository.getDadosMenorQtdeDash();
-        lista.add(montaGrafico(dadosMenorQtdeMedicamentoEstoque, "Medicamentos com menor qtde"));
+        listaDados.add(montaGrafico(dadosMenorQtdeMedicamentoEstoque, "Medicamentos com menor qtde"));
 
         List<DadoDTO> dadosEntradaSaidaRes = entradaSaidaRepository.getDadosEntradaSaidaResidentesDash();
-        lista.add(montaGrafico(dadosEntradaSaidaRes, "Entradas/Saídas por residente"));
+        listaDados.add(montaGrafico(dadosEntradaSaidaRes, "Entradas/Saídas por residente"));
 
         List<DadoDTO> dadosConsultas30Dias = consultaRepository.getDadosDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
-        lista.add(montaGrafico(dadosConsultas30Dias, "Consultas últimos 30 dias"));
+        listaDados.add(montaGrafico(dadosConsultas30Dias, "Consultas últimos 30 dias"));
 
         List<DadoDTO> dadosExames30Dias = exameRepository.getDadosDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
-        lista.add(montaGrafico(dadosExames30Dias, "Exames últimos 30 dias"));
+        listaDados.add(montaGrafico(dadosExames30Dias, "Exames últimos 30 dias"));
 
         List<DadoDTO> dadosAtvLudica30Dias = atividadeLudicaRepository.getDadosDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
-        lista.add(montaGrafico(dadosAtvLudica30Dias, "Atv. Lúdicas últimos 30 dias"));
+        listaDados.add(montaGrafico(dadosAtvLudica30Dias, "Atv. Lúdicas últimos 30 dias"));
 
         List<DadoDTO> dadosAtvMConsulta30Dias = atividadeConsultaResidenteRepository.getDadosDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
-        lista.add(montaGrafico(dadosAtvMConsulta30Dias, "Atv. Consulta. Res. 30 dias"));
+        listaDados.add(montaGrafico(dadosAtvMConsulta30Dias, "Atv. Consulta. Res. 30 dias"));
 
         List<DadoDTO> dadosAtvMExame30Dias = atividadeExameResidenteRepository.getDadosDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
-        lista.add(montaGrafico(dadosAtvMExame30Dias, "Atv. Exame. Res. 30 dias"));
+        listaDados.add(montaGrafico(dadosAtvMExame30Dias, "Atv. Exame. Res. 30 dias"));
 
         List<DadoDTO> dadosAtvMRes30Dias = atividadeMedicamentoResidenteRepository.getDadosDash(LocalDateTime.now().minusDays(30), LocalDateTime.now());
-        lista.add(montaGrafico(dadosAtvMRes30Dias, "Atv. Med. Res. 30 dias"));
+        listaDados.add(montaGrafico(dadosAtvMRes30Dias, "Atv. Med. Res. 30 dias"));
 
-        if(lista.isEmpty()){
+        listaAtividades.addAll(atividadeConsultaResidenteRepository.findByTimeDTO());
+        listaAtividades.addAll(atividadeExameResidenteRepository.findByTimeDTO());
+        listaAtividades.addAll(atividadeMedicamentoResidenteRepository.findByTimeDTO());
+
+        retorno.setDados(listaDados);
+        retorno.setAtividades(listaAtividades);
+
+
+        if(retorno.getDados().isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(lista).build();
+        return Response.ok(retorno).build();
     }
 
 }
