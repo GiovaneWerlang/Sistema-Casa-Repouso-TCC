@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "gzip": "ng build && gzipper compress ./dist ./compressed"
   },
   "private": true,
   "dependencies": {

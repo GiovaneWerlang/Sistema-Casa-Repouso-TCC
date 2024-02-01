@@ -31,9 +31,6 @@
     {
       "name":"gets",
       "urls": [
-        "http://localhost:8080/consulta",
-        "http://localhost:8080/atividadeexame",
-        "http://localhost:8080/atividademedicamento",
         "http://localhost:8080/dashboard"
       ],
       "cacheConfig": {
