@@ -1,6 +1,6 @@
 <div class="flex flex-row flex-wrap justify-content-center col-12">
     <div class="col-8 sm:col-8 md:col-12 lg:col-5 xl:col-5 list-container pt-0 text-center">
-        <p-table *ngIf="atividades" [value]="atividades" [scrollable]="true" scrollHeight="450px">
+        <p-table [value]="atividades" [scrollable]="true" scrollHeight="450px">
             <ng-template pTemplate="header" style="background-color: #fdfdfd;">
                 <tr style="background-color: #fdfdfd;">
                     <th style="background-color: #fdfdfd;">Descrição</th>
@@ -26,7 +26,7 @@
             </ng-template>
         </p-table>
     </div>
-    <div *ngFor="let dado of data" class="col-8 sm:col-8 md:col-12 lg:col-5 xl:col-5 chart-container pt-0 text-center">
+    <div *ngFor="let dado of dados" class="col-8 sm:col-8 md:col-12 lg:col-5 xl:col-5 chart-container pt-0 text-center">
         <p class="font-bold text-blue-600">{{dado?.titulo}}</p>
         <p-chart type="doughnut" *ngIf="dado?.datasets" [data]="dado" [options]="options" [responsive]="true"></p-chart>
         <div *ngIf="!dado?.datasets" class="flex justify-content-center align-items-center">

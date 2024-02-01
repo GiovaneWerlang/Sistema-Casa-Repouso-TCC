@@ -5,6 +5,9 @@ import { AtividadeMedicamentoService } from '../atividadesresidente/atividademed
 import { DashboardService } from './service/dashboard.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AtividadeDashDTO } from './modelo/atividades';
+import { GraficoDadoDTO } from './modelo/graficodado';
+import { DashboardDTO } from './modelo/dashboard';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,20 +16,14 @@ import { Router } from '@angular/router';
   providers: [DashboardService, AtividadeConsultaService, AtividadeExameService, AtividadeMedicamentoService]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  data: any;
+  data: DashboardDTO | undefined;
+  atividades:AtividadeDashDTO[] = [];
+  dados: GraficoDadoDTO[] = [];
 
   options: any;
   carregando: boolean = false;
-  atividades: any[] = [];
-  atividadesConsulta: any[] = [];
-  atividadesExame: any[] = [];
-  atividadesMedicamento: any[] = [];
 
   dashBoardSubscription: Subscription = new Subscription;
-
-  atividadesConsultaSubscription: Subscription = new Subscription;
-  atividadesExameSubscription: Subscription = new Subscription;
-  atividadesMedicamentoSubscription: Subscription = new Subscription;
 
   constructor(private _dashboardService: DashboardService,
     private _atividadeConsultaService: AtividadeConsultaService,
@@ -35,61 +32,36 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _router: Router,
   ) {
     this.options = {
-      cutout: '50%'
+      cutout: '50%',
+      animation: false
     };
     this.carregando = true;
   }
 
   ngOnInit(): void {
     this.carregarDadosDashboard();
-    this.carregarAtividadesConsulta();
-    this.carregarAtividadesExame();
-    this.carregarAtividadesMedicamento();
   }
 
   edit(atividade:any){
-    if(atividade.hasOwnProperty('consulta')){
+    if(atividade.tipo === 'Consulta'){
       this._router.navigate([`/${this._atividadeConsultaService.getUrl()}/editar/${atividade?.id}`]);
-    } else if(atividade.hasOwnProperty('exame')){
+    } else if(atividade.tipo === 'Exame'){
       this._router.navigate([`/${this._atividadeExameService.getUrl()}/editar/${atividade?.id}`]);
-    } else if(atividade.hasOwnProperty('medicamento')){
+    } else if(atividade.tipo === 'Medicamento'){
       this._router.navigate([`/${this._atividadeMedicamentoService.getUrl()}/editar/${atividade?.id}`]);
     }
   }
 
   carregarDadosDashboard() {
-    this.dashBoardSubscription = this._dashboardService.list().subscribe(dados => {
-      this.data = dados;
+    this.dashBoardSubscription = this._dashboardService.list().subscribe((dados:any) => {
+      this.atividades = dados?.atividades;
+      this.dados = dados?.dados;
       this.carregando = false;
     });
-  }
-
-  carregarAtividadesConsulta() {
-    this.atividadesConsultaSubscription = this._atividadeConsultaService.list().subscribe(atividadesConsulta => {
-      if (atividadesConsulta)
-        this.atividades.push.apply(this.atividades, atividadesConsulta);
-    })
-  }
-
-  carregarAtividadesExame() {
-    this.atividadesExameSubscription = this._atividadeExameService.list().subscribe(atividadesExame => {
-      if (atividadesExame)
-        this.atividades.push.apply(this.atividades, atividadesExame);
-    })
-  }
-
-  carregarAtividadesMedicamento() {
-    this.atividadesMedicamentoSubscription = this._atividadeMedicamentoService.list().subscribe(atividadesMedicamento => {
-      if (atividadesMedicamento)
-        this.atividades.push.apply(this.atividades, atividadesMedicamento);
-    })
-  }
+  }  
 
   ngOnDestroy(): void {
     this.dashBoardSubscription.unsubscribe();
-    this.atividadesConsultaSubscription.unsubscribe();
-    this.atividadesExameSubscription.unsubscribe();
-    this.atividadesMedicamentoSubscription.unsubscribe();
   }
 
 }

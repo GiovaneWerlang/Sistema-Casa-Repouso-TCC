@@ -1,7 +1,7 @@
-import { Dado } from "./dado";
+import { AtividadeDashDTO } from "./atividades";
+import { GraficoDadoDTO } from "./graficodado";
 
 export interface DashboardDTO {
-    titulo:string;
-    labels?:string[];
-    datasets?:Dado[];
+    atividades?:AtividadeDashDTO[];
+    dados?:GraficoDadoDTO[];
 }
