@@ -15,6 +15,8 @@ import { ProfissionalCadastrarComponent } from "./profissional-cadastrar/profiss
 import { ProfissionalListarComponent } from "./profissional-listar/profissional-listar.component";
 import { InputMaskModule } from "primeng/inputmask";
 import { ProfissionalRoutingModule } from "./profissional-routing.module";
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
+import { KeyFilterModule } from "primeng/keyfilter";
 
 @NgModule({
     declarations: [
@@ -35,7 +37,10 @@ import { ProfissionalRoutingModule } from "./profissional-routing.module";
         CalendarModule,
         PipesModule,
         InputMaskModule,
+        KeyFilterModule,
+        NgxMaskDirective, NgxMaskPipe,
         ProfissionalRoutingModule,
-    ]
+    ],
+    providers: [provideNgxMask()]
 })
 export class ProfissionalModule {}

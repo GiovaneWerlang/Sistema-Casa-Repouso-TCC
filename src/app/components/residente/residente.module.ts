@@ -15,6 +15,8 @@ import { InputMaskModule } from "primeng/inputmask";
 import { ResidenteCadastrarComponent } from "./residente-cadastrar/residente-cadastrar.component";
 import { ResidenteListarComponent } from "./residente-listar/residente-listar.component";
 import { ResidenteRoutingModule } from "./residente-routing.module";
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
 
 @NgModule({
     declarations: [
@@ -35,7 +37,10 @@ import { ResidenteRoutingModule } from "./residente-routing.module";
         CalendarModule,
         PipesModule,
         InputMaskModule,
+        KeyFilterModule,
+        NgxMaskDirective, NgxMaskPipe,
         ResidenteRoutingModule,
-    ]
+    ],
+    providers: [provideNgxMask()]
 })
 export class ResidenteModule {}
