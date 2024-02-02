@@ -20,7 +20,7 @@ import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
 import { ChartModule } from 'primeng/chart';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { provideNgxMask } from 'ngx-mask';
 
@@ -49,6 +49,7 @@ import { LoginModule } from './components/login/login.module';
 import { HomeModule } from './components/home/home.module';
 import { HeaderModule } from './components/header/header.module';
 import { MenuItemsModule } from './components/menu/menu.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
     declarations: [
@@ -101,12 +102,14 @@ import { MenuItemsModule } from './components/menu/menu.module';
 
         HeaderModule,
         MenuItemsModule,
+        ConfirmDialogModule,
     ],
     providers: [
         MessageService,
         { provide: HTTP_INTERCEPTORS, useClass: AutenticacaoInterceptorService, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: DataHoraInterceptorService, multi: true },
-        provideNgxMask()
+        provideNgxMask(),
+        ConfirmationService,
     ],
     bootstrap: [AppComponent]
 })

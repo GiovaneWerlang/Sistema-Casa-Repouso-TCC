@@ -3,9 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { AtividadeexameEditarComponent } from './atividadeexame-editar/atividadeexame-editar.component';
 import { AtividadeexameListarComponent } from './atividadeexame-listar/atividadeexame-listar.component';
 import { AutenticacaoGuard } from '../../login/autenticacao.guard';
+import { CrudGuard } from 'src/app/shared/crud/crud-guard/crud-guard';
 
 const routes: Routes = [
-    { path: 'editar/:id', component: AtividadeexameEditarComponent, canActivate: [AutenticacaoGuard] },
+    { path: 'editar/:id', component: AtividadeexameEditarComponent, canActivate: [AutenticacaoGuard], canDeactivate: [CrudGuard] },
     { path: 'listar', component: AtividadeexameListarComponent, canActivate: [AutenticacaoGuard] },
 ];
 

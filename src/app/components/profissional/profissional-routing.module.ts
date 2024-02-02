@@ -3,10 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { AutenticacaoGuard } from '../login/autenticacao.guard';
 import { ProfissionalCadastrarComponent } from './profissional-cadastrar/profissional-cadastrar.component';
 import { ProfissionalListarComponent } from './profissional-listar/profissional-listar.component';
+import { CrudGuard } from 'src/app/shared/crud/crud-guard/crud-guard';
 
 const routes: Routes = [
-    { path: 'cadastrar', component: ProfissionalCadastrarComponent, canActivate: [AutenticacaoGuard] },
-    { path: 'editar/:id', component: ProfissionalCadastrarComponent, canActivate: [AutenticacaoGuard] },
+    { path: 'cadastrar', component: ProfissionalCadastrarComponent, canActivate: [AutenticacaoGuard], canDeactivate: [CrudGuard] },
+    { path: 'editar/:id', component: ProfissionalCadastrarComponent, canActivate: [AutenticacaoGuard], canDeactivate: [CrudGuard] },
     { path: 'listar', component: ProfissionalListarComponent, canActivate: [AutenticacaoGuard] },
 ];
 
