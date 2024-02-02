@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe } from '@angular/core';
+import { Component, OnDestroy, OnInit, Pipe } from '@angular/core';
 import { ProfissionalService } from '../service/profissional.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LabelValue } from 'src/app/shared/labelvalue/labelvalue';
@@ -10,6 +10,7 @@ import { Especialidade } from '../../especialidade/modelo/especialidade';
 import { Estados } from 'src/app/shared/estados/estados';
 import { Paises } from 'src/app/shared/paises/paises'
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profissional-cadastrar',
@@ -17,7 +18,7 @@ import { ToastService } from 'src/app/shared/toast-service/toast.service';
   styleUrls: ['./profissional-cadastrar.component.css'],
   providers: [ProfissionalService]
 })
-export class ProfissionalCadastrarComponent implements OnInit {
+export class ProfissionalCadastrarComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   novo:boolean = false;
@@ -28,6 +29,8 @@ export class ProfissionalCadastrarComponent implements OnInit {
   opcoesEspecialidade: LabelValue[] = [];
   opcoesEstados: string[] = Estados;
   opcoesPaises: string[] = Paises;
+
+  funcaoSubscription: Subscription | undefined = new Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,6 +64,7 @@ export class ProfissionalCadastrarComponent implements OnInit {
       endereco: this.formEndereco
     });
     this.carregarOpcoesEspecialidade();
+    this.monitoraFuncao();
   }
 
   ngOnInit(): void {
@@ -71,6 +75,18 @@ export class ProfissionalCadastrarComponent implements OnInit {
       }
       this.novo = id ? false : true;
     })
+  }
+
+  monitoraFuncao(){
+    this.funcaoSubscription = this.form.get('funcao')?.valueChanges.subscribe((funcao:any) => {
+      if(funcao === 'MEDICO'){
+        this.form.get('especialidade')?.addValidators(Validators.required);
+        this.form.get('especialidade')?.updateValueAndValidity();
+      }else{
+        this.form.get('especialidade')?.clearValidators();
+        this.form.get('especialidade')?.updateValueAndValidity();
+      }
+    });
   }
 
   salvar() {
@@ -117,6 +133,10 @@ export class ProfissionalCadastrarComponent implements OnInit {
     this.especialidadeService.list().subscribe((res:any) =>
       this.opcoesEspecialidade = res?.map((i: Especialidade) => ({ label: i.nome, value: i.id }))
     );
+  }
+
+  ngOnDestroy(): void {
+      this.funcaoSubscription?.unsubscribe();
   }
 
 }
