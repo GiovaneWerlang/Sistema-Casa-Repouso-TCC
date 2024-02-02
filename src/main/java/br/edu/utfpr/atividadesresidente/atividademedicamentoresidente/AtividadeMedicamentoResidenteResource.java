@@ -27,20 +27,20 @@ public class AtividadeMedicamentoResidenteResource {
     }
 
     @Operation(summary = "Retorna todos")
-    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","VOLUNTARIO"})
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
-    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","VOLUNTARIO"})
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
-    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","VOLUNTARIO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -48,7 +48,7 @@ public class AtividadeMedicamentoResidenteResource {
         return service.update(id, atividadeResidenteDTO);
     }
 
-    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","VOLUNTARIO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size, @PathParam("sort") String sort, @PathParam("asc") boolean asc){

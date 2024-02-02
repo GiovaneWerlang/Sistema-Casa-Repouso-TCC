@@ -28,7 +28,7 @@ public class DashboardResource {
     }
 
     @Operation(summary = "Retorna todos")
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();

@@ -26,28 +26,28 @@ public class ExameResource implements CrudResource<ExameDTO> {
         this.service = service;
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @Operation(summary = "Retorna todos")
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @POST
     @Transactional
     public Response add(ExameDTO exameDTO){
        return service.add(exameDTO);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -55,7 +55,7 @@ public class ExameResource implements CrudResource<ExameDTO> {
         return service.update(id, exameDTO);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @DELETE
     @Path("{id}")
     @Transactional
@@ -63,14 +63,14 @@ public class ExameResource implements CrudResource<ExameDTO> {
         return service.delete(id);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){
         return service.page(page,size);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){

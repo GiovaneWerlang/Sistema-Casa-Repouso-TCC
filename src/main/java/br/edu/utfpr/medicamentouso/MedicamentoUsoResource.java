@@ -27,27 +27,27 @@ public class MedicamentoUsoResource implements CrudResource<MedicamentoUsoDTO> {
     }
 
     @Operation(summary = "Retorna todos")
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @POST
     @Transactional
     public Response add(MedicamentoUsoDTO medicamentoUsoDTO){
         return service.add(medicamentoUsoDTO);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -55,7 +55,7 @@ public class MedicamentoUsoResource implements CrudResource<MedicamentoUsoDTO> {
         return service.update(id, medicamentoUsoDTO);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @DELETE
     @Path("{id}")
     @Transactional
@@ -63,14 +63,14 @@ public class MedicamentoUsoResource implements CrudResource<MedicamentoUsoDTO> {
         return service.delete(id);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){
         return service.page(page,size);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){

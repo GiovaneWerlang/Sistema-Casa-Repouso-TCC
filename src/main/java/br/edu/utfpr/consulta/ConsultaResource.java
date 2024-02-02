@@ -26,27 +26,27 @@ public class ConsultaResource {
     }
 
     @Operation(summary = "Retorna todos")
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @GET
     @Path("{id}")
     public Response getConsultaById(@PathParam("id") long id){
         return service.findById(id);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @POST
     @Transactional
     public Response addConsulta(ConsultaDTO consultaDTO){
        return service.add(consultaDTO);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -54,7 +54,7 @@ public class ConsultaResource {
         return service.update(id, consultaDTO);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @DELETE
     @Path("{id}")
     @Transactional
@@ -62,14 +62,14 @@ public class ConsultaResource {
         return service.delete(id);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){
         return service.page(page,size);
     }
 
-    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
+    @RolesAllowed({"ADMIN","CUIDADOR","ENFERMEIRO","MEDICO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){

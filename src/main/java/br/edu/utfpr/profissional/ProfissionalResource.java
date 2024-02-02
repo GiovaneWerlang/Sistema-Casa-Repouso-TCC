@@ -27,27 +27,27 @@ public class ProfissionalResource implements CrudResource<ProfissionalDTO> {
     }
 
     @Operation(summary = "Retorna todos")
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @POST
     @Transactional
     public Response add(ProfissionalDTO profissionalDTO){
         return service.add(profissionalDTO);
     }
 
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -55,7 +55,7 @@ public class ProfissionalResource implements CrudResource<ProfissionalDTO> {
         return service.update(id, profissionalDTO);
     }
 
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @DELETE
     @Path("{id}")
     @Transactional
@@ -63,14 +63,14 @@ public class ProfissionalResource implements CrudResource<ProfissionalDTO> {
         return service.delete(id);
     }
 
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){
         return service.page(page,size);
     }
 
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){
