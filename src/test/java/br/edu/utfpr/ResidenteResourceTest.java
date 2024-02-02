@@ -6,6 +6,7 @@ import br.edu.utfpr.enums.TipoEstadia;
 import br.edu.utfpr.residente.ResidenteDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -49,8 +50,9 @@ public class ResidenteResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar residente com sucesso.")
     public void createResidenteTest(){
         ResidenteDTO residenteDTO = new ResidenteDTO();
@@ -84,8 +86,9 @@ public class ResidenteResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar residente.")
     public void createResidenteValidationErrorTest(){
         ResidenteDTO residenteDTO = new ResidenteDTO();
@@ -123,6 +126,7 @@ public class ResidenteResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar residente com sucesso.")
     public void updateResidenteTest(){
 
@@ -160,6 +164,7 @@ public class ResidenteResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar residente.")
     public void updateResidenteValidationErrorTest(){
 
@@ -199,6 +204,7 @@ public class ResidenteResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar residente por id com sucesso.")
     public void getByIdResidenteTest(){
 
@@ -215,6 +221,7 @@ public class ResidenteResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar residente por id.")
     public void getByIdResidenteValidationErrorTest(){
 
@@ -231,6 +238,7 @@ public class ResidenteResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os residentes com sucesso.")
     public void getAllResidenteTest(){
 
@@ -247,6 +255,7 @@ public class ResidenteResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os residentes paginados com sucesso.")
     public void pageResidenteTest(){
 
@@ -262,6 +271,7 @@ public class ResidenteResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a residente com sucesso.")
     public void deleteResidenteTest(){
 
@@ -278,6 +288,7 @@ public class ResidenteResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a residente.")
     public void deleteResidenteErrorTest(){
 
@@ -294,6 +305,7 @@ public class ResidenteResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os residentes.")
     public void getAllResidenteErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -315,6 +327,7 @@ public class ResidenteResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os residentes paginados.")
     public void pageResidenteErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

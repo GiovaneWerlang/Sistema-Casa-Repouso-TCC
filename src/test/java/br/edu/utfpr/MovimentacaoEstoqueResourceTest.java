@@ -4,6 +4,7 @@ import br.edu.utfpr.enums.TipoMovimentacao;
 import br.edu.utfpr.movimentacaoestoque.MovimentacaoEstoqueDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -45,8 +46,9 @@ public class MovimentacaoEstoqueResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar movimentação de estoque com sucesso.")
     public void createMovimentacaoEstoqueTest() throws SQLException {
 
@@ -73,8 +75,9 @@ public class MovimentacaoEstoqueResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar movimentação de estoque.")
     public void createMovimentacaoEstoqueValidationErrorTest(){
 
@@ -98,6 +101,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar movimentação de estoque com sucesso.")
     public void updateMovimentacaoEstoqueTest(){
 
@@ -119,6 +123,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar movimentação de estoque.")
     public void updateMovimentacaoEstoqueValidationErrorTest(){
 
@@ -142,6 +147,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar movimentação de estoque por id com sucesso.")
     public void getByIdMovimentacaoEstoqueTest(){
 
@@ -157,6 +163,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar movimentação de estoque por id.")
     public void getByIdMovimentacaoEstoqueValidationErrorTest(){
 
@@ -172,6 +179,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as movimentações de estoque com sucesso.")
     public void getAllMovimentacaoEstoqueTest(){
 
@@ -187,6 +195,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as movimentações de estoque paginadas com sucesso.")
     public void pagelMovimentacaoEstoqueTest(){
 
@@ -202,6 +211,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a movimentação de estoque com sucesso.")
     public void deleteMovimentacaoEstoqueTest(){
 
@@ -217,6 +227,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a movimentação de estoque.")
     public void deleteMovimentacaoEstoqueErrorTest(){
 
@@ -233,6 +244,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas os movimentações de estoque.")
     public void getAllMovimentacaoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -254,6 +266,7 @@ public class MovimentacaoEstoqueResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as movimentações de estoque paginadas.")
     public void pageMovimentacaoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

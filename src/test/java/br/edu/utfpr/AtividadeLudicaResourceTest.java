@@ -4,6 +4,7 @@ import br.edu.utfpr.atividadeludica.AtividadeLudicaDTO;
 import br.edu.utfpr.enums.Situacao;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -47,8 +48,9 @@ public class AtividadeLudicaResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar atividade lúdica com sucesso.")
     public void createAtividadeLudicaTest(){
         AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
@@ -67,8 +69,9 @@ public class AtividadeLudicaResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar atividade.")
     public void createAtividadeLudicaValidationErrorTest(){
         AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
@@ -92,6 +95,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar atividade com sucesso.")
     public void updateAtividadeLudicaTest(){
 
@@ -113,6 +117,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar atividade.")
     public void updateAtividadeLudicaValidationErrorTest(){
 
@@ -136,6 +141,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar atividade por id com sucesso.")
     public void getByIdAtividadeLudicaTest(){
 
@@ -152,6 +158,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar atividade por id.")
     public void getByIdAtividadeLudicaValidationErrorTest(){
 
@@ -168,6 +175,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as atividades com sucesso.")
     public void getAllAtividadeLudicaTest(){
 
@@ -184,6 +192,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as atividades paginadas com sucesso.")
     public void pageAtividadeLudicaTest(){
 
@@ -200,6 +209,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a atividade com sucesso.")
     public void deleteAtividadeLudicaTest(){
 
@@ -216,6 +226,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a atividade.")
     public void deleteAtividadeLudicaErrorTest(){
 
@@ -232,6 +243,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as atividades.")
     public void getAllAtividadeLudicaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -253,6 +265,7 @@ public class AtividadeLudicaResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as atividades paginadas.")
     public void pageAtividadeLudicaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

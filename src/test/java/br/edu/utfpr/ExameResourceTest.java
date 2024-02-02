@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.exame.ExameDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -46,8 +47,9 @@ public class ExameResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar exame com sucesso.")
     public void createExameTest() throws SQLException {
         ExameDTO exameDTO = new ExameDTO();
@@ -136,8 +138,9 @@ public class ExameResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar exame.")
     public void createExameValidationErrorTest(){
         ExameDTO exameDTO = new ExameDTO();
@@ -166,6 +169,7 @@ public class ExameResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar exame com sucesso.")
     public void updateExameTest() throws SQLException {
 
@@ -257,6 +261,7 @@ public class ExameResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar exame.")
     public void updateExameValidationErrorTest(){
 
@@ -284,6 +289,7 @@ public class ExameResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar exame por id com sucesso.")
     public void getByIdExameTest(){
 
@@ -300,6 +306,7 @@ public class ExameResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar exame por id.")
     public void getByIdExameValidationErrorTest(){
 
@@ -316,6 +323,7 @@ public class ExameResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os exames com sucesso.")
     public void getAllExameTest(){
 
@@ -332,6 +340,7 @@ public class ExameResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os exames paginados com sucesso.")
     public void pageExameTest(){
 
@@ -347,6 +356,7 @@ public class ExameResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a exame com sucesso.")
     public void deleteExameTest(){
 
@@ -363,6 +373,7 @@ public class ExameResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a exame.")
     public void deleteExameErrorTest(){
 
@@ -379,6 +390,7 @@ public class ExameResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os exames.")
     public void getAllExameErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -407,6 +419,7 @@ public class ExameResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os exames paginados.")
     public void pageExameErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

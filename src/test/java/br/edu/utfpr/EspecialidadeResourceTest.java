@@ -45,8 +45,9 @@ public class EspecialidadeResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar especialidade com sucesso.")
     public void createEspecialidadeTest(){
         EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
@@ -64,8 +65,9 @@ public class EspecialidadeResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar especialidade.")
     public void createEspecialidadeValidationErrorTest(){
         EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
@@ -86,6 +88,7 @@ public class EspecialidadeResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar especialidade com sucesso.")
     public void updateEspecialidadeTest(){
 
@@ -106,6 +109,7 @@ public class EspecialidadeResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar especialidade.")
     public void updateEspecialidadeValidationErrorTest(){
 
@@ -128,6 +132,7 @@ public class EspecialidadeResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar especialidade por id com sucesso.")
     public void getByIdEspecialidadeTest(){
 
@@ -144,6 +149,7 @@ public class EspecialidadeResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar especialidade por id.")
     public void getByIdEspecialidadeValidationErrorTest(){
 
@@ -160,7 +166,7 @@ public class EspecialidadeResourceTest {
 
     @Order(7)
     @Test
-    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as especialidades com sucesso.")
     public void getAllEspecialidadeTest(){
 
@@ -177,7 +183,7 @@ public class EspecialidadeResourceTest {
 
     @Order(7)
     @Test
-    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as especialidades paginadas com sucesso.")
     public void pageEspecialidadeTest(){
 
@@ -193,6 +199,7 @@ public class EspecialidadeResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a especialidade com sucesso.")
     public void deleteEspecialidadeTest(){
 
@@ -209,6 +216,7 @@ public class EspecialidadeResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a especialidade.")
     public void deleteEspecialidadeErrorTest(){
 
@@ -225,7 +233,7 @@ public class EspecialidadeResourceTest {
 
     @Order(11)
     @Test
-    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as especialidades.")
     public void getAllEspecialidadeErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -247,7 +255,7 @@ public class EspecialidadeResourceTest {
 
     @Order(12)
     @Test
-    @TestSecurity(user = "testUser", roles = {"FUNCIONARIO"})
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as especialidades paginadas.")
     public void pageEspecialidadeErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

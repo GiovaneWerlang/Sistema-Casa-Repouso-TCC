@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.entradasaida.EntradaSaidaDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -46,8 +47,9 @@ public class EntradaSaidaResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar usuário com sucesso.")
     public void createEntradaSaidaTest() throws SQLException {
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
@@ -94,8 +96,9 @@ public class EntradaSaidaResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar entradasaida.")
     public void createEntradaSaidaValidationErrorTest(){
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
@@ -119,6 +122,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar entradasaida com sucesso.")
     public void updateEntradaSaidaTest(){
 
@@ -141,6 +145,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar entradasaida.")
     public void updateEntradaSaidaValidationErrorTest(){
 
@@ -165,6 +170,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar entradasaida por id com sucesso.")
     public void getByIdEntradaSaidaTest(){
 
@@ -181,6 +187,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar entradasaida por id.")
     public void getByIdEntradaSaidaValidationErrorTest(){
 
@@ -197,6 +204,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as entradasaidas com sucesso.")
     public void getAllEntradaSaidaTest(){
 
@@ -213,6 +221,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as entradasaidas paginadas com sucesso.")
     public void pageEntradaSaidaTest(){
 
@@ -229,6 +238,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a entradasaida com sucesso.")
     public void deleteEntradaSaidaTest(){
 
@@ -245,6 +255,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a entradasaida.")
     public void deleteEntradaSaidaErrorTest(){
 
@@ -261,6 +272,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as entradasaidas.")
     public void getAllEntradaSaidaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -282,6 +294,7 @@ public class EntradaSaidaResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as entradasaidas paginadas.")
     public void pagelEntradaSaidaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

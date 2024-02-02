@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.consulta.ConsultaDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -46,8 +47,9 @@ public class ConsultaResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar consulta com sucesso.")
     public void createConsultaTest() throws SQLException {
         ConsultaDTO consultaDTO = new ConsultaDTO();
@@ -136,8 +138,9 @@ public class ConsultaResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar consulta.")
     public void createConsultaValidationErrorTest(){
         ConsultaDTO consultaDTO = new ConsultaDTO();
@@ -166,6 +169,7 @@ public class ConsultaResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar consulta com sucesso.")
     public void updateConsultaTest() throws SQLException {
 
@@ -257,6 +261,7 @@ public class ConsultaResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar consulta.")
     public void updateConsultaValidationErrorTest(){
 
@@ -284,6 +289,7 @@ public class ConsultaResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar consulta por id com sucesso.")
     public void getByIdConsultaTest(){
 
@@ -300,6 +306,7 @@ public class ConsultaResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar consulta por id.")
     public void getByIdConsultaValidationErrorTest(){
 
@@ -316,6 +323,7 @@ public class ConsultaResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as consultas com sucesso.")
     public void getAllConsultaTest(){
 
@@ -331,6 +339,7 @@ public class ConsultaResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as consultas paginadas com sucesso.")
     public void pageConsultaTest(){
 
@@ -346,6 +355,7 @@ public class ConsultaResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a consulta com sucesso.")
     public void deleteConsultaTest(){
 
@@ -362,6 +372,7 @@ public class ConsultaResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a consulta.")
     public void deleteConsultaErrorTest(){
 
@@ -378,6 +389,7 @@ public class ConsultaResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os consultas.")
     public void getAllConsultaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -406,6 +418,7 @@ public class ConsultaResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as consultas paginadas.")
     public void pageConsultaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

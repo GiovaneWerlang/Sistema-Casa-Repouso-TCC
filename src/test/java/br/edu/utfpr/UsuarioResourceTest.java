@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.usuario.UsuarioDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -44,8 +45,9 @@ public class UsuarioResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar usuário com sucesso.")
     public void createUsuarioTest() throws SQLException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -89,8 +91,9 @@ public class UsuarioResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar usuario.")
     public void createUsuarioValidationErrorTest(){
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -110,9 +113,9 @@ public class UsuarioResourceTest {
         assertEquals("Erro de validação de campos.", response.jsonPath().getString("message"));
 
     }
-
-    @Test
     @Order(3)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar usuário com login já existente.")
     public void createUsuarioLoginJaExisteTest() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -133,6 +136,7 @@ public class UsuarioResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar usuario com sucesso.")
     public void updateUsuarioTest(){
 
@@ -154,6 +158,7 @@ public class UsuarioResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar usuario.")
     public void updateUsuarioValidationErrorTest(){
 
@@ -175,8 +180,9 @@ public class UsuarioResourceTest {
 
     }
 
-    @Test
     @Order(6)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar usuário com login já existente.")
     public void updateUsuarioLoginJaExisteTest() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -197,6 +203,7 @@ public class UsuarioResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar usuario por id com sucesso.")
     public void getByIdUsuarioTest(){
 
@@ -213,6 +220,7 @@ public class UsuarioResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar usuario por id.")
     public void getByIdUsuarioValidationErrorTest(){
 
@@ -229,6 +237,7 @@ public class UsuarioResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os usuarios com sucesso.")
     public void getAllUsuarioTest(){
 
@@ -245,6 +254,7 @@ public class UsuarioResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os usuarios paginados com sucesso.")
     public void pageUsuarioTest(){
 
@@ -261,6 +271,7 @@ public class UsuarioResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a usuario com sucesso.")
     public void deleteUsuarioTest(){
 
@@ -277,6 +288,7 @@ public class UsuarioResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a usuario.")
     public void deleteUsuarioErrorTest(){
 
@@ -293,6 +305,7 @@ public class UsuarioResourceTest {
 
     @Order(13)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os usuarios.")
     public void getAllUsuarioErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -314,6 +327,7 @@ public class UsuarioResourceTest {
 
     @Order(14)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os usuarios paginados.")
     public void pageUsuarioErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

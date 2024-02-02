@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.endereco.EnderecoDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -41,8 +42,9 @@ public class EnderecoResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar endereco com sucesso.")
     public void createEnderecoTest(){
         EnderecoDTO enderecoDTO = new EnderecoDTO();
@@ -66,8 +68,9 @@ public class EnderecoResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar endereco.")
     public void createEnderecoValidationErrorTest(){
         EnderecoDTO enderecoDTO = new EnderecoDTO();
@@ -94,6 +97,7 @@ public class EnderecoResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar endereco com sucesso.")
     public void updateEnderecoTest(){
 
@@ -120,6 +124,7 @@ public class EnderecoResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar endereco.")
     public void updateEnderecoValidationErrorTest(){
 
@@ -148,6 +153,7 @@ public class EnderecoResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar endereco por id com sucesso.")
     public void getByIdEnderecoTest(){
 
@@ -164,6 +170,7 @@ public class EnderecoResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar endereco por id.")
     public void getByIdEnderecoValidationErrorTest(){
 
@@ -180,6 +187,7 @@ public class EnderecoResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as enderecos com sucesso.")
     public void getAllEnderecoTest(){
 
@@ -196,6 +204,7 @@ public class EnderecoResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a endereco com sucesso.")
     public void deleteEnderecoTest(){
 
@@ -212,6 +221,7 @@ public class EnderecoResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a endereco.")
     public void deleteEnderecoErrorTest(){
 
@@ -228,6 +238,7 @@ public class EnderecoResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as enderecos.")
     public void getAllEnderecoErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

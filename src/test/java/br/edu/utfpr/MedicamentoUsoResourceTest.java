@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.medicamentouso.MedicamentoUsoDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -46,8 +47,9 @@ public class MedicamentoUsoResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar medicamento uso com sucesso.")
     public void createMedicamentoUsoTest() throws SQLException {
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
@@ -104,8 +106,9 @@ public class MedicamentoUsoResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar medicamento uso.")
     public void createMedicamentoUsoValidationErrorTest(){
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
@@ -132,6 +135,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar medicamento uso com sucesso.")
     public void updateMedicamentoUsoTest(){
 
@@ -157,6 +161,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar medicamento uso.")
     public void updateMedicamentoUsoValidationErrorTest(){
 
@@ -184,6 +189,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar medicamento uso por id com sucesso.")
     public void getByIdMedicamentoUsoTest(){
 
@@ -199,6 +205,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar medicamento uso por id.")
     public void getByIdMedicamentoUsoValidationErrorTest(){
 
@@ -215,6 +222,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os medicamento usos com sucesso.")
     public void getAllMedicamentoUsoTest(){
 
@@ -231,6 +239,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os medicamento usos paginados com sucesso.")
     public void pageMedicamentoUsoTest(){
 
@@ -247,6 +256,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id o medicamento uso com sucesso.")
     public void deleteMedicamentoUsoTest(){
 
@@ -263,6 +273,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id o medicamento uso.")
     public void deleteMedicamentoUsoErrorTest(){
 
@@ -279,6 +290,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas os medicamento usos.")
     public void getAllMedicamentoUsoErrorTest() throws SQLException {
 
@@ -308,6 +320,7 @@ public class MedicamentoUsoResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os medicamento usos paginados.")
     public void pageMedicamentoUsoErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

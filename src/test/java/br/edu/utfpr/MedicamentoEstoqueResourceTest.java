@@ -3,6 +3,7 @@ package br.edu.utfpr;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -44,8 +45,9 @@ public class MedicamentoEstoqueResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar medicamentoestoque com sucesso.")
     public void createMedicamentoEstoqueTest(){
         MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
@@ -64,8 +66,9 @@ public class MedicamentoEstoqueResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar medicamentoestoque.")
     public void createMedicamentoEstoqueValidationErrorTest(){
         MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
@@ -88,6 +91,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar medicamentoestoque com sucesso.")
     public void updateMedicamentoEstoqueTest(){
 
@@ -109,6 +113,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar medicamentoestoque.")
     public void updateMedicamentoEstoqueValidationErrorTest(){
 
@@ -132,6 +137,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar medicamentoestoque por id com sucesso.")
     public void getByIdMedicamentoEstoqueTest(){
 
@@ -148,6 +154,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar medicamentoestoque por id.")
     public void getByIdMedicamentoEstoqueValidationErrorTest(){
 
@@ -164,6 +171,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os medicamentoestoques com sucesso.")
     public void getAllMedicamentoEstoqueTest(){
 
@@ -180,6 +188,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os medicamentoestoques paginados com sucesso.")
     public void pagelMedicamentoEstoqueTest(){
 
@@ -196,6 +205,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id o medicamentoestoque com sucesso.")
     public void deleteMedicamentoEstoqueTest(){
 
@@ -212,6 +222,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id o medicamentoestoque.")
     public void deleteMedicamentoEstoqueErrorTest(){
 
@@ -228,6 +239,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os medicamentoestoques.")
     public void getAllMedicamentoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -249,6 +261,7 @@ public class MedicamentoEstoqueResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os medicamentoestoques paginados.")
     public void pageMedicamentoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());

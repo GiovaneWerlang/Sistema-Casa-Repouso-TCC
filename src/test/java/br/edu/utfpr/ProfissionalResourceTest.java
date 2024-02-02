@@ -6,6 +6,7 @@ import br.edu.utfpr.enums.Situacao;
 import br.edu.utfpr.profissional.ProfissionalDTO;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
@@ -48,8 +49,9 @@ public class ProfissionalResourceTest {
         flyway.migrate();
     }
 
-    @Test
     @Order(1)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar profissional com sucesso.")
     public void createProfissionalTest() throws SQLException {
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
@@ -98,8 +100,9 @@ public class ProfissionalResourceTest {
         assertEquals( 201, response.getStatusCode());
     }
 
-    @Test
     @Order(2)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar profissional.")
     public void createProfissionalValidationErrorTest(){
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
@@ -139,6 +142,7 @@ public class ProfissionalResourceTest {
 
     @Order(3)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar profissional com sucesso.")
     public void updateProfissionalTest(){
 
@@ -179,6 +183,7 @@ public class ProfissionalResourceTest {
 
     @Order(4)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar profissional.")
     public void updateProfissionalValidationErrorTest(){
 
@@ -221,6 +226,7 @@ public class ProfissionalResourceTest {
 
     @Order(5)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar profissional por id com sucesso.")
     public void getByIdProfissionalTest(){
 
@@ -237,6 +243,7 @@ public class ProfissionalResourceTest {
 
     @Order(6)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar profissional por id.")
     public void getByIdProfissionalValidationErrorTest(){
 
@@ -253,6 +260,7 @@ public class ProfissionalResourceTest {
 
     @Order(7)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os profissionais com sucesso.")
     public void getAllProfissionalTest(){
 
@@ -269,6 +277,7 @@ public class ProfissionalResourceTest {
 
     @Order(8)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os profissionais paginados com sucesso.")
     public void pageProfissionalTest(){
 
@@ -285,6 +294,7 @@ public class ProfissionalResourceTest {
 
     @Order(9)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id o profissional com sucesso.")
     public void deleteProfissionalTest(){
 
@@ -301,6 +311,7 @@ public class ProfissionalResourceTest {
 
     @Order(10)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id o profissional.")
     public void deleteProfissionalErrorTest(){
 
@@ -317,6 +328,7 @@ public class ProfissionalResourceTest {
 
     @Order(11)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os profissionais.")
     public void getAllProfissionalErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
@@ -341,6 +353,7 @@ public class ProfissionalResourceTest {
 
     @Order(12)
     @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os profissionais paginados.")
     public void pageProfissionalErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
