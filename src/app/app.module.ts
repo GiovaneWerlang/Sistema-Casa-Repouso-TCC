@@ -50,6 +50,7 @@ import { ProfissionalModule } from './components/profissional/profissional.modul
 import { ResidenteModule } from './components/residente/residente.module';
 import { UsuarioModule } from './components/usuario/usuario.module';
 import { NaoEncontradoModule } from './components/naoencontrado/naoencontrado.module';
+import { LoginModule } from './components/login/login.module';
 
 @NgModule({
     declarations: [
@@ -59,8 +60,6 @@ import { NaoEncontradoModule } from './components/naoencontrado/naoencontrado.mo
         HeaderComponent,
         MenuComponent,
 
-        LoginComponent,
-        // NaoencontradoComponent,
         DashboardComponent,
     ],
     imports: [
@@ -103,7 +102,8 @@ import { NaoEncontradoModule } from './components/naoencontrado/naoencontrado.mo
         ProfissionalModule,
         ResidenteModule,
         UsuarioModule,
-        NaoEncontradoModule
+        NaoEncontradoModule,
+        LoginModule,
     ],
     providers: [
         MessageService,

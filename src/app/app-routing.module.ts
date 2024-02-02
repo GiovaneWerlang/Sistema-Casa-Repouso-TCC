@@ -11,7 +11,9 @@ import { DashboardService } from './components/dashboard/service/dashboard.servi
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AutenticacaoGuard], pathMatch: 'full',  resolve: { resolver: () => inject(DashboardService).list()} },
   { path: 'home', component: HomeComponent, canActivate: [AutenticacaoGuard], resolve: { resolver: () => inject(DashboardService).list()} },
-  { path: 'login', component: LoginComponent },
+  { path: 'login',
+    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule)
+  },
   {
     path: 'especialidade',
     loadChildren: () => import('./components/especialidade/especialidade.module').then(m => m.EspecialidadeModule), canActivate: [AutenticacaoGuard]
