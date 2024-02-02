@@ -7,29 +7,28 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './components/app-root/app.component';
-import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 import { MenuModule } from 'primeng/menu';
 import { InputTextModule } from 'primeng/inputtext';
 import { SidebarModule } from 'primeng/sidebar';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
-import { HeaderComponent } from './components/header/header.component';
 import { TooltipModule } from 'primeng/tooltip';
-import { MenuComponent } from './components/menu/menu.component';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
 import { ChartModule } from 'primeng/chart';
+import { MessageService } from 'primeng/api';
 
 import { provideNgxMask } from 'ngx-mask';
 
-import { MessageService } from 'primeng/api';
 import { AutenticacaoInterceptorService } from './components/login/autenticacaointerceptor.service';
 import { DataHoraInterceptorService } from './shared/crud/crud-service/datahorainterceptor.service';
+
 import { ServiceWorkerModule } from '@angular/service-worker';
+
 import { AtividadeLudicaModule } from './components/atividadeludica/atividadeludica.module';
 import { AtividadeConsultaModule } from './components/atividadesresidente/atividadeconsulta/atividadeconsulta.module';
 import { AtividadeExameModule } from './components/atividadesresidente/atividadeexame/atividadexame.module';
@@ -48,14 +47,12 @@ import { UsuarioModule } from './components/usuario/usuario.module';
 import { NaoEncontradoModule } from './components/naoencontrado/naoencontrado.module';
 import { LoginModule } from './components/login/login.module';
 import { HomeModule } from './components/home/home.module';
+import { HeaderModule } from './components/header/header.module';
+import { MenuItemsModule } from './components/menu/menu.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-
-        SideMenuComponent,
-        HeaderComponent,
-        MenuComponent,
     ],
     imports: [
         BrowserModule,
@@ -97,10 +94,13 @@ import { HomeModule } from './components/home/home.module';
         ProfissionalModule,
         ResidenteModule,
         UsuarioModule,
+
         NaoEncontradoModule,
         LoginModule,
-        
         HomeModule,
+
+        HeaderModule,
+        MenuItemsModule,
     ],
     providers: [
         MessageService,
