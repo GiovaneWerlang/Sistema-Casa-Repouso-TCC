@@ -8,13 +8,7 @@ import { CommonModule } from "@angular/common";
 import { InputTextModule } from "primeng/inputtext";
 import { CheckboxModule } from "primeng/checkbox";
 import { ConfiguracaosistemaCadastrarComponent } from "./configuracaosistema-cadastrar/configuracaosistema-cadastrar.component";
-import { Routes, RouterModule } from "@angular/router";
-
-const routes: Routes = [
-    {
-      path: '', component: ConfiguracaosistemaCadastrarComponent
-    }
-  ];
+import { ConfiguracaoSistemaRoutingModule } from "./configuracaosistema-routing.module";
 
 @NgModule({
     declarations: [
@@ -29,8 +23,7 @@ const routes: Routes = [
         BlockUIModule,
         InputTextModule,
         CheckboxModule,
-        RouterModule.forChild(routes)
-    ],
-    exports: [RouterModule]
+        ConfiguracaoSistemaRoutingModule
+    ]
 })
 export class ConfiguracaoSistemaModule {}
