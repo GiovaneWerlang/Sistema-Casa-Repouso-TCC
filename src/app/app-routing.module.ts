@@ -4,7 +4,6 @@ import { HomeComponent } from './components/home/home.component';
 
 
 import { LoginComponent } from './components/login/login.component';
-import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 import { AutenticacaoGuard } from './components/login/autenticacao.guard';
 import { ConfiguracaosistemaCadastrarComponent } from './components/configuracaosistema/configuracaosistema-cadastrar/configuracaosistema-cadastrar.component';
 import { DashboardService } from './components/dashboard/service/dashboard.service';
@@ -70,7 +69,9 @@ const routes: Routes = [
     loadChildren: () => import('./components/medicamentouso/medicamentouso.module').then(m => m.MedicamentoUsoModule), canActivate: [AutenticacaoGuard]
   },
   { path: 'configuracaosistema', component: ConfiguracaosistemaCadastrarComponent, canActivate: [AutenticacaoGuard] },
-  { path: '**', component: NaoencontradoComponent },
+  { path: '**',
+    loadChildren: () => import('./components/naoencontrado/naoencontrado.module').then(m => m.NaoEncontradoModule)
+  }
 ];
 
 const config = { useHash: true };
