@@ -22,13 +22,13 @@ public class ConfiguracaoSistemaResource {
         this.service = service;
     }
 
-    @RolesAllowed({"FUNCIONARIO"})
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @GET
     public Response getConfiguracaoSistema(){
         return service.find();
     }
 
-    @RolesAllowed({"FUNCIONARIO"})
+    @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @PUT
     @Path("{id}")
     @Transactional
