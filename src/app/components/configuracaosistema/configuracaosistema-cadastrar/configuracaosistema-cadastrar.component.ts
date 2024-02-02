@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ConfiguracaoSistemaService } from '../service/configuracaosistema.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/shared/toast-service/toast.service';
 
 @Component({

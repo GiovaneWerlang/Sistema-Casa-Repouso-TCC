@@ -27,8 +27,6 @@ import { ChartModule } from 'primeng/chart';
 
 import { provideNgxMask } from 'ngx-mask';
 
-import { LoginComponent } from './components/login/login.component';
-import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
 import { MessageService } from 'primeng/api';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AutenticacaoInterceptorService } from './components/login/autenticacaointerceptor.service';
