@@ -9,9 +9,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 
 @ApplicationScoped
@@ -34,16 +31,12 @@ public class AutenticacaoService {
             Security security = new Security();
             Instant instant = Instant.now().plus(7, ChronoUnit.DAYS);
             UsuarioDados usuarioDados = new UsuarioDados(
-                    model.getProfissional().getId(),
-                    model.getProfissional().getNome(),
                     security.token(
                             model.getProfissional().getFuncao(),
                             model.getProfissional().getNome(),
                             String.valueOf(model.getProfissional().getId()),
                             instant
-                    ),
-                    model.getProfissional().getFuncao(),
-                    LocalDateTime.ofInstant(instant, ZoneId.of("America/Sao_Paulo"))
+                    )
             );
             return Response.ok(
                     usuarioDados
