@@ -73,7 +73,7 @@ export class EntradasaidaListarComponent {
         this.total = page.total;
         this.carregando = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         this.carregando = false;
         this.total = 0;
         this.items = [];
@@ -84,6 +84,7 @@ export class EntradasaidaListarComponent {
 
   onPageChange(event: any) {
     this.rows = event.rows;
+    this.page = event.page;
     this.carregarLista(event.page, event.rows);
   }
 
@@ -98,7 +99,7 @@ export class EntradasaidaListarComponent {
           this.total = page.total;
           this.carregando = false;
         },
-        error: (error) => {
+        error: (error: any) => {
           this.carregando = false;
           this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }

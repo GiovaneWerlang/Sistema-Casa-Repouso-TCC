@@ -76,7 +76,7 @@ export class AtividadeludicaListarComponent {
         this.total = page.total;
         this.carregando = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         this.carregando = false;
         this.total = 0;
         this.items = [];
@@ -100,10 +100,10 @@ export class AtividadeludicaListarComponent {
         next: (page: any) => {
           this.items = page.lista;
           this.total = page.total;
-          this.carregando = false
+          this.carregando = false;
         },
-        error: (error) => {
-          this.carregando = false
+        error: (error: any) => {
+          this.carregando = false;
           this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })

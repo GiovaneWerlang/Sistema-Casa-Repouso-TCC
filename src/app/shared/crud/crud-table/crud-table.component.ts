@@ -80,13 +80,14 @@ export class CrudTableComponent<T> {
         this.carregando = false;
         this.total = 0;
         this.items = [];
-        this.toastService.toastBase('warn', 'Não foi possível carregar!', error );
+        this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
       }
     })
   }
 
   onPageChange(event: any) {
     this.rows = event.rows;
+    this.page = event.page;
     this.carregarLista(event.page, event.rows);
   }
 
@@ -101,9 +102,9 @@ export class CrudTableComponent<T> {
           this.total = page.total;
           this.carregando = false;
         },
-        error: (error:any) => {
+        error: (error: any) => {
           this.carregando = false;
-          this.toastService.toastBase('warn', 'Não foi possível carregar!', error );
+          this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
     }

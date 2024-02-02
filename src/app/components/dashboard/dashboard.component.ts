@@ -14,17 +14,12 @@ import { GraficoDadoDTO } from './modelo/graficodado';
   providers: [DashboardService, AtividadeConsultaService, AtividadeExameService, AtividadeMedicamentoService]
 })
 export class DashboardComponent {
-  //data: DashboardDTO | undefined;
   @Input() atividades:AtividadeDashDTO[] = [];
   @Input() dados: GraficoDadoDTO[] = [];
 
   options: any;
-  // carregando: boolean = false;
-
-  // dashBoardSubscription: Subscription = new Subscription;
 
   constructor(
-    // private _dashboardService: DashboardService,
     private _atividadeConsultaService: AtividadeConsultaService,
     private _atividadeExameService: AtividadeExameService,
     private _atividadeMedicamentoService: AtividadeMedicamentoService,
@@ -34,12 +29,8 @@ export class DashboardComponent {
       cutout: '50%',
       animation: false
     };
-    // this.carregando = true;
   }
 
-  // ngOnInit(): void {
-    // this.carregarDadosDashboard();
-  // }
 
   edit(atividade:any){
     if(atividade.tipo === 'Consulta'){
@@ -50,18 +41,6 @@ export class DashboardComponent {
       this._router.navigate([`/${this._atividadeMedicamentoService.getUrl()}/editar/${atividade?.id}`]);
     }
   }
-
-  // carregarDadosDashboard() {
-  //   this.dashBoardSubscription = this._dashboardService.list().subscribe((dados:any) => {
-  //     this.atividades = dados?.atividades;
-  //     this.dados = dados?.dados;
-  //     this.carregando = false;
-  //   });
-  // }  
-
-  // ngOnDestroy(): void {
-  //   this.dashBoardSubscription.unsubscribe();
-  // }
 
   trackByTitle(index:any, item:any){
     return item?.titulo;

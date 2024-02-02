@@ -5,13 +5,10 @@ import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { DadoUsuario } from '../modelo/dadousuario.model';
 import { Router } from '@angular/router';
+import { jwtDecode } from "jwt-decode";
 
 export interface DadoResponseAutenticacao {
-  id: number,
-  nome: string,
-  token: string,
-  funcao: string,
-  dataHoraExpiracao: string
+  token: string
 }
 
 @Injectable({
@@ -32,11 +29,7 @@ export class AutenticacaoService {
       catchError(this.handleLoginError),
       tap(resData => {
         this.handleAuthentication(
-          resData.id,
-          resData.nome,
-          resData.token,
-          resData.funcao,
-          resData.dataHoraExpiracao
+          resData.token
         );
       })
     );
@@ -74,6 +67,8 @@ export class AutenticacaoService {
   }
 
   private handleLoginError(error: HttpErrorResponse) {    
+    console.log(error);
+    
     if(error?.status === 401){
       return throwError(() => new Error('Usuário ou senha informados estão incorretos.'));
     } else if(error?.status === 404){
@@ -84,14 +79,11 @@ export class AutenticacaoService {
   }
 
   private handleAuthentication(
-    id: number,
-    nome: string,
-    token: string,
-    funcao: string,
-    dataHoraExpiracao: string
+    token:string
   ) {
-    const dataExpiracao = new Date(dataHoraExpiracao);
-    const dadoUsuario = new DadoUsuario(id, nome, token, funcao, dataExpiracao);    
+    const decoded:any = jwtDecode(token);    
+    const dataExpiracao = new Date(decoded?.exp * 1000);    
+    const dadoUsuario = new DadoUsuario(decoded?.sub, decoded?.full_name, token, decoded?.groups[0], dataExpiracao);        
     this.dadoUsuario.next(dadoUsuario);
     localStorage.setItem('dadosUsuario', JSON.stringify(dadoUsuario));
   }

@@ -18,24 +18,14 @@ import { DividerModule } from 'primeng/divider';
 import { HeaderComponent } from './components/header/header.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuComponent } from './components/menu/menu.component';
-import { PaginatorModule } from 'primeng/paginator';
-import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
-import { KeyFilterModule } from 'primeng/keyfilter';
-import { InputMaskModule } from 'primeng/inputmask';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
 import { ChartModule } from 'primeng/chart';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
-import { VirtualScrollerModule } from 'primeng/virtualscroller';
-
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { provideNgxMask } from 'ngx-mask';
 
 import { LoginComponent } from './components/login/login.component';
 import { NaoencontradoComponent } from './components/naoencontrado/naoencontrado.component';
@@ -80,26 +70,16 @@ import { UsuarioModule } from './components/usuario/usuario.module';
         ReactiveFormsModule,
         ButtonModule,
         MenuModule,
-        // InputTextModule,
+        InputTextModule,
         SidebarModule,
         TableModule,
         DividerModule,
         TooltipModule,
-        // PaginatorModule,
-        // CalendarModule,
-        // DropdownModule,
-        // KeyFilterModule,
-        // InputMaskModule,
-        // InputTextareaModule,
         ToastModule,
         CardModule,
         ProgressSpinnerModule,
         BlockUIModule,
         ChartModule,
-        // NgxMaskDirective,
-        // NgxMaskPipe,
-        // CheckboxModule,
-        // ConfirmDialogModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
           // Register the ServiceWorker as soon as the application is stable
@@ -116,7 +96,6 @@ import { UsuarioModule } from './components/usuario/usuario.module';
         EntradaSaidaModule,
         EspecialidadeModule,
         ExameModule,
-
         MedicamentoEstoqueModule,
         MedicamentoUsoModule,
         MovimentacaoEstoqueModule,

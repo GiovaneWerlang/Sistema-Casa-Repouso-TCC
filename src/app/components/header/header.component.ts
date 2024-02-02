@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   desktop: boolean = true;
   estaAutenticado = false;
   private usuarioSub: Subscription;
+  private breakpointSubscription: Subscription = new Subscription;
 
   items = [
     {
@@ -35,17 +36,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.usuarioSub = this.autenticacaoService.dadoUsuario.subscribe(usuario => {
       this.estaAutenticado = !!usuario;
     });
-    // let elements = document.getElementsByClassName("p-menuitem-link");
-    // for (let i = 0; i < elements.length; i++) {
-    //     elements[i].ariaLabel = this.items[i].label;
-    // }
   }
 
   ngOnInit() {
   }
 
   monitoraBreakspoints(breakpointService: BreakpointserviceService) {
-    breakpointService.getBreakpoints().subscribe((breakpoint: BreakpointState) => {
+    this.breakpointSubscription = breakpointService.getBreakpoints().subscribe((breakpoint: BreakpointState) => {
       const breakpoints = breakpoint.breakpoints;
       this.desktop = breakpoints[Breakpoints.Web] || breakpoints[Breakpoints.WebLandscape];
     });
@@ -61,6 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.usuarioSub.unsubscribe();
+    this.breakpointSubscription.unsubscribe();
   }
 
 }

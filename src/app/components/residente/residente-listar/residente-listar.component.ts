@@ -78,7 +78,7 @@ export class ResidenteListarComponent {
         this.total = page.total;
         this.carregando = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         this.carregando = false;
         this.total = 0;
         this.items = [];
@@ -89,22 +89,23 @@ export class ResidenteListarComponent {
 
   onPageChange(event: any) {
     this.rows = event.rows;
+    this.page = event.page;
     this.carregarLista(event.page, event.rows);
   }
 
   customSort(event: any) {
     if (event) {
+      this.carregando = true;
       this.sort = event.sortField ? event.sortField : "id";
       this.asc = event.sortOrder === 1;
-      this.carregando = true;
       this.service.pagesort(this.page, this.rows, this.sort, this.asc).subscribe({
         next: (page: any) => {
           this.items = page.lista;
           this.total = page.total;
           this.carregando = false;
         },
-        error: (error) => {
-          this.carregando = false
+        error: (error: any) => {
+          this.carregando = false;
           this.toastService.toastBase('warn', 'Não foi possível carregar!', error);
         }
       })
