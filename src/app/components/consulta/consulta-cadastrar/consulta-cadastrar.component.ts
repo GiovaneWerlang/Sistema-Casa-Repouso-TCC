@@ -64,7 +64,7 @@ export class ConsultaCadastrarComponent {
       this.consultaService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Consulta  ${this.novo ? 'salva' : 'atualizada'} com sucesso.`);
-          this.router.navigate(['/consulta/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -79,7 +79,7 @@ export class ConsultaCadastrarComponent {
   }
 
   voltar() {
-    this.router.navigate(['/consulta/listar']);
+    this.router.navigate([`/${this.consultaService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

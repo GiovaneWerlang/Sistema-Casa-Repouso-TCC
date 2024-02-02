@@ -56,7 +56,7 @@ export class AtividadeexameEditarComponent {
       ).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess('Atividade de exame atualizada com sucesso.');
-          this.router.navigate(['/atividadeexame/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -79,7 +79,7 @@ export class AtividadeexameEditarComponent {
   }
 
   voltar() {
-    this.router.navigate(['/atividadeexame/listar']);
+    this.router.navigate([`/${this.atividadeExameService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

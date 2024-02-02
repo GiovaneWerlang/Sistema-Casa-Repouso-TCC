@@ -71,7 +71,7 @@ export class ResidenteCadastrarComponent implements OnInit {
       this.residenteService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Residente ${this.novo ? 'salvo(a)' : 'atualizado(a)'} com sucesso.`);
-          this.router.navigate(['/residente/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -86,7 +86,7 @@ export class ResidenteCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/residente/listar']);
+    this.router.navigate([`/${this.residenteService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

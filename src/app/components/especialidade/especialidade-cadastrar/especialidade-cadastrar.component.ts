@@ -44,7 +44,7 @@ export class EspecialidadeCadastrarComponent implements OnInit {
       this.especialidadeService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) { 
           this.toastService.toastSuccess(`Especialidade  ${this.novo ? 'salva' : 'atualizada'}  com sucesso.`);
-          this.router.navigate(['/especialidade/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -59,7 +59,7 @@ export class EspecialidadeCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/especialidade/listar']);
+    this.router.navigate([`/${this.especialidadeService.getUrl()}/listar`]);
   }
 
   private carregaEspecialidade(id: number) {

@@ -52,7 +52,7 @@ export class EntradasaidaCadastrarComponent {
       this.entradaSaidaService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Entrada e Saída  ${this.novo ? 'salva' : 'atualizada'}  com sucesso.`);
-          this.router.navigate(['/entradasaida/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -67,7 +67,7 @@ export class EntradasaidaCadastrarComponent {
   }
 
   voltar() {
-    this.router.navigate(['/entradasaida/listar']);
+    this.router.navigate([`/${this.entradaSaidaService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

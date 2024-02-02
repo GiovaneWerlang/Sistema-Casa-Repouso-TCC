@@ -56,7 +56,7 @@ export class AtividadeconsultaEditarComponent {
       ).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess('Atividade de consulta atualizada com sucesso.');
-          this.router.navigate(['/atividadeconsulta/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -79,7 +79,7 @@ export class AtividadeconsultaEditarComponent {
   }
 
   voltar() {
-    this.router.navigate(['/atividadeconsulta/listar']);
+    this.router.navigate([`/${this.atividadeConsultaService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

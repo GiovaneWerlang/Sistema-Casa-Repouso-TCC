@@ -61,7 +61,7 @@ export class MedicamentousoCadastrarComponent implements OnInit {
       this.medicamentoUsoService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Medicamento em uso  ${this.novo ? 'salvo' : 'atualizado'} com sucesso.`);
-          this.router.navigate(['/medicamentouso/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -76,7 +76,7 @@ export class MedicamentousoCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/medicamentouso/listar']);
+    this.router.navigate([`/${this.medicamentoUsoService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

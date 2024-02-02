@@ -55,7 +55,7 @@ export class AtividademedicamentoEditarComponent {
       ).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess('Atividade de medicamento atualizada com sucesso.');
-          this.router.navigate(['/atividademedicamento/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -78,7 +78,7 @@ export class AtividademedicamentoEditarComponent {
   }
 
   voltar() {
-    this.router.navigate(['/atividademedicamento/listar']);
+    this.router.navigate([`/${this.atividadeMedicamentoService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

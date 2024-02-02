@@ -78,7 +78,7 @@ export class ProfissionalCadastrarComponent implements OnInit {
       this.profissionalService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Profissional ${this.novo ? 'salvo(a)' : 'atualizado(a)'} com sucesso.`);
-          this.router.navigate(['/profissional/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -93,7 +93,7 @@ export class ProfissionalCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/profissional/listar']);
+    this.router.navigate([`/${this.profissionalService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

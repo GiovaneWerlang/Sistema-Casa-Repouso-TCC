@@ -53,7 +53,7 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
       this.movimentacaoEstoqueService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Movimentação de medicamento ${this.novo ? 'salva' : 'atualizada'} com sucesso.`);
-          this.router.navigate(['/movimentacaoestoque/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -68,7 +68,7 @@ export class MovimentacaoestoqueCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/movimentacaoestoque/listar']);
+    this.router.navigate([`/${this.movimentacaoEstoqueService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

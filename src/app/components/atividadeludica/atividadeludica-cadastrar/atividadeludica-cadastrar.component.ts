@@ -48,9 +48,7 @@ export class AtividadeludicaCadastrarComponent implements OnInit {
             this.atividadeLudicaService.save(this.form.getRawValue()).subscribe((res) => {
                 if (res) {
                     this.toastService.toastSuccess(`Atividade lúdica ${this.novo ? 'salva' : 'atualizada'} com sucesso.`);
-                    setTimeout(() => {
-                        this.router.navigate([`/${this.atividadeLudicaService.getUrl()}/listar`]);
-                    }, 500);
+                    this.voltar();
                 }
             })
             this.limpar();

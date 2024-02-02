@@ -51,7 +51,7 @@ export class UsuarioCadastrarComponent implements OnInit {
       this.usuarioService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Usuário  ${this.novo ? 'salvo' : 'atualizado'}  com sucesso.`);
-          this.router.navigate(['/usuario/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -67,7 +67,7 @@ export class UsuarioCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/usuario/listar']);
+    this.router.navigate([`/${this.usuarioService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

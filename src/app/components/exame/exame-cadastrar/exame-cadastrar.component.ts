@@ -65,7 +65,7 @@ export class ExameCadastrarComponent implements OnInit {
       this.exameService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Exame  ${this.novo ? 'salvo' : 'atualizado'}  com sucesso.`);
-          this.router.navigate(['/exame/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -80,7 +80,7 @@ export class ExameCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/exame/listar']);
+    this.router.navigate([`/${this.exameService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {

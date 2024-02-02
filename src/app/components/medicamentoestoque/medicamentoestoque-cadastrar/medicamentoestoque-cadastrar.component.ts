@@ -44,7 +44,7 @@ export class MedicamentoestoqueCadastrarComponent implements OnInit {
       this.medicamentoEstoqueService.save(this.form.getRawValue()).subscribe((res) => {
         if (res) {
           this.toastService.toastSuccess(`Medicamento  ${this.novo ? 'salvo' : 'atualizado'}  com sucesso.`);
-          this.router.navigate(['/medicamentoestoque/listar']);
+          this.voltar();
         }
       })
       this.limpar();
@@ -59,7 +59,7 @@ export class MedicamentoestoqueCadastrarComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/medicamentoestoque/listar']);
+    this.router.navigate([`/${this.medicamentoEstoqueService.getUrl()}/listar`]);
   }
 
   private carrega(id: number) {
