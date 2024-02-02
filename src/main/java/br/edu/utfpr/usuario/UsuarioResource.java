@@ -5,6 +5,7 @@ import br.edu.utfpr.crud.CrudResource;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -28,23 +29,27 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
     }
 
     @Operation(summary = "Retorna todos")
+    @RolesAllowed("FUNCIONARIO")
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
+    @RolesAllowed("FUNCIONARIO")
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
+    @RolesAllowed("FUNCIONARIO")
     @POST
     @Transactional
     public Response add(UsuarioDTO usuarioDTO){
        return service.add(usuarioDTO);
     }
 
+    @RolesAllowed("FUNCIONARIO")
     @PUT
     @Path("{id}")
     @Transactional
@@ -52,6 +57,7 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
         return service.update(id, usuarioDTO);
     }
 
+    @RolesAllowed("FUNCIONARIO")
     @DELETE
     @Path("{id}")
     @Transactional
@@ -59,12 +65,14 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
         return service.delete(id);
     }
 
+    @RolesAllowed("FUNCIONARIO")
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){
         return service.page(page,size);
     }
 
+    @RolesAllowed("FUNCIONARIO")
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){

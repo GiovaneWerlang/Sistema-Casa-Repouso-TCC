@@ -4,6 +4,7 @@ import br.edu.utfpr.atividadesresidente.AtividadeResidenteDTO;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -26,17 +27,20 @@ public class AtividadeMedicamentoResidenteResource {
     }
 
     @Operation(summary = "Retorna todos")
+    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
+    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
         return service.findById(id);
     }
 
+    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -44,6 +48,7 @@ public class AtividadeMedicamentoResidenteResource {
         return service.update(id, atividadeResidenteDTO);
     }
 
+    @RolesAllowed({"CUIDADOR","VOLUNTARIO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size, @PathParam("sort") String sort, @PathParam("asc") boolean asc){

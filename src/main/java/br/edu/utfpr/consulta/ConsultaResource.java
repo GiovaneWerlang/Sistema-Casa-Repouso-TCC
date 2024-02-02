@@ -3,6 +3,7 @@ package br.edu.utfpr.consulta;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -25,23 +26,27 @@ public class ConsultaResource {
     }
 
     @Operation(summary = "Retorna todos")
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("{id}")
     public Response getConsultaById(@PathParam("id") long id){
         return service.findById(id);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @POST
     @Transactional
     public Response addConsulta(ConsultaDTO consultaDTO){
        return service.add(consultaDTO);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -49,6 +54,7 @@ public class ConsultaResource {
         return service.update(id, consultaDTO);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @DELETE
     @Path("{id}")
     @Transactional
@@ -56,12 +62,14 @@ public class ConsultaResource {
         return service.delete(id);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){
         return service.page(page,size);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){

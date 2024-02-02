@@ -28,22 +28,26 @@ public class EspecialidadeResource implements CrudResource<EspecialidadeDTO> {
 
     @Operation(summary = "Retorna todas")
     @GET
-    @RolesAllowed("FUNCIONARIO")
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     public Response getAll(@Context SecurityContext ctx){
         return service.getAll();
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") long id){
        return service.findById(id);
     }
+
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     @POST
     @Transactional
     public Response add(EspecialidadeDTO especialidadeDTO){
        return service.add(especialidadeDTO);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     @PUT
     @Path("{id}")
     @Transactional
@@ -51,6 +55,7 @@ public class EspecialidadeResource implements CrudResource<EspecialidadeDTO> {
        return service.update(id, especialidadeDTO);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     @DELETE
     @Path("{id}")
     @Transactional
@@ -58,12 +63,14 @@ public class EspecialidadeResource implements CrudResource<EspecialidadeDTO> {
         return service.delete(id);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("page/{page}/{size}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size){
         return service.page(page,size);
     }
 
+    @RolesAllowed({"CUIDADOR","ENFERMEIRO","FUNCIONARIO","MEDICO","VOLUNTARIO"})
     @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
     public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){
