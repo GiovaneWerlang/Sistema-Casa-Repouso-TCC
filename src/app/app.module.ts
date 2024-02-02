@@ -7,7 +7,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './components/app-root/app.component';
-import { HomeComponent } from './components/home/home.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 import { MenuModule } from 'primeng/menu';
@@ -28,7 +27,6 @@ import { ChartModule } from 'primeng/chart';
 import { provideNgxMask } from 'ngx-mask';
 
 import { MessageService } from 'primeng/api';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AutenticacaoInterceptorService } from './components/login/autenticacaointerceptor.service';
 import { DataHoraInterceptorService } from './shared/crud/crud-service/datahorainterceptor.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -49,16 +47,15 @@ import { ResidenteModule } from './components/residente/residente.module';
 import { UsuarioModule } from './components/usuario/usuario.module';
 import { NaoEncontradoModule } from './components/naoencontrado/naoencontrado.module';
 import { LoginModule } from './components/login/login.module';
+import { HomeModule } from './components/home/home.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-        HomeComponent,
+
         SideMenuComponent,
         HeaderComponent,
         MenuComponent,
-
-        DashboardComponent,
     ],
     imports: [
         BrowserModule,
@@ -102,6 +99,8 @@ import { LoginModule } from './components/login/login.module';
         UsuarioModule,
         NaoEncontradoModule,
         LoginModule,
+        
+        HomeModule,
     ],
     providers: [
         MessageService,

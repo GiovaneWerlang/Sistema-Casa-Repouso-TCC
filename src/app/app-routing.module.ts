@@ -1,14 +1,22 @@
 import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
 
 
 import { AutenticacaoGuard } from './components/login/autenticacao.guard';
 import { DashboardService } from './components/dashboard/service/dashboard.service';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AutenticacaoGuard], pathMatch: 'full',  resolve: { resolver: () => inject(DashboardService).list()} },
-  { path: 'home', component: HomeComponent, canActivate: [AutenticacaoGuard], resolve: { resolver: () => inject(DashboardService).list()} },
+  { 
+    path: '',
+    loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),
+    pathMatch: 'full', 
+    canActivate: [AutenticacaoGuard],
+    resolve: { resolver: () => inject(DashboardService).list()} },
+  { 
+    path: 'home',
+    loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule),
+    canActivate: [AutenticacaoGuard],
+    resolve: { resolver: () => inject(DashboardService).list()} },
   {
     path: 'login',
     loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule)
