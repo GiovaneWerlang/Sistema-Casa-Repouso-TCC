@@ -5,5 +5,6 @@ export const Funcoes:LabelValue[] = [
     {label:"Enfermeiro",value:"ENFERMEIRO"},
     {label:"Funcionário",value:"FUNCIONARIO"},
     {label:"Médico",value:"MEDICO"},
-    {label:"Voluntário",value:"VOLUNTARIO"}
+    {label:"Voluntário",value:"VOLUNTARIO"},
+    {label:"Administrador",value:"ADMIN"}
 ];

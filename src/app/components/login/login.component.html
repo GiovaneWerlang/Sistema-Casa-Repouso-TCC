@@ -4,7 +4,7 @@
             <form [formGroup]="form" class="flex flex-column">
                 <div class="col-12 flex flex-column">
                     <label htmlFor="login">Login:</label>
-                    <input type="text" pInputText name="login" formControlName="login" />
+                    <input type="text" pInputText name="login" formControlName="login" aria-label="Login"/>
                     <div *ngIf="form.controls['login']?.invalid && (form.controls['login']?.dirty || form.controls['login']?.touched)">
                         <small *ngIf="form.get('login')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                         <small *ngIf="form.get('login')?.errors?.['maxlength']" class="p-error">Tamanho máximo 50 caracteres.</small>
@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-12 flex flex-column">
                     <label htmlFor="senha">Senha:</label>
-                    <input type="text" pInputText name="senha" formControlName="senha" />
+                    <input type="password" pInputText name="senha" formControlName="senha" aria-label="Senha"/>
                     <div *ngIf="form.controls['senha']?.invalid && (form.controls['senha']?.dirty || form.controls['senha']?.touched)">
                         <small *ngIf="form.get('senha')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                         <small *ngIf="form.get('senha')?.errors?.['minlength']" class="p-error">Tamanho mínimo 6 caracteres.</small>
@@ -22,7 +22,7 @@
         </form>
         <ng-template pTemplate="footer">
             <div class="flex justify-content-end">
-                <p-button label="Login" (click)="login()" icon="pi pi-sign-in" aria-label="Login"></p-button>
+                <p-button label="Logar" (click)="login()" icon="pi pi-sign-in" aria-label="Logar"></p-button>
             </div>
         </ng-template>
     </p-card>
