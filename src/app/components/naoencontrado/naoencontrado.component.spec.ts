@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NaoencontradoComponent } from './naoencontrado.component';
 import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 describe('NaoencontradoComponent', () => {
   let component: NaoencontradoComponent;
@@ -12,6 +13,7 @@ describe('NaoencontradoComponent', () => {
       declarations: [NaoencontradoComponent],
       imports: [
         CardModule,
+        ButtonModule,
       ],
     });
     fixture = TestBed.createComponent(NaoencontradoComponent);
