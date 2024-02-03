@@ -3,18 +3,25 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule, HttpClientTestingModule, ToastModule
+        RouterTestingModule,
+        HttpClientTestingModule,
+        ToastModule,
+        ConfirmDialogModule,
       ],
       declarations: [
         AppComponent
       ],
-      providers: [MessageService]
+      providers: [
+        MessageService,
+        ConfirmationService
+      ]
     }).compileComponents();
   });
 
