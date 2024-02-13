@@ -31,7 +31,6 @@
     {
       "name":"gets",
       "urls": [
-        "http://localhost:8080/dashboard"
       ],
       "cacheConfig": {
         "maxSize": 20,

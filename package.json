@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "gzip": "ng build && gzipper compress ./dist ./compressed"
+    "gzip": "rm -rf dist compressed && ng build && gzipper compress ./dist ./compressed && cp localhost.crt ./compressed/client && cp localhost.key ./compressed/client",
+    "report": "source-map-explorer dist/client/*.js"
   },
   "private": true,
   "dependencies": {

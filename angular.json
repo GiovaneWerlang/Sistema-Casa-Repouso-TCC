@@ -62,18 +62,24 @@
               "extractLicenses": true,
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true
+              "aot": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.development.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
             },
             "development": {
               "serviceWorker": false,
               "buildOptimizer": false,
               "optimization": {
-                "scripts": true,
+                "scripts": false,
                 "styles": {
-                  "minify": true,
-                  "inlineCritical": true
+                  "minify": false,
+                  "inlineCritical": false
                 },
-                "fonts": true
+                "fonts": false
               },
               "vendorChunk": true,
               "extractLicenses": true,
