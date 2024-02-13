@@ -41,4 +41,6 @@ nb-configuration.xml
 
 #Certificate
 *.pem
+*.crt
+*.key
 
