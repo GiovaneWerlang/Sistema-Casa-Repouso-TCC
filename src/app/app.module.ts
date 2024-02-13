@@ -60,24 +60,19 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        ReactiveFormsModule,
         ButtonModule,
         MenuModule,
-        InputTextModule,
         SidebarModule,
         TableModule,
-        DividerModule,
-        TooltipModule,
         ToastModule,
-        CardModule,
         ProgressSpinnerModule,
         BlockUIModule,
         ChartModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
           // Register the ServiceWorker as soon as the application is stable
-          // or after 30 seconds (whichever comes first).
-          registrationStrategy: 'registerWhenStable:30000'
+          // or after 5 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:5000'
         }),
 
         AtividadeLudicaModule,

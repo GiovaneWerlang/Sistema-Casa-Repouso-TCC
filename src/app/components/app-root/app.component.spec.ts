@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ServiceWorkerModule, SwPush } from '@angular/service-worker';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -14,13 +15,14 @@ describe('AppComponent', () => {
         HttpClientTestingModule,
         ToastModule,
         ConfirmDialogModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: false })
       ],
       declarations: [
         AppComponent
       ],
       providers: [
         MessageService,
-        ConfirmationService
+        ConfirmationService,        
       ]
     }).compileComponents();
   });
