@@ -37,26 +37,10 @@ public class NotificacaoService {
                     Notificacao.builder()
                         .title("Lembre de atividade de residente. " + montaMensagem(atividadeDashDTO))
                         .actions(
-                            Arrays.asList(
-                                AcoesNotificacao.builder()
-                                        .action("open")
-                                        .title("Abrir")
-                                        .build()
-                            )
+                            Arrays.asList(montaAcoes("open", "Abrir"))
                         )
                         .data(
-                            DadosNotificacao.builder()
-                                .onActionClick(
-                                    AcaoClickNotificacao.builder()
-                                        .open(
-                                            AcaoDefault.builder()
-                                                    .operation("navigateLastFocusedOrOpen")
-                                                    .url(montaUrl(atividadeDashDTO))
-                                                    .build()
-                                        )
-                                        .build()
-                                )
-                                .build()
+                            montaDadosNotificacao(montaAcaoClick(montaAcaoPadrao("navigateLastFocusedOrOpen", montaUrl(atividadeDashDTO))))
                         )
                         .build()
                 ).build()
@@ -95,5 +79,31 @@ public class NotificacaoService {
         sb.append(atividadeDashDTO.getId());
 
         return sb.toString();
+    }
+
+    private AcoesNotificacao montaAcoes(String titulo, String acao){
+        return AcoesNotificacao.builder()
+                .action("open")
+                .title("Abrir")
+                .build();
+    }
+
+    public AcaoDefault montaAcaoPadrao(String operacao, String url){
+        return AcaoDefault.builder()
+                .operation(operacao)
+                .url(url)
+                .build();
+    }
+
+    public AcaoClickNotificacao montaAcaoClick(AcaoDefault acaoPadrao){
+        return AcaoClickNotificacao.builder()
+                .open(acaoPadrao)
+                .build();
+    }
+
+    public DadosNotificacao montaDadosNotificacao(AcaoClickNotificacao acaoClickNotificacao){
+        return DadosNotificacao.builder()
+                .onActionClick(acaoClickNotificacao)
+                .build();
     }
 }

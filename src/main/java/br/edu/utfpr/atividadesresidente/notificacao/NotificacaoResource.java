@@ -10,10 +10,14 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.security.Security;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.jose4j.lang.JoseException;
 
 @Path("/notificacoes")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -63,7 +67,8 @@ public class NotificacaoResource {
                     pushService.send(notification);
                 }
             }
-        }catch (Exception e){
+        } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
+                | InterruptedException e){
             e.printStackTrace();
         }
     }
