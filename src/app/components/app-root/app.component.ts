@@ -10,6 +10,7 @@ import { Subscription, interval } from 'rxjs';
 import { SwPush } from '@angular/service-worker';
 import { MensagemSubscriptionService } from '../atividadesresidente/notificacoes/service/mensagemsubscription.service';
 import { Router } from '@angular/router';
+import { DadosnotificacoesService } from './services/dadosnotificacoes.service';
 
 @Component({
     selector: 'app-root',
@@ -36,6 +37,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     inscricao: MensagemSubscription | undefined;
 
+    receberSubscription: Subscription = new Subscription;
+
     constructor(
         private config: PrimeNGConfig,
         breakpointService: BreakpointserviceService,
@@ -43,13 +46,16 @@ export class AppComponent implements OnInit, OnDestroy {
         private swPush: SwPush,
         private notificacoesService: NotificacoesService,
         private mensagemSubscriptionService: MensagemSubscriptionService,
-        private _router: Router
+        private _router: Router,
+        private dadosnotificacoesService:DadosnotificacoesService
         ) {
         config.setTranslation(Translate);
         this.monitoraBreakspoints(breakpointService);
         this.monitoraAutenticado();
 
-        this.requisitarPermissao();
+        this.monitoraRecebeNotificacoes();
+
+        //this.requisitarPermissao();
         this.emitirMensagens();
         this.emitirNotificacaoClick();
     }
@@ -58,7 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this._autenticacaoService.autoLogin();
         const source = interval(1000 * 60);
         const subscribe = source.subscribe(val => {
-            console.log(val);
+            console.log(val);//pode usar a inscricao para buscar e receber apenas para si
             this.notificacoesService.notificarTodos().subscribe((not) => console.log(not));
         });
     }
@@ -76,6 +82,17 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.autenticado = !!dado;
             }
         );
+    }
+
+    monitoraRecebeNotificacoes(){
+        this.receberSubscription = this.dadosnotificacoesService.getReceberNotificacoes().subscribe((receber) => {
+            console.log('receber', receber);
+            if(receber){
+                this.requisitarPermissao();
+            } else {
+                this.cancelarInscricao();
+            }     
+        })
     }
 
     emitirMensagens() {
@@ -96,7 +113,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     requisitarPermissao() {
         if (!this.swPush.isEnabled) {
-            console.log('Notificações não habilitadas.');
+            console.log('Service worker não habilitado.');
             return;
         }
 
@@ -105,7 +122,6 @@ export class AppComponent implements OnInit, OnDestroy {
                 serverPublicKey: this.publicKey,
             })
             .then((sub) => {
-                console.log('teste', JSON.stringify(sub));
                 const pushSubscription = JSON.parse(JSON.stringify(sub));
 
                 let mensagemSubscription: MensagemSubscription = {
@@ -114,7 +130,6 @@ export class AppComponent implements OnInit, OnDestroy {
                     auth: pushSubscription.keys.auth
                 }
                 this.inscricao = mensagemSubscription;
-                console.log(mensagemSubscription);
 
                 this.mensagemSubscriptionService.subscribe(mensagemSubscription).subscribe((res) => {
                     console.log(res);
@@ -138,6 +153,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.swPushSubscription.unsubscribe();
 
         this.mensagemSwPushSubscription.unsubscribe();
-        this.notificacaoSwPushSubscription.unsubscribe()
+        this.notificacaoSwPushSubscription.unsubscribe();
+        this.receberSubscription.unsubscribe();
     }
 }

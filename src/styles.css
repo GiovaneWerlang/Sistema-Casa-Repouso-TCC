@@ -36,8 +36,9 @@ body {
     margin: auto;
 }
 
-.p-menu {
+.appmenu .p-menu {
     border: none;
+    width: 100%;
 }
 
 .p-menuitem {

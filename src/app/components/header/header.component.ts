@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { BreakpointserviceService } from '../app-root/services/breakpointservice.service';
 import { BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
+import { ConfirmationService } from "primeng/api";
+import { MensagemSubscriptionService } from '../atividadesresidente/notificacoes/service/mensagemsubscription.service';
+import { SwPush } from '@angular/service-worker';
+import { DadosnotificacoesService } from '../app-root/services/dadosnotificacoes.service';
 
 @Component({
   selector: 'app-header',
@@ -19,6 +23,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   items = [
     {
+      label: 'Receber notificações',
+      icon: 'pi pi-message',
+      command: () => {
+        this.confirmarNotificacoes();
+      }
+    },
+    {
       label: 'Logout',
       icon: 'pi pi-sign-out',
       command: () => {
@@ -30,7 +41,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private _router: Router,
     private breakpointService: BreakpointserviceService,
-    private autenticacaoService: AutenticacaoService
+    private autenticacaoService: AutenticacaoService,
+    private confirmationService: ConfirmationService,
+    private dadosnotificacoesService:DadosnotificacoesService
   ) {
     this.monitoraBreakspoints(breakpointService);
     this.usuarioSub = this.autenticacaoService.dadoUsuario.subscribe(usuario => {
@@ -54,6 +67,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.autenticacaoService.logout();
+  }
+
+  confirmarNotificacoes(){
+    this.confirmationService.confirm({
+      message: 'Deseja receber notificações de atividades?',
+      header: 'Confirmação',
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      accept: () => {
+        this.criarInscricao();
+      },
+      reject: () => {
+        this.cancelarInscricao();
+      }
+  });
+  }
+
+  criarInscricao(){
+    this.dadosnotificacoesService.setReceberNotificacoes(true);
+  }
+
+  cancelarInscricao() {
+    this.dadosnotificacoesService.setReceberNotificacoes(false);
   }
 
   ngOnDestroy() {

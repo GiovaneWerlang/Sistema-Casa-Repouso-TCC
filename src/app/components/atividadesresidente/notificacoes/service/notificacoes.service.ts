@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, throwError } from "rxjs";
 import { environment } from "src/environments/environment.development";
-import { MensagemSubscription } from "../modelo/mensagemSubscription";
 
 @Injectable({
     providedIn: 'root'

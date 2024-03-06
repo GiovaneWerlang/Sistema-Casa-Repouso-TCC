@@ -4,6 +4,7 @@ import { HeaderComponent } from "./header.component";
 import { SideMenuModule } from "../side-menu/side-menu.module";
 import { ButtonModule } from "primeng/button";
 import { MenuModule } from "primeng/menu";
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,9 @@ import { MenuModule } from "primeng/menu";
     ],
     exports: [
         HeaderComponent
+    ],
+    providers: [
+        ConfirmationService
     ]
 })
 export class HeaderModule {}

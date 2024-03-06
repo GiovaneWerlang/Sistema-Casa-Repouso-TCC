@@ -1,7 +1,9 @@
 <app-header *ngIf="autenticado"></app-header>
 <div class="flex">
-    <app-menu *ngIf="desktop && autenticado"></app-menu>
-    <div [ngClass]="desktop ? 'routercontent' : 'w100'">
+    <div *ngIf="desktop && autenticado" class="col-2">
+        <app-menu></app-menu>
+    </div>
+    <div [ngClass]="desktop && autenticado ? 'col-10' : 'col-12'">
         <router-outlet></router-outlet>
     </div>
 </div>
