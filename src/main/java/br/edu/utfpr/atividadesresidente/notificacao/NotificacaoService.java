@@ -37,7 +37,7 @@ public class NotificacaoService {
                     Notificacao.builder()
                         .title("Lembre de atividade de residente. " + montaMensagem(atividadeDashDTO))
                         .actions(
-                            Arrays.asList(montaAcoes("open", "Abrir"))
+                            Arrays.asList(montaAcoes())
                         )
                         .data(
                             montaDadosNotificacao(montaAcaoClick(montaAcaoPadrao("navigateLastFocusedOrOpen", montaUrl(atividadeDashDTO))))
