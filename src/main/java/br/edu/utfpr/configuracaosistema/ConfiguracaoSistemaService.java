@@ -43,15 +43,11 @@ public class ConfiguracaoSistemaService {
         ConfiguracaoSistemaModel model = repository.findById(id);
         if(model != null){
 
-            if(configuracaoSistemaDTO.isHabilitarEnvioEmail()){
-                if(configuracaoSistemaDTO.getEmailLogin() == null || configuracaoSistemaDTO.getEmailSenha() == null){
-                    return ResponseUtils.porCodigo(422);
-                }
+            if(validaCamposEmailInvalidos(configuracaoSistemaDTO)){
+                return ResponseUtils.porCodigo(422);
             }
-            if(configuracaoSistemaDTO.isHabilitarEnvioWhats()){
-                if(configuracaoSistemaDTO.getWhatsNumeroId() == null || configuracaoSistemaDTO.getWhatsToken() == null){
-                    return ResponseUtils.porCodigo(422);
-                }
+            if(validaCamposWhatsappInvalidos(configuracaoSistemaDTO)){
+                return ResponseUtils.porCodigo(422);
             }
 
             model.setHabilitarEnvioEmail(configuracaoSistemaDTO.isHabilitarEnvioEmail());
@@ -72,6 +68,14 @@ public class ConfiguracaoSistemaService {
         }
 
         return ResponseUtils.notFound();
+    }
+
+    private boolean validaCamposEmailInvalidos(ConfiguracaoSistemaDTO configuracaoSistemaDTO){
+        return configuracaoSistemaDTO.isHabilitarEnvioEmail() && configuracaoSistemaDTO.getEmailLogin() == null || configuracaoSistemaDTO.getEmailSenha() == null;
+    }
+
+    private boolean validaCamposWhatsappInvalidos(ConfiguracaoSistemaDTO configuracaoSistemaDTO){
+        return configuracaoSistemaDTO.isHabilitarEnvioWhats() && configuracaoSistemaDTO.getWhatsNumeroId() == null || configuracaoSistemaDTO.getWhatsToken() == null;
     }
 
 }
