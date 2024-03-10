@@ -1,6 +1,7 @@
 package br.edu.utfpr.atividadesresidente.notificacao;
 
 import br.edu.utfpr.atividadesresidente.mensagemsubscription.MensagemSubscription;
+import br.edu.utfpr.atividadesresidente.mensagemsubscription.MensagemSubscriptionDTO;
 import br.edu.utfpr.atividadesresidente.mensagemsubscription.MensagemSubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.martijndwars.webpush.Notification;
@@ -69,6 +70,33 @@ public class NotificacaoResource {
             }
         } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
                 | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    @POST
+    @Path("/notificarum")
+    public void notificar(MensagemSubscriptionDTO subscription) {
+
+        List<MensagemNotificacao> mensagens = this.notificacaoService.getMensagens();
+
+        try {
+            if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+                Security.addProvider(new BouncyCastleProvider());
+            }
+            pushService.setPublicKey("BPtfmbAFQwggTeQKEH5pGLcP9qAC7ATbpvbxKTaIPaHVMhIoM4U_z-e-gDxIHiSUcEd41SVu-kq99frpGSTbBo0");
+            pushService.setPrivateKey("RLM5YVZ2Co9a4eh8EorZRX-BKlaSsLLBjd_s2fdf2a4");
+            for(MensagemNotificacao mensagem : mensagens) {
+                Notification notification = new Notification(
+                        subscription.getEndpoint(),
+                        subscription.getP256dh(),
+                        subscription.getAuth(),
+                        objectMapper.writeValueAsBytes(mensagem));
+
+                pushService.send(notification);
+            }
+        } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
+                 | InterruptedException e){
             e.printStackTrace();
         }
     }
