@@ -5,8 +5,6 @@ import { BreakpointserviceService } from '../app-root/services/breakpointservice
 import { BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { ConfirmationService } from "primeng/api";
-import { MensagemSubscriptionService } from '../atividadesresidente/notificacoes/service/mensagemsubscription.service';
-import { SwPush } from '@angular/service-worker';
 import { DadosnotificacoesService } from '../app-root/services/dadosnotificacoes.service';
 
 @Component({

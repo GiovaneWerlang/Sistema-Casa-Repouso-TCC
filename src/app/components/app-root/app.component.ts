@@ -54,8 +54,8 @@ export class AppComponent implements OnInit, OnDestroy {
         this.monitoraAutenticado();
 
         this.monitoraRecebeNotificacoes();
+        this.buscarInscricao();
 
-        //this.requisitarPermissao();
         this.emitirMensagens();
         this.emitirNotificacaoClick();
     }
@@ -64,8 +64,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this._autenticacaoService.autoLogin();
         const source = interval(1000 * 60);
         const subscribe = source.subscribe(val => {
-            console.log(val);//pode usar a inscricao para buscar e receber apenas para si
-            this.notificacoesService.notificarTodos().subscribe((not) => console.log(not));
+            if(this.inscricao){
+                this.notificacoesService.notificarUM(this.inscricao).subscribe((res) => {console.log('um',res); });
+            }else{
+                this.notificacoesService.notificarTodos().subscribe((not) => console.log('todos',not));
+            }
         });
     }
 
@@ -107,8 +110,28 @@ export class AppComponent implements OnInit, OnDestroy {
             console.log('notificacao', notification);
             console.log('notificacao', notification.data.url);
 
-            window.open(notification.data.url);
+            //window.open(notification.data.url);
         });
+    }
+
+    buscarInscricao(){
+        if (this.swPush.isEnabled) {
+            this.swPush.subscription.subscribe((subscription) => {
+                if(subscription){
+                    const pushSubscription = JSON.parse(JSON.stringify(subscription));
+
+                    let mensagemSubscription: MensagemSubscription = new MensagemSubscription(
+                        pushSubscription.endpoint,
+                        pushSubscription.keys.p256dh,
+                        pushSubscription.keys.auth
+                    );
+                    this.inscricao = mensagemSubscription;
+                    console.log('inscrito', this.inscricao);                    
+                }else{
+                    this.inscricao = undefined;
+                }
+            })
+        }
     }
 
     requisitarPermissao() {
@@ -124,25 +147,25 @@ export class AppComponent implements OnInit, OnDestroy {
             .then((sub) => {
                 const pushSubscription = JSON.parse(JSON.stringify(sub));
 
-                let mensagemSubscription: MensagemSubscription = {
-                    endpoint: pushSubscription.endpoint,
-                    p256dh: pushSubscription.keys.p256dh,
-                    auth: pushSubscription.keys.auth
-                }
+                let mensagemSubscription: MensagemSubscription = new MensagemSubscription(
+                    pushSubscription.endpoint,
+                    pushSubscription.keys.p256dh,
+                    pushSubscription.keys.auth
+                );
                 this.inscricao = mensagemSubscription;
 
                 this.mensagemSubscriptionService.subscribe(mensagemSubscription).subscribe((res) => {
-                    console.log(res);
+                    console.log('inscricao banco',res);
                 })
             })
             .catch((err) => console.log('erro', err));
     }
 
     cancelarInscricao() {
-        this.swPush.unsubscribe().catch((reason:any) => console.log('razao', reason));
+        this.swPush.unsubscribe().catch((reason:any) => console.log('cancelar sw', reason));
         if (this.inscricao)
             this.mensagemSubscriptionService.unsubscribe(this.inscricao).subscribe((res) => {
-                console.log(res);
+                console.log('cancelar banco', res);
             });
     }
 

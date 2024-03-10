@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, throwError } from "rxjs";
 import { environment } from "src/environments/environment.development";
+import { MensagemSubscription } from "../modelo/mensagemSubscription";
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +25,12 @@ export class NotificacoesService {
 
     notificarTodos(): Observable<any> {
         return this.http.get(`${this.API_URL}${this.T_URL}/notificar`).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    notificarUM(subscrition:MensagemSubscription): Observable<any> {
+        return this.http.post(`${this.API_URL}${this.T_URL}/notificarum`, subscrition).pipe(
             catchError(this.handleError)
         );
     }
