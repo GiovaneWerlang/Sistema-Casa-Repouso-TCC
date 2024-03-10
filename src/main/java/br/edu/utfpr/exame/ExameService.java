@@ -20,6 +20,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @ApplicationScoped
@@ -186,7 +187,7 @@ public class ExameService implements CrudService<ExameDTO> {
             return ResponseUtils.porCodigo(422);
         }
         List<ExameModel> lista = repository.pageList(page,size);
-        if(lista.isEmpty()){
+        if(Objects.isNull(lista)){
             return ResponseUtils.notFound();
         }
         PageDTO<ExameModel> pageDTO = new PageDTO<>();
@@ -201,7 +202,7 @@ public class ExameService implements CrudService<ExameDTO> {
             return ResponseUtils.porCodigo(422);
         }
         List<ExameModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(lista.isEmpty()){
+        if(Objects.isNull(lista)){
             return ResponseUtils.notFound();
         }
         PageDTO<ExameModel> pageDTO = new PageDTO<>();

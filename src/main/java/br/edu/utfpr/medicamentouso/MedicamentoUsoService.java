@@ -17,6 +17,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -172,7 +173,7 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             return ResponseUtils.porCodigo(422);
         }
         List<MedicamentoUsoModel> lista = repository.pageList(page,size);
-        if(lista.isEmpty()){
+        if(Objects.isNull(lista)){
             return ResponseUtils.notFound();
         }
         PageDTO<MedicamentoUsoModel> pageDTO = new PageDTO<>();
@@ -187,7 +188,7 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             return ResponseUtils.porCodigo(422);
         }
         List<MedicamentoUsoModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(lista.isEmpty()){
+        if(Objects.isNull(lista)){
             return ResponseUtils.notFound();
         }
         PageDTO<MedicamentoUsoModel> pageDTO = new PageDTO<>();

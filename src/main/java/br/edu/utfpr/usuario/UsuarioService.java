@@ -131,7 +131,7 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
             return ResponseUtils.porCodigo(422);
         }
         List<UsuarioModel> lista = repository.pageList(page,size);
-        if(lista.isEmpty()){
+        if(Objects.isNull(lista)){
             return ResponseUtils.notFound();
         }
         PageDTO<UsuarioModel> pageDTO = new PageDTO<>();
@@ -146,7 +146,7 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
             return ResponseUtils.porCodigo(422);
         }
         List<UsuarioModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(lista.isEmpty()){
+        if(Objects.isNull(lista)){
             return ResponseUtils.notFound();
         }
         PageDTO<UsuarioModel> pageDTO = new PageDTO<>();

@@ -50,7 +50,7 @@ public class AtividadeResidenteScheduler {
         this.envioWhatsapp = envioWhatsapp;
     }
 
-    @Scheduled(every="3m")
+    @Scheduled(every="1h")
     void cronJob(ScheduledExecution execution) {
         processarAtividades(buscarEmails(), buscarTelefones());
     }
