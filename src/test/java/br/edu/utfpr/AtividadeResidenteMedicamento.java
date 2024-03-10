@@ -1,7 +1,7 @@
 package br.edu.utfpr;
 
-import br.edu.utfpr.atividadeludica.AtividadeLudicaDTO;
-import br.edu.utfpr.enums.Situacao;
+import br.edu.utfpr.atividadesresidente.AtividadeResidenteDTO;
+import br.edu.utfpr.enums.SituacaoAtividade;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
@@ -17,7 +17,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 import static io.restassured.RestAssured.given;
@@ -27,21 +26,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AtividadeLudicaResourceTest {
-
-    @TestHTTPResource("/atividadeludica")
+public class AtividadeResidenteMedicamento {
+    @TestHTTPResource("/atividademedicamento")
     URL apiURL;
 
-    @TestHTTPResource("/atividadeludica/page/0/1")
-    URL pageURL;
-
-    @TestHTTPResource("/atividadeludica/pagesort/0/1/id/true")
+    @TestHTTPResource("/atividademedicamento/pagesort/0/1/id/true")
     URL pageSortURL;
 
-    @TestHTTPResource("/atividadeludica/1")
+    @TestHTTPResource("/atividademedicamento/1")
     URL idURL;
 
-    @TestHTTPResource("/atividadeludica/321")
+    @TestHTTPResource("/atividademedicamento/321")
     URL erroURL;
 
     @Inject
@@ -56,40 +51,106 @@ public class AtividadeLudicaResourceTest {
     @Order(1)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve criar atividade lúdica com sucesso.")
-    public void createAtividadeLudicaTest(){
-        AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
-        atividadeDTO.setNome("Infantil");
-        atividadeDTO.setSituacao(Situacao.ATIVO);
-        atividadeDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
+    @DisplayName("Deve atualizar atividade com sucesso.")
+    public void updateAtividadeLudicaTest() throws SQLException {
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("INSERT INTO RESIDENTE (" +
+                "\tDATAHORAINGRESSO,\n" +
+                "\tDATAHORAPREVISAOSAIDA,\n" +
+                "\tTIPOESTADIA,\n" +
+                "\tSITUACAO,\n" +
+                "\tNOME,\n" +
+                "\tIDADE,\n" +
+                "\tCPF,\n" +
+                "\tTELEFONE,\n" +
+                "\tEMAIL) \n" +
+                "VALUES (" +
+                "'2023-05-05',\n" +
+                "'2023-05-05',\n" +
+                "'PADRAO',\n" +
+                "'ATIVO',\n" +
+                "'teste',\n" +
+                "0,\n" +
+                "'00000000000',\n" +
+                "'0000000000',\n" +
+                "'teste@gmail.com'\n" +
+                ");");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt2 = c2.prepareStatement("INSERT INTO MEDICAMENTOESTOQUE (NOME, PRINCIPIOATIVO, QTDE) VALUES ('DIPIRONA', 'DIPIRONA 500MG', 20);");
+        stmt2.execute();
+        stmt2.close();
+        c2.close();
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c3 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt3 = c3.prepareStatement("INSERT INTO MEDICAMENTOUSO (" +
+                "\tINTERVALO,\n" +
+                "\tQTDEVEZESAODIA,\n" +
+                "\tDATAHORAINICIO,\n" +
+                "\tQTDEDIASUSO,\n" +
+                "\tQTDEMEDICAMENTO,\n" +
+                "\tIDRESIDENTE,\n" +
+                "\tIDMEDICAMENTO) \n" +
+                "VALUES (" +
+                "24," +
+                "1," +
+                "'" + LocalDateTime.now().withHour(13) + "',"+
+                "1," +
+                "1," +
+                "1," +
+                "1" +
+                ");");
+        stmt3.execute();
+        stmt3.close();
+        c3.close();
+
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c4 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt4 = c4.prepareStatement("INSERT INTO ATIVIDADEMEDICAMENTORESIDENTE (DESCRICAO, DATAHORA, SITUACAOATIVIDADE, IDMEDICAMENTO)" +
+                " VALUES ('teste'," +
+                "'" + LocalDateTime.now().withHour(13) + "',"+
+                "'PENDENTE',1);");
+        stmt4.execute();
+        stmt4.close();
+        c4.close();
+
+        AtividadeResidenteDTO atividadeResidenteDTO = new AtividadeResidenteDTO();
+        atividadeResidenteDTO.setSituacao(SituacaoAtividade.PENDENTE);
+        atividadeResidenteDTO.setProfissional(1L);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(atividadeDTO)
+                .body(atividadeResidenteDTO)
                 .when()
-                .post(apiURL)
+                .put(idURL)
                 .then()
                 .extract().response();
 
-        assertEquals( 201, response.getStatusCode());
+        assertEquals(201, response.getStatusCode());
     }
 
     @Order(2)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao criar atividade.")
-    public void createAtividadeLudicaValidationErrorTest(){
-        AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
-        atividadeDTO.setNome(null);
-        atividadeDTO.setSituacao(null);
-        atividadeDTO.setDataHora(null);
+    @DisplayName("Deve falhar ao atualizar atividade.")
+    public void updateAtividadeLudicaValidationErrorTest(){
 
+        AtividadeResidenteDTO atividadeResidenteDTO = new AtividadeResidenteDTO();
+        atividadeResidenteDTO.setSituacao(null);
+        atividadeResidenteDTO.setProfissional(null);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(atividadeDTO)
+                .body(atividadeResidenteDTO)
                 .when()
-                .post(apiURL)
+                .put(idURL)
                 .then()
                 .extract().response();
 
@@ -99,52 +160,6 @@ public class AtividadeLudicaResourceTest {
     }
 
     @Order(3)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve atualizar atividade com sucesso.")
-    public void updateAtividadeLudicaTest(){
-
-        AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
-        atividadeDTO.setNome("Juvenil");
-        atividadeDTO.setSituacao(Situacao.INATIVO);
-        atividadeDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body(atividadeDTO)
-                .when()
-                .put(idURL)
-                .then()
-                .extract().response();
-
-        assertEquals(201, response.getStatusCode());
-    }
-
-    @Order(4)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao atualizar atividade.")
-    public void updateAtividadeLudicaValidationErrorTest(){
-
-        AtividadeLudicaDTO atividadeDTO = new AtividadeLudicaDTO();
-        atividadeDTO.setNome(null);
-        atividadeDTO.setSituacao(null);
-        atividadeDTO.setDataHora(null);
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body(atividadeDTO)
-                .when()
-                .put(idURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 422, response.getStatusCode());
-        assertEquals("Erro de validação de campos.", response.jsonPath().getString("message"));
-
-    }
-
-    @Order(5)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar atividade por id com sucesso.")
@@ -161,7 +176,7 @@ public class AtividadeLudicaResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(6)
+    @Order(4)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar atividade por id.")
@@ -178,12 +193,11 @@ public class AtividadeLudicaResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(7)
+    @Order(5)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as atividades com sucesso.")
     public void getAllAtividadeLudicaTest(){
-
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -195,29 +209,11 @@ public class AtividadeLudicaResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(8)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve buscar as atividades paginadas com sucesso.")
-    public void pageAtividadeLudicaTest(){
-
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 200, response.getStatusCode());
-    }
-
-    @Order(9)
+    @Order(6)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as atividades paginadas e ordenadas com sucesso.")
     public void pageSortAtividadeLudicaTest(){
-
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -229,48 +225,14 @@ public class AtividadeLudicaResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(10)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve deletar por id a atividade com sucesso.")
-    public void deleteAtividadeLudicaTest(){
-
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(idURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 200, response.getStatusCode());
-    }
-
-    @Order(11)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao deletar por id a atividade.")
-    public void deleteAtividadeLudicaErrorTest(){
-
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(erroURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 404, response.getStatusCode());
-    }
-
-    @Order(12)
+    @Order(7)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as atividades.")
     public void getAllAtividadeLudicaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from atividadeludica");
+        PreparedStatement stmt = c.prepareStatement("delete from ATIVIDADEMEDICAMENTORESIDENTE");
         stmt.execute();
         stmt.close();
         c.close();
@@ -285,39 +247,14 @@ public class AtividadeLudicaResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(13)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao buscar as atividades paginadas.")
-    public void pageAtividadeLudicaErrorTest() throws SQLException {
-        DriverManager.registerDriver(new org.h2.Driver());
-        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from atividadeludica");
-        stmt.execute();
-        stmt.close();
-        c.close();
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        response.then().assertThat().statusCode(200)
-                .body("lista", equalTo(Collections.emptyList()))
-                .body("pages", equalTo(1))
-                .body("total", equalTo(0));
-    }
-
-    @Order(14)
+    @Order(8)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as atividades paginadas e ordenadas.")
     public void pageSortAtividadeLudicaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from atividadeludica");
+        PreparedStatement stmt = c.prepareStatement("delete from ATIVIDADEMEDICAMENTORESIDENTE");
         stmt.execute();
         stmt.close();
         c.close();
@@ -333,5 +270,6 @@ public class AtividadeLudicaResourceTest {
                 .body("lista", equalTo(Collections.emptyList()))
                 .body("pages", equalTo(1))
                 .body("total", equalTo(0));
+
     }
 }

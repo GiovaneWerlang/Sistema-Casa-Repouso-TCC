@@ -15,8 +15,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
@@ -291,7 +293,10 @@ public class EspecialidadeResourceTest {
                 .then()
                 .extract().response();
 
-        assertEquals( 404, response.getStatusCode());
+        response.then().assertThat().statusCode(200)
+                .body("lista", equalTo(Collections.emptyList()))
+                .body("pages", equalTo(1))
+                .body("total", equalTo(0));
     }
 
     @Order(14)
@@ -313,6 +318,9 @@ public class EspecialidadeResourceTest {
                 .then()
                 .extract().response();
 
-        assertEquals( 404, response.getStatusCode());
+        response.then().assertThat().statusCode(200)
+                .body("lista", equalTo(Collections.emptyList()))
+                .body("pages", equalTo(1))
+                .body("total", equalTo(0));
     }
 }
