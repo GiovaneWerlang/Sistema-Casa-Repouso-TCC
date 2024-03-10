@@ -3,6 +3,7 @@ package br.edu.utfpr.security;
 import br.edu.utfpr.usuario.UsuarioDados;
 import br.edu.utfpr.usuario.UsuarioModel;
 import br.edu.utfpr.usuario.UsuarioRepository;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.elytron.security.common.BcryptUtil;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -26,7 +27,7 @@ public class AutenticacaoService {
 
         if(model != null){
             if(!BcryptUtil.matches(senha, model.getSenha())){
-                return Response.status(Response.Status.UNAUTHORIZED).build();
+                return ResponseUtils.notAuth();
             }
             Security security = new Security();
             Instant instant = Instant.now().plus(7, ChronoUnit.DAYS);
@@ -38,12 +39,12 @@ public class AutenticacaoService {
                             instant
                     )
             );
-            return Response.ok(
+            return ResponseUtils.okModel(
                     usuarioDados
-            ).build();
+            );
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
 }

@@ -11,6 +11,7 @@ import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
 import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -24,6 +25,9 @@ import java.util.Set;
 @ApplicationScoped
 public class ExameService implements CrudService<ExameDTO> {
 
+    private static final String MENSAGEMESPECIALIDADE = "Especialidade não encontrada.";
+    private static final String MENSAGEMPROFISSIONAL = "Profissional não encontrado(a).";
+    private static final String MENSAGEMRESIDENTE = "Residente não encontrado(a).";
     private ExameRepository repository;
     private ProfissionalRepository profissionalRepository;
     private ResidenteRepository residenteRepository;
@@ -44,18 +48,18 @@ public class ExameService implements CrudService<ExameDTO> {
     public Response getAll(){
         List<ExameModel> lista = repository.listAll();
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
         ExameModel model = repository.findById(id);
         if(model != null){
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response add(ExameDTO exameDTO){
@@ -74,7 +78,7 @@ public class ExameService implements CrudService<ExameDTO> {
         if(especialidadeRepository.findById(exameDTO.getEspecialidade()) != null){
             especialidadeModel = especialidadeRepository.findById(exameDTO.getEspecialidade());
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMESPECIALIDADE);
         }
         model.setEspecialidade(especialidadeModel);
 
@@ -82,7 +86,7 @@ public class ExameService implements CrudService<ExameDTO> {
         if(profissionalRepository.findById(exameDTO.getProfissional()) != null){
             profissionalModel = profissionalRepository.findById(exameDTO.getProfissional());
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Profissional não encontrado(a).").build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMPROFISSIONAL);
         }
         model.setProfissional(profissionalModel);
 
@@ -90,7 +94,7 @@ public class ExameService implements CrudService<ExameDTO> {
         if(residenteRepository.findById(exameDTO.getResidente()) != null){
             residenteModel = residenteRepository.findById(exameDTO.getResidente());
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Residente não encontrado(a).").build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMRESIDENTE);
         }
         model.setResidente(residenteModel);
 
@@ -99,10 +103,10 @@ public class ExameService implements CrudService<ExameDTO> {
             GerarAtividadeExame gerarAtividadeExame = new GerarAtividadeExame();
             atividadeExameResidenteRepository.persist(gerarAtividadeExame.gerar(model));
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
+        return ResponseUtils.criado(model.getId());
     }
 
     public Response update(long id, ExameDTO exameDTO){
@@ -122,7 +126,7 @@ public class ExameService implements CrudService<ExameDTO> {
             if(especialidadeRepository.findById(exameDTO.getEspecialidade()) != null){
                 especialidadeModel = especialidadeRepository.findById(exameDTO.getEspecialidade());
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMESPECIALIDADE);
             }
             model.setEspecialidade(especialidadeModel);
 
@@ -130,7 +134,7 @@ public class ExameService implements CrudService<ExameDTO> {
             if(profissionalRepository.findById(exameDTO.getProfissional()) != null){
                 profissionalModel = profissionalRepository.findById(exameDTO.getProfissional());
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Profissional não encontrado(a).").build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMPROFISSIONAL);
             }
             model.setProfissional(profissionalModel);
 
@@ -138,14 +142,14 @@ public class ExameService implements CrudService<ExameDTO> {
             if(residenteRepository.findById(exameDTO.getResidente()) != null){
                 residenteModel = residenteRepository.findById(exameDTO.getResidente());
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Residente não encontrado(a).").build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMRESIDENTE);
             }
             model.setResidente(residenteModel);
 
             try{
                 repository.persist(model);
             }catch (Exception ex){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return ResponseUtils.serverError();
             }
 
             if(atividadeExameResidenteRepository.findByExameId(model.getId()) != null){
@@ -157,54 +161,54 @@ public class ExameService implements CrudService<ExameDTO> {
                 try{
                     atividadeExameResidenteRepository.persist(atividadeExameResidenteModel);
                 }catch (Exception ex){
-                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                    return ResponseUtils.serverError();
                 }
             }
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response delete(long id){
         ExameModel model = repository.findById(id);
         if(model != null){
             repository.delete(model);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response page(int page, int size){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<ExameModel> lista = repository.pageList(page,size);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<ExameModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
     public Response pageSort(int page, int size, String atributo, boolean asc){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<ExameModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<ExameModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
 }

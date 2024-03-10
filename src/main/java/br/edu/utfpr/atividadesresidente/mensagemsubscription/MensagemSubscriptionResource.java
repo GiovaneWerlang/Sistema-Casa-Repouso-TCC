@@ -1,5 +1,6 @@
 package br.edu.utfpr.atividadesresidente.mensagemsubscription;
 
+import br.edu.utfpr.utils.ResponseUtils;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -30,9 +31,9 @@ public class MensagemSubscriptionResource {
     public Response subscribe(MensagemSubscription subscription) {
         try{
             subscriptionService.add(subscription);
-            return Response.ok().build();
+            return ResponseUtils.ok();
         }catch (Exception e){
-            return Response.serverError().build();
+            return ResponseUtils.serverError();
         }
     }
 
@@ -42,9 +43,9 @@ public class MensagemSubscriptionResource {
     public Response unsubscribe(MensagemSubscription subscription) {
         try {
             subscriptionService.delete(subscription);
-            return Response.ok().build();
+            return ResponseUtils.ok();
         }catch (Exception e){
-            return Response.serverError().build();
+            return ResponseUtils.serverError();
         }
     }
 

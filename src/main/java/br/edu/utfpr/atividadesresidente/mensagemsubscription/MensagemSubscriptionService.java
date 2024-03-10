@@ -1,5 +1,7 @@
 package br.edu.utfpr.atividadesresidente.mensagemsubscription;
 
+import br.edu.utfpr.utils.ResponseUtils;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
@@ -27,7 +29,7 @@ public class MensagemSubscriptionService {
             mensagemSubscription.getEndpoint() == null||
             mensagemSubscription.getP256dh() == null ||
             mensagemSubscription.getAuth() == null){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
 
         try{
@@ -37,19 +39,19 @@ public class MensagemSubscriptionService {
             }
             repository.persist(mensagemSubscription);
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
-        return Response.status(Response.Status.CREATED.getStatusCode()).entity(mensagemSubscription.getId()).build();
+        return ResponseUtils.criado(mensagemSubscription.getId());
     }
 
     public Response delete(MensagemSubscription mensagemSubscription){
         MensagemSubscription model = repository.findByAtt(mensagemSubscription);
         if(model != null){
             repository.delete(model);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
 }

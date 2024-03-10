@@ -8,6 +8,7 @@ import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueRepository;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
 import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,6 +23,10 @@ import java.util.Set;
 @ApplicationScoped
 public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
 
+    private static final String MENSAGEMRESIDENTE = "Residente não encontrado(a).";
+    private static final String MENSAGEMMEDICAMENTO = "Medicamento não encontrado(a).";
+    private static final String MENSAGEMINCONSISTENCIA = "Inconsistência nos dados informados.";
+    private static final String MENSAGEMCAMPOS = "O campo vezes ao dia não pode ter valor maior que 1 se o intervalo for igual ou maior a 24 horas.";
     private MedicamentoUsoRepository repository;
     private ResidenteRepository residenteRepository;
     private MedicamentoEstoqueRepository medicamentoEstoqueRepository;
@@ -45,18 +50,18 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
     public Response getAll(){
         List<MedicamentoUsoModel> lista = repository.listAll();
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
         MedicamentoUsoModel model = repository.findById(id);
         if(model != null){
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response add(MedicamentoUsoDTO medicamentoUsoDTO){
@@ -77,7 +82,7 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
         if(optional.isPresent()){
             residenteModel = optional.get();
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Residente não encontrado(a).").build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMRESIDENTE);
         }
         model.setResidente(residenteModel);
 
@@ -86,15 +91,15 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
         if(optional.isPresent()){
             medicamentoEstoqueModel = optionalMedicamentoEstoque.get();
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Medicamento não encontrado(a).").build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMMEDICAMENTO);
         }
         model.setMedicamento(medicamentoEstoqueModel);
 
         if(model.getIntervalo() < 24 && model.getQtdeVezesAoDia() * model.getIntervalo() > 24 || model.getIntervalo() < 1){
-            return Response.status(422, "Inconsistência nos dados informados.").build();
+            return ResponseUtils.inconsistenciaComMotivo(MENSAGEMINCONSISTENCIA);
         }
         if(model.getIntervalo() >= 24 && model.getQtdeVezesAoDia() > 1){
-            return Response.status(422, "O campo vezes ao dia não pode ter valor maior que 1 se o intervalo for igual ou maior a 24 horas.").build();
+            return  ResponseUtils.inconsistenciaComMotivo(MENSAGEMCAMPOS);
         }
 
         try{
@@ -102,10 +107,10 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             GerarAtividadesMedicamentoUso gerarAtividadesMedicamentoUso = new GerarAtividadesMedicamentoUso();
             atividadeMedicamentoResidenteRepository.persist(gerarAtividadesMedicamentoUso.gerar(model));
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
+        return ResponseUtils.criado(model.getId());
     }
 
     public Response update(long id, MedicamentoUsoDTO medicamentoUsoDTO){
@@ -127,7 +132,7 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             if(optional.isPresent()){
                 residenteModel = optional.get();
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Residente não encontrado(a).").build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMRESIDENTE);
             }
             model.setResidente(residenteModel);
 
@@ -136,60 +141,60 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             if(optional.isPresent()){
                 medicamentoEstoqueModel = optionalMedicamentoEstoque.get();
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Medicamento não encontrado(a).").build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMMEDICAMENTO);
             }
             model.setMedicamento(medicamentoEstoqueModel);
 
             try{
                 repository.persist(model);
             }catch (Exception ex){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return ResponseUtils.serverError();
             }
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response delete(long id){
         MedicamentoUsoModel model = repository.findById(id);
         if(model != null){
             repository.delete(model);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response page(int page, int size){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<MedicamentoUsoModel> lista = repository.pageList(page,size);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<MedicamentoUsoModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
     public Response pageSort(int page, int size, String atributo, boolean asc){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<MedicamentoUsoModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<MedicamentoUsoModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
 }

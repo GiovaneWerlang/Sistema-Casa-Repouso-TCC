@@ -5,6 +5,7 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.panache.common.Sort;
 
@@ -20,6 +21,8 @@ import java.util.Set;
 
 @ApplicationScoped
 public class UsuarioService implements CrudService<UsuarioDTO> {
+    private static final String MENSAGEMPROFISSIONAL = "Profissional não encontrado.";
+    private static final String MENSAGEMUSUARIO = "Já existe um usuário com esse login.";
 
     private UsuarioRepository repository;
     private ProfissionalRepository profissionalRepository;
@@ -35,9 +38,9 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
     public Response getAll(){
         List<UsuarioModel> lista = repository.listAll();
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
@@ -47,10 +50,10 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
             ProfissionalModel modelProfissional = new ProfissionalModel();
             modelProfissional.setId(model.getProfissional().getId());
             model.setProfissional(modelProfissional);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response add(UsuarioDTO usuarioDTO){
@@ -59,7 +62,7 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
             return ResponseError.createFromViolations(violations).returnWithStatusCode(422);
         }
         if(repository.findByLogin(usuarioDTO.getLogin()) != null){
-            return Response.status(Response.Status.CONFLICT.getStatusCode(),"Já existe um usuário com esse login.").build();
+            return ResponseUtils.conflitoComMotivo(MENSAGEMUSUARIO);
         }
         UsuarioModel model = new UsuarioModel();
         model.setLogin(usuarioDTO.getLogin());
@@ -68,16 +71,16 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
             ProfissionalModel profissionalModel = profissionalRepository.findById(usuarioDTO.getProfissional());
             model.setProfissional(profissionalModel);
         }else{
-            return Response.status( Response.Status.NOT_FOUND.getStatusCode(),"Profissional não encontrado.").build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMPROFISSIONAL);
         }
 
         try{
             repository.persist(model);
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
+        return ResponseUtils.criado(model.getId());
     }
 
     public Response update(long id, UsuarioDTO usuarioDTO){
@@ -90,7 +93,7 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
         if(model != null){
             UsuarioModel doBanco = repository.findByLogin(usuarioDTO.getLogin());
             if(doBanco != null && !Objects.equals(id,doBanco.getId())){
-                return Response.status(Response.Status.CONFLICT.getStatusCode(),"Já existe um usuário com esse login.").build();
+                return ResponseUtils.conflitoComMotivo(MENSAGEMUSUARIO);
             }
             model.setLogin(usuarioDTO.getLogin());
             model.setSenha(BcryptUtil.bcryptHash(usuarioDTO.getSenha()));
@@ -101,56 +104,56 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
                 try{
                     repository.persist(model);
                 }catch (Exception ex){
-                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                    return ResponseUtils.serverError();
                 }
             }else{
-                return Response.status( Response.Status.NOT_FOUND.getStatusCode(),"Profissional não encontrado.").build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMPROFISSIONAL);
             }
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response delete(long id){
         UsuarioModel model = repository.findById(id);
         if(model != null){
             repository.delete(model);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response page(int page, int size){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<UsuarioModel> lista = repository.pageList(page,size);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<UsuarioModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
     public Response pageSort(int page, int size, String atributo, boolean asc){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<UsuarioModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<UsuarioModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
 }

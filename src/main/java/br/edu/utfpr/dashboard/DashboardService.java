@@ -10,6 +10,7 @@ import br.edu.utfpr.exame.ExameRepository;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueRepository;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.residente.ResidenteRepository;
+import br.edu.utfpr.utils.ResponseUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -106,9 +107,9 @@ public class DashboardService extends MontaGrafico {
 
 
         if(retorno.getDados().isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(retorno).build();
+        return ResponseUtils.okModel(retorno);
     }
 
 }

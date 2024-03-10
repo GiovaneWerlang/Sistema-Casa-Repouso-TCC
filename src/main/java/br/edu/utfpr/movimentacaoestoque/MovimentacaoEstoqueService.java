@@ -5,6 +5,7 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueRepository;
 import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,7 +19,9 @@ import java.util.Set;
 @ApplicationScoped
 public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoqueDTO> {
 
-    private static final String MENSAGEM = "Quantidade insuficiente.";
+    private static final String MENSAGEMQUANTIDADE = "Quantidade insuficiente.";
+    private static final String MENSAGEMTIPO = "Tipo não encontrado.";
+    private static final String MENSAGEMMEDICAMENTO = "Medicamento não encontrado.";
 
     private MovimentacaoEstoqueRepository repository;
     private MedicamentoEstoqueRepository medicamentoEstoqueRepository;
@@ -35,18 +38,18 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
     public Response getAll(){
         List<MovimentacaoEstoqueModel> lista = repository.listAll();
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
         MovimentacaoEstoqueModel model = repository.findById(id);
         if(model != null){
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response add(MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
@@ -63,7 +66,7 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
         if(medicamentoEstoqueRepository.findById(movimentacaoEstoqueDTO.getMedicamento()) != null){
             medicamentoEstoqueModel = medicamentoEstoqueRepository.findById(movimentacaoEstoqueDTO.getMedicamento());
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Medicamento não encontrado.").build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMMEDICAMENTO);
         }
         model.setMedicamento(medicamentoEstoqueModel);
 
@@ -78,19 +81,19 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
                     if(medicamentoEstoqueModel.getQtde() >= model.getQtde()){
                         medicamentoEstoqueModel.setQtde(medicamentoEstoqueModel.getQtde() - model.getQtde());
                     }else{
-                        return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), MENSAGEM).build();
+                        return ResponseUtils.notModifiedComMotivo(MENSAGEMQUANTIDADE);
                     }
                     break;
                 }
                 default:{
-                    return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Tipo não encontrado.").build();
+                    return ResponseUtils.notFoundComMotivo(MENSAGEMTIPO);
                 }
             }
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
+        return ResponseUtils.criado(model.getId());
     }
 
     public Response update(long id, MovimentacaoEstoqueDTO movimentacaoEstoqueDTO){
@@ -109,7 +112,7 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
             if(medicamentoEstoqueRepository.findById(movimentacaoEstoqueDTO.getMedicamento()) != null){
                 medicamentoEstoqueModel = medicamentoEstoqueRepository.findById(movimentacaoEstoqueDTO.getMedicamento());
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Medicamento não encontrado.").build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMMEDICAMENTO);
             }
 
             if(!qtdeAnterior.equals(movimentacaoEstoqueDTO.getQtde())){
@@ -120,7 +123,7 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
                         if(valorAtualizado >= 0) {
                             medicamentoEstoqueModel.setQtde(valorAtualizado);
                         }else{
-                            return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), MENSAGEM).build();
+                            return ResponseUtils.notModifiedComMotivo(MENSAGEMQUANTIDADE);
                         }
                         break;
                     }
@@ -129,31 +132,31 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
                         if(valorAtualizado >= 0){
                             medicamentoEstoqueModel.setQtde(valorAtualizado);
                         }else{
-                            return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), MENSAGEM).build();
+                            return ResponseUtils.notModifiedComMotivo(MENSAGEMQUANTIDADE);
                         }
                         break;
                     }
                     default:{
-                        return Response.status(Response.Status.NOT_MODIFIED.getStatusCode(), "Tipo não encontrado.").build();
+                        return ResponseUtils.notModifiedComMotivo(MENSAGEMTIPO);
                     }
                 }
             }
             model.setMedicamento(medicamentoEstoqueModel);
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response delete(long id){
         MovimentacaoEstoqueModel model = repository.findById(id);
         if(model != null){
             repository.delete(model);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     private boolean valorAumentou(Integer valorAnterior, Integer valorNovo){
@@ -180,32 +183,32 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
 
     public Response page(int page, int size){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<MovimentacaoEstoqueModel> lista = repository.pageList(page,size);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<MovimentacaoEstoqueModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
     public Response pageSort(int page, int size, String atributo, boolean asc){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<MovimentacaoEstoqueModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<MovimentacaoEstoqueModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
 }

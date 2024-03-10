@@ -5,6 +5,7 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -32,18 +33,18 @@ public class AtividadeMedicamentoResidenteService {
     public Response getAll(){
         List<AtividadeMedicamentoResidenteModel> lista = repository.findByTime();
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
         AtividadeMedicamentoResidenteModel model = repository.findById(id);
         if(model != null){
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response update(long id, AtividadeResidenteDTO atividadeResidenteDTO){
@@ -58,25 +59,25 @@ public class AtividadeMedicamentoResidenteService {
             model.setSituacao(atividadeResidenteDTO.getSituacao());
             model.setProfissional(profissionalModel);
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response pageSort(int page, int size, String atributo, boolean asc){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<AtividadeMedicamentoResidenteModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<AtividadeMedicamentoResidenteModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
 }

@@ -10,6 +10,7 @@ import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
 import br.edu.utfpr.utils.Copy;
 import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,7 +29,7 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
     private EnderecoRepository enderecoRepository;
     private EspecialidadeRepository especialidadeRepository;
     private Validator validator;
-    private final String MENSAGEMNAOENCONTRADA = "Especialidade não encontrada.";
+    private static final String MENSAGEMNAOENCONTRADA = "Especialidade não encontrada.";
 
     @Inject
     public ProfissionalService(ProfissionalRepository repository, EnderecoRepository enderecoRepository, EspecialidadeRepository especialidadeRepository, Validator validator){
@@ -41,18 +42,18 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
     public Response getAll(){
         List<ProfissionalModel> lista = repository.listAll(Sort.by("id"));
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
         ProfissionalModel model = repository.findById(id);
         if(model != null){
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response add(ProfissionalDTO profissionalDTO){
@@ -76,15 +77,15 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
             if (especialidadeRepository.findById(profissionalDTO.getEspecialidade()) != null) {
                 especialidadeModel = especialidadeRepository.findById(profissionalDTO.getEspecialidade());
             } else {
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMNAOENCONTRADA);
             }
             model.setEspecialidade(especialidadeModel);
         }else if(Funcao.MEDICO.equals(profissionalDTO.getFuncao())){
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
+            return ResponseUtils.notFoundComMotivo(MENSAGEMNAOENCONTRADA);
         }
         EnderecoDTO enderecoDTO = new EnderecoDTO();
         if(!Copy.copyProperties(enderecoDTO, profissionalDTO.getEndereco())){
-            return Response.status(418).build();
+            return ResponseUtils.porCodigo(418);
         }
 
         Set<ConstraintViolation<EnderecoDTO>> violationsEndereco = validator.validate(enderecoDTO);
@@ -93,13 +94,13 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
         }
         EnderecoModel enderecoModel = new EnderecoModel();
         if(!Copy.copyProperties(enderecoModel, enderecoDTO)){
-            return Response.status(418).build();
+            return ResponseUtils.porCodigo(418);
         }
 
         try{
             enderecoRepository.persist(enderecoModel);
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
         model.setEndereco(enderecoModel);
@@ -107,10 +108,10 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
         try{
             repository.persist(model);
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
+        return ResponseUtils.criado(model.getId());
     }
 
     public Response update(long id, ProfissionalDTO profissionalDTO){
@@ -137,15 +138,15 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
                 if (especialidadeRepository.findById(profissionalDTO.getEspecialidade()) != null) {
                     especialidadeModel = especialidadeRepository.findById(profissionalDTO.getEspecialidade());
                 } else {
-                    return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
+                    return ResponseUtils.notFoundComMotivo(MENSAGEMNAOENCONTRADA);
                 }
                 model.setEspecialidade(especialidadeModel);
             }else if(Funcao.MEDICO.equals(profissionalDTO.getFuncao())){
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), MENSAGEMNAOENCONTRADA).build();
+                return ResponseUtils.notFoundComMotivo(MENSAGEMNAOENCONTRADA);
             }
             EnderecoDTO enderecoDTO = new EnderecoDTO();
             if(!Copy.copyProperties(enderecoDTO, profissionalDTO.getEndereco())){
-                return Response.status(418).build();
+                return ResponseUtils.porCodigo(418);
             }
 
             Set<ConstraintViolation<EnderecoDTO>> violationsEndereco = validator.validate(enderecoDTO);
@@ -160,13 +161,13 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
             }
 
             if(!Copy.copyProperties(enderecoModel, profissionalDTO.getEndereco())){
-                return Response.status(418).build();
+                return ResponseUtils.porCodigo(418);
             }
 
             try{
                 enderecoRepository.persist(enderecoModel);
             }catch (Exception ex){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return ResponseUtils.serverError();
             }
 
             model.setEndereco(enderecoModel);
@@ -174,13 +175,13 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
             try{
                 repository.persist(model);
             }catch (Exception ex){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return ResponseUtils.serverError();
             }
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response delete(long id){
@@ -189,40 +190,40 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
             EnderecoModel enderecoModel = enderecoRepository.findById(model.getEndereco().getId());
             repository.delete(model);
             enderecoRepository.delete(enderecoModel);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response page(int page, int size){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<ProfissionalModel> lista = repository.pageList(page,size);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<ProfissionalModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
     public Response pageSort(int page, int size, String atributo, boolean asc){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<ProfissionalModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<ProfissionalModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
     public List<String> buscarEmails(){

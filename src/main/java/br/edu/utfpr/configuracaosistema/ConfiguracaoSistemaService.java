@@ -1,6 +1,7 @@
 package br.edu.utfpr.configuracaosistema;
 
 import br.edu.utfpr.erro.ResponseError;
+import br.edu.utfpr.utils.ResponseUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,10 +28,10 @@ public class ConfiguracaoSistemaService {
             model.setEmailSenha(null);
             model.setWhatsNumeroId(null);
             model.setWhatsToken(null);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response update(long id, ConfiguracaoSistemaDTO configuracaoSistemaDTO){
@@ -44,12 +45,12 @@ public class ConfiguracaoSistemaService {
 
             if(configuracaoSistemaDTO.isHabilitarEnvioEmail()){
                 if(configuracaoSistemaDTO.getEmailLogin() == null || configuracaoSistemaDTO.getEmailSenha() == null){
-                    return Response.status(422).build();
+                    return ResponseUtils.porCodigo(422);
                 }
             }
             if(configuracaoSistemaDTO.isHabilitarEnvioWhats()){
                 if(configuracaoSistemaDTO.getWhatsNumeroId() == null || configuracaoSistemaDTO.getWhatsToken() == null){
-                    return Response.status(422).build();
+                    return ResponseUtils.porCodigo(422);
                 }
             }
 
@@ -64,13 +65,13 @@ public class ConfiguracaoSistemaService {
             try{
                 repository.persist(model);
             }catch (Exception ex){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return ResponseUtils.serverError();
             }
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
 }

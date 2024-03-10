@@ -3,7 +3,6 @@ package br.edu.utfpr.consulta;
 import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteModel;
 import br.edu.utfpr.atividadesresidente.atividadeconsultaresidente.AtividadeConsultaResidenteRepository;
 import br.edu.utfpr.crud.CrudService;
-import br.edu.utfpr.enums.SituacaoAtividade;
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
@@ -12,6 +11,7 @@ import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
 import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -45,18 +45,18 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
     public Response getAll(){
         List<ConsultaModel> lista = repository.listAll();
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
         ConsultaModel model = repository.findById(id);
         if(model != null){
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response add(ConsultaDTO consultaDTO){
@@ -76,7 +76,7 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
         if(especialidadeRepository.findById(consultaDTO.getEspecialidade()) != null){
             especialidadeModel = especialidadeRepository.findById(consultaDTO.getEspecialidade());
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+            return ResponseUtils.notFoundComMotivo("Especialidade não encontrada.");
         }
         model.setEspecialidade(especialidadeModel);
 
@@ -84,7 +84,7 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
         if(profissionalRepository.findById(consultaDTO.getProfissional()) != null){
             profissionalModel = profissionalRepository.findById(consultaDTO.getProfissional());
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Profissional não encontrado(a).").build();
+            return ResponseUtils.notFoundComMotivo("Profissional não encontrado(a).");
         }
         model.setProfissional(profissionalModel);
 
@@ -92,7 +92,7 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
         if(residenteRepository.findById(consultaDTO.getResidente()) != null){
             residenteModel = residenteRepository.findById(consultaDTO.getResidente());
         }else{
-            return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Residente não encontrado(a).").build();
+            return ResponseUtils.notFoundComMotivo("Residente não encontrado(a).");
         }
         model.setResidente(residenteModel);
 
@@ -101,10 +101,10 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
             GerarAtividadeConsulta gerarAtividadeConsulta = new GerarAtividadeConsulta();
             atividadeConsultaResidenteRepository.persist(gerarAtividadeConsulta.gerar(model));
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
-        return Response.status(Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
+        return ResponseUtils.criado(model.getId());
     }
 
     public Response update(long id, ConsultaDTO consultaDTO){
@@ -124,7 +124,7 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
             if(especialidadeRepository.findById(consultaDTO.getEspecialidade()) != null){
                 especialidadeModel = especialidadeRepository.findById(consultaDTO.getEspecialidade());
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Especialidade não encontrada.").build();
+                return ResponseUtils.notFoundComMotivo("Especialidade não encontrada.");
             }
             model.setEspecialidade(especialidadeModel);
 
@@ -132,7 +132,7 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
             if(profissionalRepository.findById(consultaDTO.getProfissional()) != null){
                 profissionalModel = profissionalRepository.findById(consultaDTO.getProfissional());
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Profissional não encontrado(a).").build();
+                return ResponseUtils.notFoundComMotivo("Profissional não encontrado(a).");
             }
             model.setProfissional(profissionalModel);
 
@@ -140,14 +140,14 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
             if(residenteRepository.findById(consultaDTO.getResidente()) != null){
                 residenteModel = residenteRepository.findById(consultaDTO.getResidente());
             }else{
-                return Response.status(Response.Status.NOT_FOUND.getStatusCode(), "Residente não encontrado(a).").build();
+                return ResponseUtils.notFoundComMotivo("Residente não encontrado(a).");
             }
             model.setResidente(residenteModel);
 
             try{
                 repository.persist(model);
             }catch (Exception ex){
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return ResponseUtils.serverError();
             }
 
             if(atividadeConsultaResidenteRepository.findByConsultaId(model.getId()) != null){
@@ -159,54 +159,54 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
                 try{
                     atividadeConsultaResidenteRepository.persist(atividadeConsultaResidenteModel);
                 }catch (Exception ex){
-                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                    return ResponseUtils.serverError();
                 }
             }
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response delete(long id){
         ConsultaModel model = repository.findById(id);
         if(model != null){
             repository.delete(model);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response page(int page, int size){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<ConsultaModel> lista = repository.pageList(page,size);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<ConsultaModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
     public Response pageSort(int page, int size, String atributo, boolean asc){
         if(page < 0 || size < 1){
-            return Response.status(422).build();
+            return ResponseUtils.porCodigo(422);
         }
         List<ConsultaModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
         PageDTO<ConsultaModel> pageDTO = new PageDTO<>();
         pageDTO.setLista(lista);
         pageDTO.setPages(repository.pageCount(page,size));
         pageDTO.setTotal(repository.pageTotal(page,size));
-        return Response.ok(pageDTO).build();
+        return ResponseUtils.okPage(pageDTO);
     }
 
 }

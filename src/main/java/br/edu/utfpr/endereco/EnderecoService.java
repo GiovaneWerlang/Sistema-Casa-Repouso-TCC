@@ -2,6 +2,7 @@ package br.edu.utfpr.endereco;
 
 import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.Copy;
+import br.edu.utfpr.utils.ResponseUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -26,18 +27,18 @@ public class EnderecoService {
     public Response getAll(){
         List<EnderecoModel> lista = repository.listAll();
         if(lista.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return ResponseUtils.notFound();
         }
-        return Response.ok(lista).build();
+        return ResponseUtils.okListaModel(lista);
     }
 
     public Response findById(long id){
         EnderecoModel model = repository.findById(id);
         if(model != null){
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response add(EnderecoDTO enderecoDTO){
@@ -49,16 +50,16 @@ public class EnderecoService {
         EnderecoModel model = new EnderecoModel();
 
         if(!Copy.copyProperties(model, enderecoDTO)){
-            return Response.status(418).build();
+            return ResponseUtils.porCodigo(418);
         }
 
         try{
             repository.persist(model);
         }catch (Exception ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return ResponseUtils.serverError();
         }
 
-        return Response.status( Response.Status.CREATED.getStatusCode()).entity(model.getId()).build();
+        return ResponseUtils.criado(model.getId());
     }
 
     public Response update(long id, EnderecoDTO enderecoDTO){
@@ -70,22 +71,22 @@ public class EnderecoService {
         EnderecoModel model = repository.findById(id);
         if(model != null){
             if(!Copy.copyProperties(model, enderecoDTO)){
-                return Response.status(418).build();
+                return ResponseUtils.porCodigo(418);
             }
 
-            return Response.status(201).entity(model.getId()).build();
+            return ResponseUtils.atualizadoPorCodigo(model.getId());
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 
     public Response delete(long id){
         EnderecoModel model = repository.findById(id);
         if(model != null){
             repository.delete(model);
-            return Response.ok(model).build();
+            return ResponseUtils.okModel(model);
         }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return ResponseUtils.notFound();
     }
 }
