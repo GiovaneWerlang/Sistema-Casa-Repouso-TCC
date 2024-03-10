@@ -32,6 +32,9 @@ public class EntradaSaidaResourceTest {
     @TestHTTPResource("/entradasaida/page/0/1")
     URL pageURL;
 
+    @TestHTTPResource("/entradasaida/pagesort/0/1/id/true")
+    URL pageSortURL;
+
     @TestHTTPResource("/entradasaida/1")
     URL idURL;
 
@@ -219,7 +222,7 @@ public class EntradaSaidaResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(7)
+    @Order(8)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as entradasaidas paginadas com sucesso.")
@@ -229,7 +232,7 @@ public class EntradaSaidaResourceTest {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get(apiURL)
+                .get(pageURL)
                 .then()
                 .extract().response();
 
@@ -237,6 +240,23 @@ public class EntradaSaidaResourceTest {
     }
 
     @Order(9)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve buscar as entradasaidas paginadas e ordenadas com sucesso.")
+    public void pageSortEntradaSaidaTest(){
+
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(10)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a entradasaida com sucesso.")
@@ -253,7 +273,7 @@ public class EntradaSaidaResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a entradasaida.")
@@ -270,7 +290,7 @@ public class EntradaSaidaResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(11)
+    @Order(12)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as entradasaidas.")
@@ -292,11 +312,11 @@ public class EntradaSaidaResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(12)
+    @Order(13)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as entradasaidas paginadas.")
-    public void pagelEntradaSaidaErrorTest() throws SQLException {
+    public void pageEntradaSaidaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from entradasaida");
@@ -308,6 +328,28 @@ public class EntradaSaidaResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(14)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve falhar ao buscar as entradasaidas paginadas e ordenadas.")
+    public void pageSortEntradaSaidaErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from entradasaida");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
                 .then()
                 .extract().response();
 

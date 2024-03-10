@@ -35,6 +35,9 @@ public class ResidenteResourceTest {
     @TestHTTPResource("/residente/page/0/1")
     URL pageURL;
 
+    @TestHTTPResource("/residente/pagesort/0/1/id/true")
+    URL pageSortURL;
+
     @TestHTTPResource("/residente/1")
     URL idURL;
 
@@ -272,6 +275,22 @@ public class ResidenteResourceTest {
     @Order(9)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve buscar todos os residentes paginados e ordenados com sucesso.")
+    public void pageSortResidenteTest(){
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(10)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a residente com sucesso.")
     public void deleteResidenteTest(){
 
@@ -286,7 +305,7 @@ public class ResidenteResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a residente.")
@@ -303,7 +322,7 @@ public class ResidenteResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(11)
+    @Order(12)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os residentes.")
@@ -325,7 +344,7 @@ public class ResidenteResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(12)
+    @Order(13)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os residentes paginados.")
@@ -341,6 +360,28 @@ public class ResidenteResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(14)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve falhar ao buscar todos os residentes paginados e ordenados.")
+    public void pageSortResidenteErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from residente");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
                 .then()
                 .extract().response();
 

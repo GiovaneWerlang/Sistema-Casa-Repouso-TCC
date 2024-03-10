@@ -30,6 +30,9 @@ public class MedicamentoEstoqueResourceTest {
     @TestHTTPResource("/medicamentoestoque/page/0/1")
     URL pageURL;
 
+    @TestHTTPResource("/medicamentoestoque/pagesort/0/1/id/true")
+    URL pageSortURL;
+
     @TestHTTPResource("/medicamentoestoque/1")
     URL idURL;
 
@@ -190,7 +193,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os medicamentoestoques paginados com sucesso.")
-    public void pagelMedicamentoEstoqueTest(){
+    public void pageMedicamentoEstoqueTest(){
 
 
         Response response = given()
@@ -204,6 +207,23 @@ public class MedicamentoEstoqueResourceTest {
     }
 
     @Order(9)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve buscar os medicamentoestoques paginados e ordenados com sucesso.")
+    public void pageSortMedicamentoEstoqueTest(){
+
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(10)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id o medicamentoestoque com sucesso.")
@@ -220,7 +240,7 @@ public class MedicamentoEstoqueResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id o medicamentoestoque.")
@@ -237,7 +257,7 @@ public class MedicamentoEstoqueResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(11)
+    @Order(12)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os medicamentoestoques.")
@@ -259,7 +279,7 @@ public class MedicamentoEstoqueResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(12)
+    @Order(13)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os medicamentoestoques paginados.")
@@ -275,6 +295,28 @@ public class MedicamentoEstoqueResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(14)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve falhar ao buscar os medicamentoestoques paginados e ordenados.")
+    public void pageSortMedicamentoEstoqueErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from medicamentoestoque");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
                 .then()
                 .extract().response();
 

@@ -31,6 +31,9 @@ public class MovimentacaoEstoqueResourceTest {
     @TestHTTPResource("/movimentacaoestoque/page/0/1")
     URL pageURL;
 
+    @TestHTTPResource("/movimentacaoestoque/pagesort/0/1/id/true")
+    URL pageSortURL;
+
     @TestHTTPResource("/movimentacaoestoque/1")
     URL idURL;
 
@@ -197,7 +200,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as movimentações de estoque paginadas com sucesso.")
-    public void pagelMovimentacaoEstoqueTest(){
+    public void pageMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -210,6 +213,22 @@ public class MovimentacaoEstoqueResourceTest {
     }
 
     @Order(9)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve buscar as movimentações de estoque paginadas e ordenadas com sucesso.")
+    public void pageSortMovimentacaoEstoqueTest(){
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 200, response.getStatusCode());
+    }
+
+    @Order(10)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a movimentação de estoque com sucesso.")
@@ -225,7 +244,7 @@ public class MovimentacaoEstoqueResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(10)
+    @Order(11)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a movimentação de estoque.")
@@ -242,7 +261,7 @@ public class MovimentacaoEstoqueResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(11)
+    @Order(12)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas os movimentações de estoque.")
@@ -264,7 +283,7 @@ public class MovimentacaoEstoqueResourceTest {
         assertEquals( 404, response.getStatusCode());
     }
 
-    @Order(12)
+    @Order(13)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as movimentações de estoque paginadas.")
@@ -280,6 +299,28 @@ public class MovimentacaoEstoqueResourceTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .get(pageURL)
+                .then()
+                .extract().response();
+
+        assertEquals( 404, response.getStatusCode());
+    }
+
+    @Order(14)
+    @Test
+    @TestSecurity(user = "testUser", roles = {"ADMIN"})
+    @DisplayName("Deve falhar ao buscar as movimentações de estoque paginadas e ordenadas.")
+    public void pageSortMovimentacaoEstoqueErrorTest() throws SQLException {
+        DriverManager.registerDriver(new org.h2.Driver());
+        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
+        PreparedStatement stmt = c.prepareStatement("delete from movimentacaoestoque");
+        stmt.execute();
+        stmt.close();
+        c.close();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(pageSortURL)
                 .then()
                 .extract().response();
 
