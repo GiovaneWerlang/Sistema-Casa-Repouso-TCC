@@ -4,6 +4,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 public class Copy {
 
+    private Copy(){}
+
     public static boolean copyProperties(Object destino, Object origem){
         try{
             BeanUtils.copyProperties(destino, origem);

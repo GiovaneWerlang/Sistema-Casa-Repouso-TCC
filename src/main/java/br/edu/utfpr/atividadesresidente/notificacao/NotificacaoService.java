@@ -81,7 +81,7 @@ public class NotificacaoService {
         return sb.toString();
     }
 
-    private AcoesNotificacao montaAcoes(String titulo, String acao){
+    private AcoesNotificacao montaAcoes(){
         return AcoesNotificacao.builder()
                 .action("open")
                 .title("Abrir")

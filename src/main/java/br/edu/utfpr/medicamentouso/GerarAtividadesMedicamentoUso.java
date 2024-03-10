@@ -8,9 +8,9 @@ import java.util.List;
 
 public class GerarAtividadesMedicamentoUso {
 
-    private final int HORAS24 = 24;
-    private final int HORAS1 = 1;
-    private final int POSICAOINICIAL = 1;
+    private static final int HORAS24 = 24;
+    private static final int HORAS1 = 1;
+    private static final int POSICAOINICIAL = 1;
 
     public List<AtividadeMedicamentoResidenteModel> gerar(MedicamentoUsoModel model){
         List<AtividadeMedicamentoResidenteModel> atividades = new ArrayList<>();

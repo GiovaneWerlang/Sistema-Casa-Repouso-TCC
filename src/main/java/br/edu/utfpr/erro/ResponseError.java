@@ -22,7 +22,7 @@ public class ResponseError {
     public static ResponseError createFromViolations(Set<? extends ConstraintViolation<?>> violations){
 
         Collection<FieldError> errors = violations.stream().map(erro ->
-                new FieldError(erro.getMessage(), erro.getPropertyPath().toString())).collect(Collectors.toList());
+                new FieldError(erro.getMessage(), erro.getPropertyPath().toString())).toList();
 
         String message = "Erro de validação de campos.";
 

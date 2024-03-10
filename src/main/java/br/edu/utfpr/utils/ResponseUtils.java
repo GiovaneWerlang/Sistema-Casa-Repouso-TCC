@@ -8,6 +8,8 @@ import java.util.List;
 
 public class ResponseUtils {
 
+    private ResponseUtils(){}
+
     public static Response notFound(){
         return Response.status(Response.Status.NOT_FOUND).build();
     }

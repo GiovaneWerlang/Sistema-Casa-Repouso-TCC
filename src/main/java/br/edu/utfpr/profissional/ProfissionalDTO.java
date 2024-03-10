@@ -3,7 +3,6 @@ package br.edu.utfpr.profissional;
 import br.edu.utfpr.endereco.EnderecoModel;
 import br.edu.utfpr.enums.Funcao;
 import br.edu.utfpr.enums.Situacao;
-import br.edu.utfpr.especialidade.EspecialidadeModel;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
