@@ -21,7 +21,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class ResidenteService implements CrudService<ResidenteDTO> {
+public class ResidenteService extends CrudService<ResidenteModel, ResidenteDTO, ResidenteRepository> {
 
     private ResidenteRepository repository;
     private EnderecoRepository enderecoRepository;
@@ -29,6 +29,7 @@ public class ResidenteService implements CrudService<ResidenteDTO> {
 
     @Inject
     public ResidenteService(ResidenteRepository repository, EnderecoRepository enderecoRepository, Validator validator) {
+        super(repository, validator);
         this.repository = repository;
         this.enderecoRepository = enderecoRepository;
         this.validator = validator;
@@ -152,36 +153,6 @@ public class ResidenteService implements CrudService<ResidenteDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ResidenteModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ResidenteModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ResidenteModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ResidenteModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

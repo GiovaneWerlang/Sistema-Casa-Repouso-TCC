@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @ApplicationScoped
-public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoqueDTO> {
+public class MovimentacaoEstoqueService extends CrudService<MovimentacaoEstoqueModel, MovimentacaoEstoqueDTO, MovimentacaoEstoqueRepository> {
 
     private static final String MENSAGEMQUANTIDADE = "Quantidade insuficiente.";
     private static final String MENSAGEMTIPO = "Tipo não encontrado.";
@@ -31,6 +31,7 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
     @Inject
 
     public MovimentacaoEstoqueService(MovimentacaoEstoqueRepository repository, MedicamentoEstoqueRepository medicamentoEstoqueRepository, Validator validator) {
+        super(repository, validator);
         this.repository = repository;
         this.medicamentoEstoqueRepository = medicamentoEstoqueRepository;
         this.validator = validator;
@@ -180,36 +181,6 @@ public class MovimentacaoEstoqueService implements CrudService<MovimentacaoEstoq
             }
         }
         return valor;
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<MovimentacaoEstoqueModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<MovimentacaoEstoqueModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<MovimentacaoEstoqueModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<MovimentacaoEstoqueModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

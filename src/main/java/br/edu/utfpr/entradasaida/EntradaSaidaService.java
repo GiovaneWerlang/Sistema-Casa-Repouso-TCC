@@ -19,7 +19,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class EntradaSaidaService implements CrudService<EntradaSaidaDTO> {
+public class EntradaSaidaService extends CrudService<EntradaSaidaModel, EntradaSaidaDTO, EntradaSaidaRepository> {
 
     private static final String MENSAGEMDATAHORA = "Data de entrada e data da saída não podem ser ambas nulas.";
     private EntradaSaidaRepository repository;
@@ -28,6 +28,7 @@ public class EntradaSaidaService implements CrudService<EntradaSaidaDTO> {
 
     @Inject
     public EntradaSaidaService(EntradaSaidaRepository repository, ResidenteRepository residenteRepository, Validator validator){
+        super(repository, validator);
         this.repository = repository;
         this.residenteRepository = residenteRepository;
         this.validator = validator;
@@ -114,36 +115,6 @@ public class EntradaSaidaService implements CrudService<EntradaSaidaDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<EntradaSaidaModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<EntradaSaidaModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<EntradaSaidaModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<EntradaSaidaModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

@@ -17,13 +17,14 @@ import java.util.Objects;
 import java.util.Set;
 
 @ApplicationScoped
-public class AtividadeLudicaService implements CrudService<AtividadeLudicaDTO> {
+public class AtividadeLudicaService extends CrudService<AtividadeLudicaModel, AtividadeLudicaDTO, AtividadeLudicaRepository> {
 
     private AtividadeLudicaRepository repository;
     private Validator validator;
 
     @Inject
     public AtividadeLudicaService(AtividadeLudicaRepository repository, Validator validator) {
+        super(repository, validator);
         this.repository = repository;
         this.validator = validator;
     }
@@ -92,36 +93,6 @@ public class AtividadeLudicaService implements CrudService<AtividadeLudicaDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<AtividadeLudicaModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<AtividadeLudicaModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<AtividadeLudicaModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<AtividadeLudicaModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

@@ -31,9 +31,6 @@ public class MedicamentoUsoResourceTest {
     @TestHTTPResource("/medicamentouso")
     URL apiURL;
 
-    @TestHTTPResource("/medicamentouso/page/0/1")
-    URL pageURL;
-
     @TestHTTPResource("/medicamentouso/pagesort/0/1/id/true")
     URL pageSortURL;
 
@@ -242,23 +239,6 @@ public class MedicamentoUsoResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(8)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve buscar os medicamento usos paginados com sucesso.")
-    public void pageMedicamentoUsoTest(){
-
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 200, response.getStatusCode());
-    }
-
     @Order(9)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
@@ -338,38 +318,6 @@ public class MedicamentoUsoResourceTest {
                 .extract().response();
 
         assertEquals( 404, response.getStatusCode());
-    }
-
-    @Order(13)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao buscar os medicamento usos paginados.")
-    public void pageMedicamentoUsoErrorTest() throws SQLException {
-        DriverManager.registerDriver(new org.h2.Driver());
-        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("DELETE FROM ATIVIDADEMEDICAMENTORESIDENTE");
-        stmt.execute();
-        stmt.close();
-        c.close();
-
-        DriverManager.registerDriver(new org.h2.Driver());
-        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt2 = c2.prepareStatement("delete from medicamentouso");
-        stmt2.execute();
-        stmt2.close();
-        c2.close();
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        response.then().assertThat().statusCode(200)
-                .body("lista", equalTo(Collections.emptyList()))
-                .body("pages", equalTo(1))
-                .body("total", equalTo(0));
     }
 
     @Order(13)

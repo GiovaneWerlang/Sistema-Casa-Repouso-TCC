@@ -29,9 +29,6 @@ public class MedicamentoEstoqueResourceTest {
     @TestHTTPResource("/medicamentoestoque")
     URL apiURL;
 
-    @TestHTTPResource("/medicamentoestoque/page/0/1")
-    URL pageURL;
-
     @TestHTTPResource("/medicamentoestoque/pagesort/0/1/id/true")
     URL pageSortURL;
 
@@ -191,23 +188,6 @@ public class MedicamentoEstoqueResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(8)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve buscar os medicamentoestoques paginados com sucesso.")
-    public void pageMedicamentoEstoqueTest(){
-
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 200, response.getStatusCode());
-    }
-
     @Order(9)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
@@ -279,31 +259,6 @@ public class MedicamentoEstoqueResourceTest {
                 .extract().response();
 
         assertEquals( 404, response.getStatusCode());
-    }
-
-    @Order(13)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao buscar os medicamentoestoques paginados.")
-    public void pageMedicamentoEstoqueErrorTest() throws SQLException {
-        DriverManager.registerDriver(new org.h2.Driver());
-        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from medicamentoestoque");
-        stmt.execute();
-        stmt.close();
-        c.close();
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        response.then().assertThat().statusCode(200)
-                .body("lista", equalTo(Collections.emptyList()))
-                .body("pages", equalTo(1))
-                .body("total", equalTo(0));
     }
 
     @Order(14)

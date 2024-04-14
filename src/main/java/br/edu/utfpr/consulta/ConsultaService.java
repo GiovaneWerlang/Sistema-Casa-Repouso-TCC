@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @ApplicationScoped
-public class ConsultaService implements CrudService<ConsultaDTO> {
+public class ConsultaService extends CrudService<ConsultaModel, ConsultaDTO, ConsultaRepository> {
 
     private ConsultaRepository repository;
     private ProfissionalRepository profissionalRepository;
@@ -35,6 +35,7 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
 
     @Inject
     public ConsultaService(ConsultaRepository repository, ProfissionalRepository profissionalRepository, ResidenteRepository residenteRepository, EspecialidadeRepository especialidadeRepository, Validator validator,AtividadeConsultaResidenteRepository atividadeConsultaResidenteRepository){
+        super(repository, validator);
         this.repository = repository;
         this.profissionalRepository = profissionalRepository;
         this.residenteRepository = residenteRepository;
@@ -178,36 +179,6 @@ public class ConsultaService implements CrudService<ConsultaDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ConsultaModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ConsultaModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ConsultaModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ConsultaModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

@@ -24,7 +24,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class ProfissionalService implements CrudService<ProfissionalDTO> {
+public class ProfissionalService extends CrudService<ProfissionalModel, ProfissionalDTO, ProfissionalRepository> {
 
     private ProfissionalRepository repository;
     private EnderecoRepository enderecoRepository;
@@ -34,6 +34,7 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
 
     @Inject
     public ProfissionalService(ProfissionalRepository repository, EnderecoRepository enderecoRepository, EspecialidadeRepository especialidadeRepository, Validator validator){
+        super(repository, validator);
         this.repository = repository;
         this.enderecoRepository = enderecoRepository;
         this.especialidadeRepository = especialidadeRepository;
@@ -195,36 +196,6 @@ public class ProfissionalService implements CrudService<ProfissionalDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ProfissionalModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ProfissionalModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ProfissionalModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ProfissionalModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
     public List<String> buscarEmails(){

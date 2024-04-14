@@ -67,15 +67,8 @@ public class UsuarioResource implements CrudResource<UsuarioDTO> {
 
     @RolesAllowed({"ADMIN","FUNCIONARIO"})
     @GET
-    @Path("page/{page}/{size}")
-    public Response page(@PathParam("page") int page, @PathParam("size") int size){
-        return service.page(page,size);
-    }
-
-    @RolesAllowed({"ADMIN","FUNCIONARIO"})
-    @GET
     @Path("pagesort/{page}/{size}/{sort}/{asc}")
-    public Response page(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){
+    public Response pageSort(@PathParam("page") int page, @PathParam("size") int size,@PathParam("sort") String sort,@PathParam("asc") boolean asc){
         return service.pageSort(page,size,sort,asc);
     }
 

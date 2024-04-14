@@ -1,28 +1,25 @@
 package br.edu.utfpr.especialidade;
 
-import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.crud.CrudService;
-import br.edu.utfpr.utils.PageDTO;
+import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @ApplicationScoped
-public class EspecialidadeService implements CrudService<EspecialidadeDTO> {
+public class EspecialidadeService extends CrudService<EspecialidadeModel, EspecialidadeDTO, EspecialidadeRepository> {
 
     private EspecialidadeRepository repository;
     private Validator validator;
 
-    @Inject
     public EspecialidadeService(EspecialidadeRepository repository, Validator validator) {
+        super(repository, validator);
         this.repository = repository;
         this.validator = validator;
     }
@@ -86,36 +83,6 @@ public class EspecialidadeService implements CrudService<EspecialidadeDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<EspecialidadeModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<EspecialidadeModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<EspecialidadeModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<EspecialidadeModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

@@ -17,6 +17,6 @@ public interface CrudResource<T> {
 
     Response delete(@PathParam("id") long id);
 
-    Response page(@PathParam("page") int page, @PathParam("size") int size);
+    Response pageSort(@PathParam("page") int page, @PathParam("size") int size, @PathParam("sort") String sort,@PathParam("asc") boolean asc);
 
 }

@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @ApplicationScoped
-public class ExameService implements CrudService<ExameDTO> {
+public class ExameService extends CrudService<ExameModel, ExameDTO, ExameRepository> {
 
     private static final String MENSAGEMESPECIALIDADE = "Especialidade não encontrada.";
     private static final String MENSAGEMPROFISSIONAL = "Profissional não encontrado(a).";
@@ -38,6 +38,7 @@ public class ExameService implements CrudService<ExameDTO> {
 
     @Inject
     public ExameService(ExameRepository repository, ProfissionalRepository profissionalRepository, ResidenteRepository residenteRepository, EspecialidadeRepository especialidadeRepository, Validator validator, AtividadeExameResidenteRepository atividadeExameResidenteRepository){
+        super(repository, validator);
         this.repository = repository;
         this.profissionalRepository = profissionalRepository;
         this.residenteRepository = residenteRepository;
@@ -180,36 +181,6 @@ public class ExameService implements CrudService<ExameDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ExameModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ExameModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<ExameModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<ExameModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

@@ -20,7 +20,7 @@ import java.util.Set;
 
 
 @ApplicationScoped
-public class UsuarioService implements CrudService<UsuarioDTO> {
+public class UsuarioService extends CrudService<UsuarioModel, UsuarioDTO, UsuarioRepository> {
     private static final String MENSAGEMPROFISSIONAL = "Profissional não encontrado.";
     private static final String MENSAGEMUSUARIO = "Já existe um usuário com esse login.";
 
@@ -30,6 +30,7 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
 
     @Inject
     public UsuarioService(UsuarioRepository repository, ProfissionalRepository profissionalRepository, Validator validator){
+        super(repository, validator);
         this.repository = repository;
         this.profissionalRepository = profissionalRepository;
         this.validator = validator;
@@ -124,36 +125,6 @@ public class UsuarioService implements CrudService<UsuarioDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<UsuarioModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<UsuarioModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<UsuarioModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<UsuarioModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

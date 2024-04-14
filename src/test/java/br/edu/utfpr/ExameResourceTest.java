@@ -31,9 +31,6 @@ public class ExameResourceTest {
     @TestHTTPResource("/exame")
     URL apiURL;
 
-    @TestHTTPResource("/exame/page/0/1")
-    URL pageURL;
-
     @TestHTTPResource("/exame/pagesort/0/1/id/true")
     URL pageSortURL;
 
@@ -343,22 +340,6 @@ public class ExameResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(8)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve buscar os exames paginados com sucesso.")
-    public void pageExameTest(){
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 200, response.getStatusCode());
-    }
-
     @Order(9)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
@@ -436,38 +417,6 @@ public class ExameResourceTest {
                 .extract().response();
 
         assertEquals( 404, response.getStatusCode());
-    }
-
-    @Order(13)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao buscar os exames paginados.")
-    public void pageExameErrorTest() throws SQLException {
-        DriverManager.registerDriver(new org.h2.Driver());
-
-        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt = c.prepareStatement("delete from atividadeexameresidente");
-        stmt.execute();
-        stmt.close();
-        c.close();
-
-        Connection c2 = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt2 = c2.prepareStatement("delete from exame");
-        stmt2.execute();
-        stmt2.close();
-        c2.close();
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        response.then().assertThat().statusCode(200)
-                .body("lista", equalTo(Collections.emptyList()))
-                .body("pages", equalTo(1))
-                .body("total", equalTo(0));
     }
 
     @Order(14)

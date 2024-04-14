@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @ApplicationScoped
-public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
+public class MedicamentoUsoService extends CrudService<MedicamentoUsoModel, MedicamentoUsoDTO, MedicamentoUsoRepository> {
 
     private static final String MENSAGEMRESIDENTE = "Residente não encontrado(a).";
     private static final String MENSAGEMMEDICAMENTO = "Medicamento não encontrado(a).";
@@ -41,6 +41,7 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
             MedicamentoEstoqueRepository medicamentoEstoqueRepository,
             AtividadeMedicamentoResidenteRepository atividadeMedicamentoResidenteRepository,
             Validator validator) {
+        super(repository, validator);
         this.repository = repository;
         this.residenteRepository = residenteRepository;
         this.medicamentoEstoqueRepository = medicamentoEstoqueRepository;
@@ -166,36 +167,6 @@ public class MedicamentoUsoService implements CrudService<MedicamentoUsoDTO> {
         }
 
         return ResponseUtils.notFound();
-    }
-
-    public Response page(int page, int size){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<MedicamentoUsoModel> lista = repository.pageList(page,size);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<MedicamentoUsoModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
-    }
-
-    public Response pageSort(int page, int size, String atributo, boolean asc){
-        if(page < 0 || size < 1){
-            return ResponseUtils.porCodigo(422);
-        }
-        List<MedicamentoUsoModel> lista = repository.pageListSort(page,size,atributo,asc ? Sort.Direction.Ascending : Sort.Direction.Descending);
-        if(Objects.isNull(lista)){
-            return ResponseUtils.notFound();
-        }
-        PageDTO<MedicamentoUsoModel> pageDTO = new PageDTO<>();
-        pageDTO.setLista(lista);
-        pageDTO.setPages(repository.pageCount(page,size));
-        pageDTO.setTotal(repository.pageTotal(page,size));
-        return ResponseUtils.okPage(pageDTO);
     }
 
 }

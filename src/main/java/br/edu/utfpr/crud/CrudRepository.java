@@ -7,10 +7,6 @@ import java.util.List;
 
 public abstract class CrudRepository<T> implements PanacheRepository<T> {
 
-    public List<T> pageList(int page, int size){
-        return findAll(Sort.by("id")).page(page, size).list();
-    }
-
     public List<T> pageListSort(int page, int size, String atributo, Sort.Direction direction){
         return findAll(Sort.by(atributo, direction)).page(page, size).list();
     }

@@ -33,9 +33,6 @@ public class ProfissionalResourceTest {
     @TestHTTPResource("/profissional")
     URL apiURL;
 
-    @TestHTTPResource("/profissional/page/0/1")
-    URL pageURL;
-
     @TestHTTPResource("/profissional/pagesort/0/1/id/true")
     URL pageSortURL;
 
@@ -280,23 +277,6 @@ public class ProfissionalResourceTest {
         assertEquals( 200, response.getStatusCode());
     }
 
-    @Order(8)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve buscar todos os profissionais paginados com sucesso.")
-    public void pageProfissionalTest(){
-
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        assertEquals( 200, response.getStatusCode());
-    }
-
     @Order(9)
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
@@ -371,34 +351,6 @@ public class ProfissionalResourceTest {
                 .extract().response();
 
         assertEquals( 404, response.getStatusCode());
-    }
-
-    @Order(13)
-    @Test
-    @TestSecurity(user = "testUser", roles = {"ADMIN"})
-    @DisplayName("Deve falhar ao buscar os profissionais paginados.")
-    public void pageProfissionalErrorTest() throws SQLException {
-        DriverManager.registerDriver(new org.h2.Driver());
-        Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
-        PreparedStatement stmt1 = c.prepareStatement("delete from usuario");
-        stmt1.execute();
-        stmt1.close();
-        PreparedStatement stmt2 = c.prepareStatement("delete from profissional");
-        stmt2.execute();
-        stmt2.close();
-        c.close();
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .when()
-                .get(pageURL)
-                .then()
-                .extract().response();
-
-        response.then().assertThat().statusCode(200)
-                .body("lista", equalTo(Collections.emptyList()))
-                .body("pages", equalTo(1))
-                .body("total", equalTo(0));
     }
 
     @Order(14)
