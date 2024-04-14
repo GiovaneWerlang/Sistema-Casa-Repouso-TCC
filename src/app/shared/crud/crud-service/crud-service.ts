@@ -21,13 +21,6 @@ export class CrudService<T> {
         return this.http.get<T[]>(`${this.API_URL}${this.T_URL}`);
     }
 
-    page(page:number, size: number): Observable<any[]> {
-        
-        return this.http.get<T[]>(`${this.API_URL}${this.T_URL}/page/${page}/${size}`).pipe(
-            catchError(this.handleError)
-        );
-    }
-
     pagesort(page:number, size: number, sort:string, asc:boolean): Observable<any[]> {
         
         return this.http.get<T[]>(`${this.API_URL}${this.T_URL}/pagesort/${page}/${size}/${sort}/${asc}`).pipe(
