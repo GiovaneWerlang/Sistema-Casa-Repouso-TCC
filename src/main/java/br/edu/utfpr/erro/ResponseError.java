@@ -29,5 +29,4 @@ public class ResponseError {
         return new ResponseError(message, errors);
     }
 
-
 }

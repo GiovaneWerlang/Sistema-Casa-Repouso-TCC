@@ -30,7 +30,7 @@ public class AutenticacaoService {
                 return ResponseUtils.notAuth();
             }
             Security security = new Security();
-            Instant instant = Instant.now().plus(7, ChronoUnit.DAYS);
+            Instant instant = Instant.now().plus(1, ChronoUnit.HOURS);
             UsuarioDados usuarioDados = new UsuarioDados(
                     security.token(
                             model.getProfissional().getFuncao(),

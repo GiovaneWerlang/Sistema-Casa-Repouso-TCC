@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AtividadeDashDTO {
 
-
     private long id;
     private String descricao;
     private LocalDateTime dataHora;

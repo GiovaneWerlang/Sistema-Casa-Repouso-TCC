@@ -105,7 +105,6 @@ public class DashboardService extends MontaGrafico {
         retorno.setDados(listaDados);
         retorno.setAtividades(listaAtividades);
 
-
         if(retorno.getDados().isEmpty()){
             return ResponseUtils.notFound();
         }
