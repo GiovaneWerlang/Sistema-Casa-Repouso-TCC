@@ -38,7 +38,8 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from "ngx-mask";
         PipesModule,
         InputMaskModule,
         KeyFilterModule,
-        NgxMaskDirective, NgxMaskPipe,
+        NgxMaskDirective, 
+        NgxMaskPipe,
         ResidenteRoutingModule,
     ],
     providers: [provideNgxMask()]

@@ -8,9 +8,8 @@ import { Translate } from 'src/app/shared/translate/translate';
 import { AutenticacaoService } from '../login/service/autenticacao.service';
 import { Subscription, interval } from 'rxjs';
 import { SwPush } from '@angular/service-worker';
-import { MensagemSubscriptionService } from '../atividadesresidente/notificacoes/service/mensagemsubscription.service';
 import { Router } from '@angular/router';
-import { DadosnotificacoesService } from './services/dadosnotificacoes.service';
+import { DadosNotificacoesService } from './services/dadosnotificacoes.service';
 
 @Component({
     selector: 'app-root',
@@ -45,9 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
         private _autenticacaoService: AutenticacaoService,
         private swPush: SwPush,
         private notificacoesService: NotificacoesService,
-        private mensagemSubscriptionService: MensagemSubscriptionService,
         private _router: Router,
-        private dadosnotificacoesService:DadosnotificacoesService
+        private dadosNotificacoesService:DadosNotificacoesService
         ) {
         config.setTranslation(Translate);
         this.monitoraBreakspoints(breakpointService);
@@ -65,9 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const source = interval(1000 * 60);
         const subscribe = source.subscribe(val => {
             if(this.inscricao){
-                this.notificacoesService.notificarUM(this.inscricao).subscribe((res) => {console.log('um',res); });
-            }else{
-                this.notificacoesService.notificarTodos().subscribe((not) => console.log('todos',not));
+                this.notificacoesService.notificar(this.inscricao).subscribe((res) => {console.log('um',res); });
             }
         });
     }
@@ -88,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     monitoraRecebeNotificacoes(){
-        this.receberSubscription = this.dadosnotificacoesService.getReceberNotificacoes().subscribe((receber) => {
+        this.receberSubscription = this.dadosNotificacoesService.getReceberNotificacoes().subscribe((receber) => {
             console.log('receber', receber);
             if(receber){
                 this.requisitarPermissao();
@@ -153,10 +149,6 @@ export class AppComponent implements OnInit, OnDestroy {
                     pushSubscription.keys.auth
                 );
                 this.inscricao = mensagemSubscription;
-
-                this.mensagemSubscriptionService.subscribe(mensagemSubscription).subscribe((res) => {
-                    console.log('inscricao banco',res);
-                })
             })
             .catch((err) => console.log('erro', err));
     }
@@ -164,9 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
     cancelarInscricao() {
         this.swPush.unsubscribe().catch((reason:any) => console.log('cancelar sw', reason));
         if (this.inscricao)
-            this.mensagemSubscriptionService.unsubscribe(this.inscricao).subscribe((res) => {
-                console.log('cancelar banco', res);
-            });
+            this.inscricao = undefined;
     }
 
     ngOnDestroy(): void {

@@ -14,7 +14,9 @@
                     <td style="background-color: #fdfdfd;">{{ atividade?.dataHora | date:"dd/MM/yyyy HH:mm" }}</td>
                     <td style="background-color: #fdfdfd;">
                         <div class="flex gap-1">
-                            <p-button class="tablebutton" icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="secondary" (click)="edit(atividade)" aria-label="Editar" ariaLabel="Editar"></p-button>
+                            <p-button class="tablebutton" icon="pi pi-pencil" [rounded]="true" [outlined]="true"
+                                severity="secondary" (click)="edit(atividade)" aria-label="Editar"
+                                ariaLabel="Editar"></p-button>
                         </div>
                     </td>
                 </tr>
@@ -26,11 +28,12 @@
             </ng-template>
         </p-table>
     </div>
-    <div *ngFor="let dado of dados; trackBy:trackByTitle" class="col-8 sm:col-8 md:col-12 lg:col-5 xl:col-5 chart-container pt-0 text-center">
+    <div *ngFor="let dado of dados; trackBy:trackByTitle"
+        class="col-8 sm:col-8 md:col-12 lg:col-5 xl:col-5 chart-container pt-0 text-center">
         <p class="font-bold text-blue-600">{{dado?.titulo}}</p>
         <p-chart type="doughnut" *ngIf="dado?.datasets" [data]="dado" [options]="options" [responsive]="true"></p-chart>
         <div *ngIf="!dado?.datasets" class="flex justify-content-center align-items-center">
-            <span class="pi pi-info-circle flex flex-column font-bold">Não há informações para exibir</span>            
+            <span class="pi pi-info-circle flex flex-column font-bold">Não há informações para exibir</span>
         </div>
     </div>
 </div>

@@ -23,14 +23,8 @@ export class NotificacoesService {
         return this.API_URL;
     }
 
-    notificarTodos(): Observable<any> {
-        return this.http.get(`${this.API_URL}${this.T_URL}/notificar`).pipe(
-            catchError(this.handleError)
-        );
-    }
-
-    notificarUM(subscrition:MensagemSubscription): Observable<any> {
-        return this.http.post(`${this.API_URL}${this.T_URL}/notificarum`, subscrition).pipe(
+    notificar(subscrition:MensagemSubscription): Observable<any> {
+        return this.http.post(`${this.API_URL}${this.T_URL}/notificar`, subscrition).pipe(
             catchError(this.handleError)
         );
     }

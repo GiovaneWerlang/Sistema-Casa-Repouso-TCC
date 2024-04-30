@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DadosnotificacoesService implements OnDestroy {
+export class DadosNotificacoesService implements OnDestroy {
 
   private receberNotificacoes$: Subject<boolean>;
 

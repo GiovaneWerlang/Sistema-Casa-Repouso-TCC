@@ -5,7 +5,7 @@ import { BreakpointserviceService } from '../app-root/services/breakpointservice
 import { BreakpointState, Breakpoints } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 import { ConfirmationService } from "primeng/api";
-import { DadosnotificacoesService } from '../app-root/services/dadosnotificacoes.service';
+import { DadosNotificacoesService } from '../app-root/services/dadosnotificacoes.service';
 
 @Component({
   selector: 'app-header',
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private breakpointService: BreakpointserviceService,
     private autenticacaoService: AutenticacaoService,
     private confirmationService: ConfirmationService,
-    private dadosnotificacoesService:DadosnotificacoesService
+    private dadosNotificacoesService:DadosNotificacoesService
   ) {
     this.monitoraBreakspoints(breakpointService);
     this.usuarioSub = this.autenticacaoService.dadoUsuario.subscribe(usuario => {
@@ -86,11 +86,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   criarInscricao(){
-    this.dadosnotificacoesService.setReceberNotificacoes(true);
+    this.dadosNotificacoesService.setReceberNotificacoes(true);
   }
 
   cancelarInscricao() {
-    this.dadosnotificacoesService.setReceberNotificacoes(false);
+    this.dadosNotificacoesService.setReceberNotificacoes(false);
   }
 
   ngOnDestroy() {
