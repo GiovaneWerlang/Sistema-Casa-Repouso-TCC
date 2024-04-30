@@ -1,8 +1,6 @@
 package br.edu.utfpr.atividadesresidente.notificacao;
 
-import br.edu.utfpr.atividadesresidente.mensagemsubscription.MensagemSubscription;
 import br.edu.utfpr.atividadesresidente.mensagemsubscription.MensagemSubscriptionDTO;
-import br.edu.utfpr.atividadesresidente.mensagemsubscription.MensagemSubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
@@ -27,7 +25,6 @@ import org.jose4j.lang.JoseException;
 public class NotificacaoResource {
 
     private NotificacaoService notificacaoService;
-    private MensagemSubscriptionService subscriptionService;
 
     private static PushService pushService = new PushService();
 
@@ -35,47 +32,14 @@ public class NotificacaoResource {
 
     @Inject
     public NotificacaoResource(NotificacaoService notificacaoService,
-                               MensagemSubscriptionService subscriptionService,
                                ObjectMapper objectMapper
     ) {
         this.notificacaoService = notificacaoService;
-        this.subscriptionService = subscriptionService;
         this.objectMapper = objectMapper;
     }
 
-    @GET
-    @Path("/notificar")
-    public void notificarTodos() {
-
-        List<MensagemNotificacao> mensagens = this.notificacaoService.getMensagens();
-        List<MensagemSubscription> subscriptions = this.subscriptionService.buscarTodos();
-
-        try {
-            if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
-                Security.addProvider(new BouncyCastleProvider());
-            }
-            pushService.setPublicKey("BPtfmbAFQwggTeQKEH5pGLcP9qAC7ATbpvbxKTaIPaHVMhIoM4U_z-e-gDxIHiSUcEd41SVu-kq99frpGSTbBo0");
-            pushService.setPrivateKey("RLM5YVZ2Co9a4eh8EorZRX-BKlaSsLLBjd_s2fdf2a4");
-            for(MensagemNotificacao mensagem : mensagens) {
-                for (MensagemSubscription subscription : subscriptions) {
-
-                    Notification notification = new Notification(
-                            subscription.getEndpoint(),
-                            subscription.getP256dh(),
-                            subscription.getAuth(),
-                            objectMapper.writeValueAsBytes(mensagem));
-
-                    pushService.send(notification);
-                }
-            }
-        } catch (GeneralSecurityException | IOException | JoseException | ExecutionException
-                | InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-
     @POST
-    @Path("/notificarum")
+    @Path("/notificar")
     public void notificar(MensagemSubscriptionDTO subscription) {
 
         List<MensagemNotificacao> mensagens = this.notificacaoService.getMensagens();
