@@ -20,14 +20,13 @@ public class EnvioWhatsapp {
                     .uri(new URI("https://graph.facebook.com/v13.0/" + configuracaoSistemaModel.getWhatsNumeroId() + "/messages"))
                     .header("Authorization", "Bearer " +  configuracaoSistemaModel.getWhatsToken())
                     .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString("{ \"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \" 55" + telefoneProfissional + "\", \"type\": \"text\", \"text\": { \"preview_url\": false, \"body\": \"" + texto + "\" } }"))
+                    .POST(HttpRequest.BodyPublishers.ofString("{ \"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \" 55"
+                            + telefoneProfissional + "\", \"type\": \"text\", \"text\": { \"preview_url\": false, \"body\": \"" + texto + "\" } }"))
                     .build();
             HttpClient http = HttpClient.newHttpClient();
             HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
     }
-
 }

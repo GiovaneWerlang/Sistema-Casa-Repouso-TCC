@@ -28,7 +28,9 @@ public class EnvioEmail {
                 new jakarta.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(configuracaoSistema.getEmailLogin(), configuracaoSistema.getEmailSenha());
+                        return new PasswordAuthentication(
+                                configuracaoSistema.getEmailLogin(),
+                                configuracaoSistema.getEmailSenha());
                     }
                 });
 
@@ -44,7 +46,5 @@ public class EnvioEmail {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
     }
-
 }
