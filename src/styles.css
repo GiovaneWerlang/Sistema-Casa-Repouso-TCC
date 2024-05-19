@@ -32,13 +32,13 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    width: 90%;
+    width: 100%;
     margin: auto;
 }
 
-.appmenu .p-menu {
+.app-menu .p-menu {
     border: none;
-    width: 100%;
+    width: 100% !important;
 }
 
 .p-menuitem {
