@@ -71,11 +71,11 @@ public class ConfiguracaoSistemaService {
     }
 
     private boolean validaCamposEmailInvalidos(ConfiguracaoSistemaDTO configuracaoSistemaDTO){
-        return configuracaoSistemaDTO.isHabilitarEnvioEmail() && configuracaoSistemaDTO.getEmailLogin() == null || configuracaoSistemaDTO.getEmailSenha() == null;
+        return configuracaoSistemaDTO.isHabilitarEnvioEmail() && (configuracaoSistemaDTO.getEmailLogin() == null || configuracaoSistemaDTO.getEmailSenha() == null);
     }
 
     private boolean validaCamposWhatsappInvalidos(ConfiguracaoSistemaDTO configuracaoSistemaDTO){
-        return configuracaoSistemaDTO.isHabilitarEnvioWhats() && configuracaoSistemaDTO.getWhatsNumeroId() == null || configuracaoSistemaDTO.getWhatsToken() == null;
+        return configuracaoSistemaDTO.isHabilitarEnvioWhats() && (configuracaoSistemaDTO.getWhatsNumeroId() == null || configuracaoSistemaDTO.getWhatsToken() == null);
     }
 
 }
