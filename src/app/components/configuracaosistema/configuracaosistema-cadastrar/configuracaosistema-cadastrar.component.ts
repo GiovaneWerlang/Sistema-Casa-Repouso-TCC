@@ -20,7 +20,7 @@ export class ConfiguracaosistemaCadastrarComponent {
     private toastService: ToastService
   ) {
     this.form = this.formBuilder.group({
-      id: [null],
+      id: [1],
       habilitarEnvioEmail: [false, Validators.required],
       emailLogin: ['', Validators.maxLength(255)],
       emailSenha: ['', Validators.maxLength(255)],
