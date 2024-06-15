@@ -6,13 +6,16 @@
         <form [formGroup]="form" (submit)="salvar()" class="flex flex-column card-body">
             <div class="flex flex-row flex-wrap">
                 <div class="col-12 flex flex-column">
-                    <p-checkbox [binary]="true" label="Habilitar o envio de e-mail:"  inputId="habilitarEnvioEmail" name="habilitarEnvioEmail" formControlName="habilitarEnvioEmail" ></p-checkbox>
+                    <div class="col-12 flex gap-1 p-0 align-items-center">
+                        <p-checkbox [binary]="true" inputId="habilitarEnvioEmail" name="habilitarEnvioEmail" formControlName="habilitarEnvioEmail"></p-checkbox>
+                        <label for="habilitarEnvioEmail">Habilitar o envio de e-mail <span class="text-red-500">*</span></label>
+                    </div>
                     <div *ngIf="form.controls['habilitarEnvioEmail']?.invalid && (form.controls['habilitarEnvioEmail']?.dirty || form.controls['habilitarEnvioEmail']?.touched)">
                         <small *ngIf="form.get('habilitarEnvioEmail')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-8 lg:col-8 md:col-8 sm:col-12 flex flex-column">
-                    <label htmlFor="emailLogin">E-mail:</label>
+                    <label htmlFor="emailLogin">E-mail: <span class="text-red-500" *ngIf="form.get('habilitarEnvioEmail')?.value === true">*</span></label>
                     <input type="email" pInputText name="emailLogin" formControlName="emailLogin" />
                     <div *ngIf="form.controls['emailLogin']?.invalid && (form.controls['emailLogin']?.dirty || form.controls['emailLogin']?.touched)">
                         <small *ngIf="form.get('emailLogin')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -20,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
-                    <label htmlFor="emailSenha">Senha:</label>
+                    <label htmlFor="emailSenha">Senha: <span class="text-red-500" *ngIf="form.get('habilitarEnvioEmail')?.value === true">*</span></label>
                     <input type="password" pInputText name="emailSenha" formControlName="emailSenha" />
                     <div *ngIf="form.controls['emailSenha']?.invalid && (form.controls['emailSenha']?.dirty || form.controls['emailSenha']?.touched)">
                         <small *ngIf="form.get('emailSenha')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -29,13 +32,16 @@
                 </div>
 
                 <div class="col-12 flex flex-column">
-                    <p-checkbox [binary]="true" label="Habilitar o envio de whatsapp"  inputId="habilitarEnvioWhats" name="habilitarEnvioWhats" formControlName="habilitarEnvioWhats" ></p-checkbox>
+                    <div class="col-12 flex gap-1 p-0 align-items-center">
+                        <p-checkbox [binary]="true" inputId="habilitarEnvioWhats" name="habilitarEnvioWhats" formControlName="habilitarEnvioWhats" ></p-checkbox>
+                        <label for="habilitarEnvioWhats">Habilitar o envio de whatsapp <span class="text-red-500">*</span></label>
+                    </div>
                     <div *ngIf="form.controls['habilitarEnvioWhats']?.invalid && (form.controls['habilitarEnvioWhats']?.dirty || form.controls['habilitarEnvioWhats']?.touched)">
                         <small *ngIf="form.get('habilitarEnvioWhats')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-8 lg:col-8 md:col-8 sm:col-12 flex flex-column">
-                    <label htmlFor="whatsNumeroId">Id do número:</label>
+                    <label htmlFor="whatsNumeroId">Id do número: <span class="text-red-500" *ngIf="form.get('habilitarEnvioWhats')?.value === true">*</span></label>
                     <input type="text" pInputText name="whatsNumeroId" formControlName="whatsNumeroId" />
                     <div *ngIf="form.controls['whatsNumeroId']?.invalid && (form.controls['whatsNumeroId']?.dirty || form.controls['whatsNumeroId']?.touched)">
                         <small *ngIf="form.get('whatsNumeroId')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -43,7 +49,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
-                    <label htmlFor="whatsToken">Token:</label>
+                    <label htmlFor="whatsToken">Token: <span class="text-red-500" *ngIf="form.get('habilitarEnvioWhats')?.value === true">*</span></label>
                     <input type="text" pInputText name="whatsToken" formControlName="whatsToken" />
                     <div *ngIf="form.controls['whatsToken']?.invalid && (form.controls['whatsToken']?.dirty || form.controls['whatsToken']?.touched)">
                         <small *ngIf="form.get('whatsToken')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>

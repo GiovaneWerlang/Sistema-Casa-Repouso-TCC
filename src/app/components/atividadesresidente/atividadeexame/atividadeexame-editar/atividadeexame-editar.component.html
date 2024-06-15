@@ -14,7 +14,7 @@
                     <p-calendar type="text" [showTime]="true" name="dataHora" formControlName="dataHora" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="situacao">Situação:</label>
+                    <label htmlFor="situacao">Situação: <span class="text-red-500">*</span></label>
                     <p-dropdown [options]="opcoessituacao" name="situacao" formControlName="situacao" [filter]="true" [style]="{'width':'100%'}" [autoDisplayFirst]="false"/>
                     <div *ngIf="form.controls['situacao']?.invalid && (form.controls['situacao']?.dirty || form.controls['situacao']?.touched)">
                         <small *ngIf="form.get('situacao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>

@@ -6,7 +6,7 @@
         <form [formGroup]="form" (submit)="salvar()" class="flex flex-column card-body">
             <div class="flex flex-row flex-wrap">
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="intervalo">Intervalo (horas):</label>
+                    <label htmlFor="intervalo">Intervalo (horas): <span class="text-red-500">*</span></label>
                     <input type="number" pInputText pKeyFilter="pint" name="intervalo" formControlName="intervalo" />
                     <div *ngIf="form.controls['intervalo']?.invalid && (form.controls['intervalo']?.dirty || form.controls['intervalo']?.touched)">
                         <small *ngIf="form.get('intervalo')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -14,14 +14,14 @@
                     </div>
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
-                    <label htmlFor="dataHoraInicio">Data e hora de Início:</label>
+                    <label htmlFor="dataHoraInicio">Data e hora de Início: <span class="text-red-500">*</span></label>
                     <p-calendar type="text" [showTime]="true" name="dataHoraInicio" formControlName="dataHoraInicio" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['dataHoraInicio']?.invalid && (form.controls['dataHoraInicio']?.dirty || form.controls['dataHoraInicio']?.touched)">
                         <small *ngIf="form.get('dataHoraInicio')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="qtdeVezesAoDia">Vezes ao dia:</label>
+                    <label htmlFor="qtdeVezesAoDia">Vezes ao dia: <span class="text-red-500">*</span></label>
                     <input type="number" pInputText pKeyFilter="pint" name="qtdeVezesAoDia" formControlName="qtdeVezesAoDia" />
                     <div *ngIf="form.controls['qtdeVezesAoDia']?.invalid && (form.controls['qtdeVezesAoDia']?.dirty || form.controls['qtdeVezesAoDia']?.touched)">
                         <small *ngIf="form.get('qtdeVezesAoDia')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="qtdeDiasUso">Quantidade de dias:</label>
+                    <label htmlFor="qtdeDiasUso">Quantidade de dias: <span class="text-red-500">*</span></label>
                     <input type="number" pInputText pKeyFilter="pint" name="qtdeDiasUso" formControlName="qtdeDiasUso" />
                     <div *ngIf="form.controls['qtdeDiasUso']?.invalid && (form.controls['qtdeDiasUso']?.dirty || form.controls['qtdeDiasUso']?.touched)">
                         <small *ngIf="form.get('qtdeDiasUso')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="qtdeMedicamento">Quantidade de Medicamento:</label>
+                    <label htmlFor="qtdeMedicamento">Quantidade de Medicamento: <span class="text-red-500">*</span></label>
                     <input type="number" pInputText pKeyFilter="pint" name="qtdeMedicamento" formControlName="qtdeMedicamento" />
                     <div *ngIf="form.controls['qtdeMedicamento']?.invalid && (form.controls['qtdeMedicamento']?.dirty || form.controls['qtdeMedicamento']?.touched)">
                         <small *ngIf="form.get('qtdeMedicamento')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="medicamento">Medicamento:</label>
+                    <label htmlFor="medicamento">Medicamento: <span class="text-red-500">*</span></label>
                     <p-dropdown [options]="opcoesMedicamento" name="medicamento" formControlName="medicamento"
                         [filter]="true" [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['medicamento']?.invalid && (form.controls['medicamento']?.dirty || form.controls['medicamento']?.touched)">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="residente">Residente:</label>
+                    <label htmlFor="residente">Residente: <span class="text-red-500">*</span></label>
                     <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente"
                         [filter]="true" [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['residente']?.invalid && (form.controls['residente']?.dirty || form.controls['residente']?.touched)">

@@ -3,7 +3,7 @@
         <form>
             <form [formGroup]="form" class="flex flex-column">
                 <div class="col-12 flex flex-column">
-                    <label htmlFor="login">Login:</label>
+                    <label htmlFor="login">Login: <span class="text-red-500">*</span></label>
                     <input type="text" pInputText name="login" formControlName="login" aria-label="Login"/>
                     <div *ngIf="form.controls['login']?.invalid && (form.controls['login']?.dirty || form.controls['login']?.touched)">
                         <small *ngIf="form.get('login')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="col-12 flex flex-column">
-                    <label htmlFor="senha">Senha:</label>
+                    <label htmlFor="senha">Senha: <span class="text-red-500">*</span></label>
                     <input type="password" pInputText name="senha" formControlName="senha" aria-label="Senha"/>
                     <div *ngIf="form.controls['senha']?.invalid && (form.controls['senha']?.dirty || form.controls['senha']?.touched)">
                         <small *ngIf="form.get('senha')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>

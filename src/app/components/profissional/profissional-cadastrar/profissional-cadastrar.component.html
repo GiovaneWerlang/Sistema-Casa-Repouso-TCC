@@ -6,7 +6,7 @@
         <form [formGroup]="form" (submit)="salvar()" class="flex flex-column card-body">
             <div class="flex flex-row flex-wrap">
                 <div class="col-12 flex flex-column">
-                    <label htmlFor="nome">Nome:</label>
+                    <label htmlFor="nome">Nome: <span class="text-red-500">*</span></label>
                     <input type="text" pInputText name="nome" formControlName="nome" />
                     <div *ngIf="form.controls['nome']?.invalid && (form.controls['nome']?.dirty || form.controls['nome']?.touched)">
                         <small *ngIf="form.get('nome')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -14,14 +14,14 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="cpf">Cpf:</label>
+                    <label htmlFor="cpf">Cpf: <span class="text-red-500">*</span></label>
                     <p-inputMask mask="999.999.999-99" [unmask]="true" pKeyFilter="int" name="cpf" formControlName="cpf"  [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['cpf']?.invalid && (form.controls['cpf']?.dirty || form.controls['cpf']?.touched)">
                         <small *ngIf="form.get('cpf')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="idade">Idade:</label>
+                    <label htmlFor="idade">Idade: <span class="text-red-500">*</span></label>
                     <input type="number" pInputText pKeyFilter="int" name="idade" formControlName="idade" />
                     <div *ngIf="form.controls['idade']?.invalid && (form.controls['idade']?.dirty || form.controls['idade']?.touched)">
                         <small *ngIf="form.get('idade')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="salario">Salário:</label>
+                    <label htmlFor="salario">Salário: <span class="text-red-500">*</span></label>
                     <input type="text" pInputText pKeyFilter="money" name="salario" formControlName="salario" />
                     <div *ngIf="form.controls['salario']?.invalid && (form.controls['salario']?.dirty || form.controls['salario']?.touched)">
                         <small *ngIf="form.get('salario')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="telefone">Telefone:</label>
+                    <label htmlFor="telefone">Telefone: <span class="text-red-500">*</span></label>
                     <input type="text" pInputText mask="(00) 0000-0000||(00) 00000-0000" pKeyFilter="int"  name="telefone" formControlName="telefone" />
                     <div *ngIf="form.controls['telefone']?.invalid && (form.controls['telefone']?.dirty || form.controls['telefone']?.touched)">
                         <small *ngIf="form.get('telefone')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -51,7 +51,7 @@
                     <p-calendar type="text" name="dataAdmissao" formControlName="dataAdmissao" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 flex flex-column">
-                    <label htmlFor="email">E-mail:</label>
+                    <label htmlFor="email">E-mail: <span class="text-red-500">*</span></label>
                     <input type="email" pInputText name="email" formControlName="email" />
                     <div *ngIf="form.controls['email']?.invalid && (form.controls['email']?.dirty || form.controls['email']?.touched)">
                         <small *ngIf="form.get('email')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -59,21 +59,21 @@
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="funcao">Função:</label>
+                    <label htmlFor="funcao">Função: <span class="text-red-500">*</span></label>
                     <p-dropdown [options]="opcoesFuncao" name="funcao" formControlName="funcao" [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['funcao']?.invalid && (form.controls['funcao']?.dirty || form.controls['funcao']?.touched)">
                         <small *ngIf="form.get('funcao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="situacao">Situação:</label>
+                    <label htmlFor="situacao">Situação: <span class="text-red-500">*</span></label>
                     <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao" [style]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['situacao']?.invalid && (form.controls['situacao']?.dirty || form.controls['situacao']?.touched)">
                         <small *ngIf="form.get('situacao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-12 xl:col-4 lg:col-4 md:col-4 sm:col-12 flex flex-column">
-                    <label htmlFor="especialidade">Especialidade:</label>
+                    <label htmlFor="especialidade">Especialidade: <span class="text-red-500">*</span></label>
                     <p-dropdown [options]="opcoesEspecialidade" name="especialidade" formControlName="especialidade" [filter]="true" [style]="{'width':'100%'}" [autoDisplayFirst]="false"/>
                     <div *ngIf="form.controls['especialidade']?.invalid && (form.controls['especialidade']?.dirty || form.controls['especialidade']?.touched)">
                         <small *ngIf="form.get('especialidade')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -84,7 +84,7 @@
                     <p>Endereço</p>
                     <div class="flex flex-row flex-wrap">
                         <div class="col-12 flex flex-column">
-                            <label htmlFor="logradouro">Logradouro:</label>
+                            <label htmlFor="logradouro">Logradouro: <span class="text-red-500">*</span></label>
                             <input type="text" pInputText name="logradouro" formControlName="logradouro" />
                             <div *ngIf="formEndereco.controls['logradouro']?.invalid && (formEndereco.controls['logradouro']?.dirty || formEndereco.controls['logradouro']?.touched)">
                                 <small *ngIf="formEndereco.get('logradouro')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="col-12 flex flex-column">
-                            <label htmlFor="bairro">Bairro:</label>
+                            <label htmlFor="bairro">Bairro: <span class="text-red-500">*</span></label>
                             <input type="text" pInputText name="bairro" formControlName="bairro" />
                             <div *ngIf="formEndereco.controls['bairro']?.invalid && (formEndereco.controls['bairro']?.dirty || formEndereco.controls['bairro']?.touched)">
                                 <small *ngIf="formEndereco.get('bairro')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div class="col-12 flex flex-column">
-                            <label htmlFor="municipio">Município:</label>
+                            <label htmlFor="municipio">Município: <span class="text-red-500">*</span></label>
                             <input type="text" pInputText name="municipio" formControlName="municipio" />
                             <div *ngIf="formEndereco.controls['municipio']?.invalid && (formEndereco.controls['municipio']?.dirty || formEndereco.controls['municipio']?.touched)">
                                 <small *ngIf="formEndereco.get('municipio')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-12 flex flex-column">
-                            <label htmlFor="numero">Número:</label>
+                            <label htmlFor="numero">Número: <span class="text-red-500">*</span></label>
                             <input type="text" pInputText name="numero" formControlName="numero" />
                             <div *ngIf="formEndereco.controls['numero']?.invalid && (formEndereco.controls['numero']?.dirty || formEndereco.controls['numero']?.touched)">
                                 <small *ngIf="formEndereco.get('numero')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-12 flex flex-column">
-                            <span htmlFor="cep">Cep:</span>
+                            <span htmlFor="cep">Cep: <span class="text-red-500">*</span></span>
                             <p-inputMask mask="99999-999" [unmask]="true" pKeyFilter="int" name="cep" formControlName="cep"  [style]="{'width':'100%'}"/>
                             <div *ngIf="formEndereco.controls['cep']?.invalid && (formEndereco.controls['cep']?.dirty || formEndereco.controls['cep']?.touched)">
                                 <small *ngIf="formEndereco.get('cep')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -125,14 +125,14 @@
                             </div>
                         </div>
                         <div class="col-12 flex flex-column">
-                            <label htmlFor="estado">Estado:</label>
+                            <label htmlFor="estado">Estado: <span class="text-red-500">*</span></label>
                             <p-dropdown [options]="opcoesEstados" name="estado" formControlName="estado" [filter]="true" [style]="{'width':'100%'}"/>
                             <div *ngIf="formEndereco.controls['estado']?.invalid && (formEndereco.controls['estado']?.dirty || formEndereco.controls['estado']?.touched)">
                                 <small *ngIf="formEndereco.get('estado')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                             </div>
                         </div>
                         <div class="col-12 flex flex-column">
-                            <label htmlFor="pais">País:</label>
+                            <label htmlFor="pais">País: <span class="text-red-500">*</span></label>
                             <p-dropdown [options]="opcoesPaises" name="pais" formControlName="pais" [filter]="true" [style]="{'width':'100%'}"/>
                             <div *ngIf="formEndereco.controls['pais']?.invalid && (formEndereco.controls['pais']?.dirty || formEndereco.controls['pais']?.touched)">
                                 <small *ngIf="formEndereco.get('pais')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>

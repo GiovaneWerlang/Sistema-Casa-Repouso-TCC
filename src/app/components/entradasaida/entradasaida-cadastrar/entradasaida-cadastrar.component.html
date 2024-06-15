@@ -6,7 +6,7 @@
       <form [formGroup]="form" (submit)="salvar()" class="flex flex-column card-body">
         <div class="flex flex-row flex-wrap">
           <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
-            <label htmlFor="descricao">Descrição:</label>
+            <label htmlFor="descricao">Descrição: <span class="text-red-500">*</span></label>
             <input type="text" pInputText name="descricao" formControlName="descricao" />
             <div *ngIf="form.controls['descricao']?.invalid && (form.controls['descricao']?.dirty || form.controls['descricao']?.touched)">
               <small *ngIf="form.get('descricao')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
@@ -22,7 +22,7 @@
             <p-calendar type="text" [showTime]="true" name="dataHoraEntrada" formControlName="dataHoraEntrada" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
           </div>
           <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
-            <label htmlFor="residente">Residente:</label>
+            <label htmlFor="residente">Residente: <span class="text-red-500">*</span></label>
             <p-dropdown [options]="opcoesResidente" name="residente" formControlName="residente" [style]="{'width':'100%'}"/>
             <div *ngIf="form.controls['residente']?.invalid && (form.controls['residente']?.dirty || form.controls['residente']?.touched)">
               <small *ngIf="form.get('residente')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>

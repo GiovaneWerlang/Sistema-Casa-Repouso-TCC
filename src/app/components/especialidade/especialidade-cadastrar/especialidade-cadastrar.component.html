@@ -4,7 +4,7 @@
         <span class="font-bold text-2xl" style="color: var(--primary-color);">Cadastro de Especialidade</span>
     </div>
     <form [formGroup]="form" (submit)="salvar()" class="flex flex-column card-body">
-      <label htmlFor="nome">Nome:</label>
+      <label htmlFor="nome">Nome: <span class="text-red-500">*</span></label>
       <input type="text" pInputText name="nome" id="txt_nome" formControlName="nome" />
       <div *ngIf="form.controls['nome']?.invalid && (form.controls['nome']?.dirty || form.controls['nome']?.touched)">
         <small *ngIf="form.get('nome')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>

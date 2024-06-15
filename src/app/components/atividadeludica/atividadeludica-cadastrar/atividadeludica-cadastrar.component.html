@@ -6,7 +6,7 @@
         <form [formGroup]="form" (submit)="salvar()" class="flex flex-column card-body">
             <div class="flex flex-row flex-wrap">
                 <div class="col-12 xl:col-12 lg:col-12 md:col-12 sm:col-12 flex flex-column">
-                    <label htmlFor="nome">Nome:</label>
+                    <label htmlFor="nome">Nome: <span class="text-red-500">*</span></label>
                     <input type="text" pInputText name="nome" formControlName="nome" />
                     <div
                         *ngIf="form.controls['nome']?.invalid && (form.controls['nome']?.dirty || form.controls['nome']?.touched)">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
-                    <label htmlFor="dataHora">Data e hora:</label>
+                    <label htmlFor="dataHora">Data e hora: <span class="text-red-500">*</span></label>
                     <p-calendar type="text" [showTime]="true" name="dataHora" formControlName="dataHora"
                         [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" />
                     <div
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
-                    <label htmlFor="situacao">Situação:</label>
+                    <label htmlFor="situacao">Situação: <span class="text-red-500">*</span></label>
                     <p-dropdown [options]="opcoesSituacao" name="situacao" formControlName="situacao"
                         [style]="{'width':'100%'}" />
                     <div
