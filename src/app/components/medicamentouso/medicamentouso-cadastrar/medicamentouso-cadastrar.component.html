@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="col-4 xl:col-4 lg:col-4 md:col-4 sm:col-4 flex flex-column">
-                    <label htmlFor="dataHoraInicio">DataHora Início:</label>
+                    <label htmlFor="dataHoraInicio">Data e hora de Início:</label>
                     <p-calendar type="text" [showTime]="true" name="dataHoraInicio" formControlName="dataHoraInicio" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['dataHoraInicio']?.invalid && (form.controls['dataHoraInicio']?.dirty || form.controls['dataHoraInicio']?.touched)">
                         <small *ngIf="form.get('dataHoraInicio')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>

@@ -39,14 +39,14 @@
                     </div>
                 </div>
                 <div class="col-4 flex flex-column">
-                    <label htmlFor="dataHoraIngresso">DataHora Ingresso:</label>
+                    <label htmlFor="dataHoraIngresso">Data e hora de Ingresso:</label>
                     <p-calendar type="text" name="dataHoraIngresso" [showTime]="true" formControlName="dataHoraIngresso" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                     <div *ngIf="form.controls['dataHoraIngresso']?.invalid && (form.controls['dataHoraIngresso']?.dirty || form.controls['dataHoraIngresso']?.touched)">
                         <small *ngIf="form.get('dataHoraIngresso')?.errors?.['required']" class="p-error">Este campo é obrigatório.</small>
                     </div>
                 </div>
                 <div class="col-4 flex flex-column">
-                    <label htmlFor="dataHoraPrevisaoSaida">DataHora Previsão de Saída:</label>
+                    <label htmlFor="dataHoraPrevisaoSaida">Data e hora da Previsão de Saída:</label>
                     <p-calendar type="text" name="dataHoraPrevisaoSaida" [showTime]="true" formControlName="dataHoraPrevisaoSaida" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"/>
                 </div>
                 <div class="col-12 flex flex-column">
