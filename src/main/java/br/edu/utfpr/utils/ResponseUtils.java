@@ -2,8 +2,8 @@ package br.edu.utfpr.utils;
 
 import io.quarkus.vertx.http.runtime.devmode.Json;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 public class ResponseUtils {

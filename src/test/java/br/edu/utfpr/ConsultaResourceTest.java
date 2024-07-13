@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ConsultaResourceTest {
+class ConsultaResourceTest {
 
     @TestHTTPResource("/consulta")
     URL apiURL;
@@ -44,7 +44,7 @@ public class ConsultaResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -53,7 +53,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar consulta com sucesso.")
-    public void createConsultaTest() throws SQLException {
+    void createConsultaTest() throws SQLException {
         ConsultaDTO consultaDTO = new ConsultaDTO();
         consultaDTO.setDescricao("Teste");
         consultaDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
@@ -144,7 +144,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar consulta.")
-    public void createConsultaValidationErrorTest(){
+    void createConsultaValidationErrorTest(){
         ConsultaDTO consultaDTO = new ConsultaDTO();
         consultaDTO.setDescricao(null);
         consultaDTO.setDataHora(null);
@@ -173,7 +173,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar consulta com sucesso.")
-    public void updateConsultaTest() throws SQLException {
+    void updateConsultaTest() throws SQLException {
 
         ConsultaDTO consultaDTO = new ConsultaDTO();
         consultaDTO.setDescricao("Teste");
@@ -265,7 +265,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar consulta.")
-    public void updateConsultaValidationErrorTest(){
+    void updateConsultaValidationErrorTest(){
 
         ConsultaDTO consultaDTO = new ConsultaDTO();
         consultaDTO.setDescricao(null);
@@ -293,7 +293,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar consulta por id com sucesso.")
-    public void getByIdConsultaTest(){
+    void getByIdConsultaTest(){
 
 
         Response response = given()
@@ -310,7 +310,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar consulta por id.")
-    public void getByIdConsultaValidationErrorTest(){
+    void getByIdConsultaValidationErrorTest(){
 
 
         Response response = given()
@@ -327,7 +327,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as consultas com sucesso.")
-    public void getAllConsultaTest(){
+    void getAllConsultaTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -343,7 +343,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as consultas paginadas e ordenadas com sucesso.")
-    public void pageSortConsultaTest(){
+    void pageSortConsultaTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -359,7 +359,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a consulta com sucesso.")
-    public void deleteConsultaTest(){
+    void deleteConsultaTest(){
 
 
         Response response = given()
@@ -376,7 +376,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a consulta.")
-    public void deleteConsultaErrorTest(){
+    void deleteConsultaErrorTest(){
 
 
         Response response = given()
@@ -393,7 +393,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os consultas.")
-    public void getAllConsultaErrorTest() throws SQLException {
+    void getAllConsultaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
 
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
@@ -422,7 +422,7 @@ public class ConsultaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as consultas paginadas e ordenadas.")
-    public void pageSortConsultaErrorTest() throws SQLException {
+    void pageSortConsultaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
 
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");

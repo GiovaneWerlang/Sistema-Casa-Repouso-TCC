@@ -4,7 +4,7 @@ import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
 import br.edu.utfpr.residente.ResidenteModel;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

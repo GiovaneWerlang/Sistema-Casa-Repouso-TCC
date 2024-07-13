@@ -3,8 +3,8 @@ package br.edu.utfpr.atividadeludica;
 import br.edu.utfpr.enums.Situacao;
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data

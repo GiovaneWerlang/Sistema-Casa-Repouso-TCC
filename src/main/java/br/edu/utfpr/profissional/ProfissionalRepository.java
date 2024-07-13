@@ -4,7 +4,7 @@ import br.edu.utfpr.crud.CrudRepository;
 import br.edu.utfpr.dashboard.DadoDTO;
 import br.edu.utfpr.enums.Funcao;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 @ApplicationScoped

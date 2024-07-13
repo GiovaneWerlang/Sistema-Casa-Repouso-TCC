@@ -4,7 +4,7 @@ import br.edu.utfpr.enums.TipoMovimentacao;
 import br.edu.utfpr.medicamentoestoque.MedicamentoEstoqueModel;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Entity

@@ -12,7 +12,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ProfissionalResourceTest {
+class ProfissionalResourceTest {
 
     @TestHTTPResource("/profissional")
     URL apiURL;
@@ -46,7 +46,7 @@ public class ProfissionalResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -55,7 +55,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar profissional com sucesso.")
-    public void createProfissionalTest() throws SQLException {
+    void createProfissionalTest() throws SQLException {
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
         profissionalDTO.setNome("Teste");
         profissionalDTO.setIdade(45);
@@ -106,7 +106,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar profissional.")
-    public void createProfissionalValidationErrorTest(){
+    void createProfissionalValidationErrorTest(){
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
         profissionalDTO.setNome(null);
         profissionalDTO.setIdade(-1);
@@ -146,7 +146,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar profissional com sucesso.")
-    public void updateProfissionalTest(){
+    void updateProfissionalTest(){
 
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
         profissionalDTO.setNome("Teste");
@@ -187,7 +187,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar profissional.")
-    public void updateProfissionalValidationErrorTest(){
+    void updateProfissionalValidationErrorTest(){
 
         ProfissionalDTO profissionalDTO = new ProfissionalDTO();
         profissionalDTO.setNome(null);
@@ -230,7 +230,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar profissional por id com sucesso.")
-    public void getByIdProfissionalTest(){
+    void getByIdProfissionalTest(){
 
 
         Response response = given()
@@ -247,7 +247,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar profissional por id.")
-    public void getByIdProfissionalValidationErrorTest(){
+    void getByIdProfissionalValidationErrorTest(){
 
 
         Response response = given()
@@ -264,7 +264,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os profissionais com sucesso.")
-    public void getAllProfissionalTest(){
+    void getAllProfissionalTest(){
 
 
         Response response = given()
@@ -281,7 +281,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os profissionais paginados e ordenados com sucesso.")
-    public void pageSortProfissionalTest(){
+    void pageSortProfissionalTest(){
 
 
         Response response = given()
@@ -298,7 +298,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id o profissional com sucesso.")
-    public void deleteProfissionalTest(){
+    void deleteProfissionalTest(){
 
 
         Response response = given()
@@ -315,7 +315,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id o profissional.")
-    public void deleteProfissionalErrorTest(){
+    void deleteProfissionalErrorTest(){
 
 
         Response response = given()
@@ -332,7 +332,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os profissionais.")
-    public void getAllProfissionalErrorTest() throws SQLException {
+    void getAllProfissionalErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt1 = c.prepareStatement("delete from usuario");
@@ -357,7 +357,7 @@ public class ProfissionalResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os profissionais paginados e ordenados.")
-    public void pageSortProfissionalErrorTest() throws SQLException {
+    void pageSortProfissionalErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt1 = c.prepareStatement("delete from usuario");

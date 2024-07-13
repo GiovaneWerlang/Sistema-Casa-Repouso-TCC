@@ -2,7 +2,7 @@ package br.edu.utfpr.endereco;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Entity

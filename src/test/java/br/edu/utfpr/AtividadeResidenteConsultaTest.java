@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AtividadeResidenteConsultaTest {
+class AtividadeResidenteConsultaTest {
 
     @TestHTTPResource("/atividadeconsulta")
     URL apiURL;
@@ -44,7 +44,7 @@ public class AtividadeResidenteConsultaTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -53,7 +53,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar atividade com sucesso.")
-    public void updateAtividadeLudicaTest() throws SQLException {
+    void updateAtividadeLudicaTest() throws SQLException {
 
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
@@ -132,7 +132,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar atividade.")
-    public void updateAtividadeLudicaValidationErrorTest(){
+    void updateAtividadeLudicaValidationErrorTest(){
 
         AtividadeResidenteDTO atividadeResidenteDTO = new AtividadeResidenteDTO();
         atividadeResidenteDTO.setSituacao(null);
@@ -155,7 +155,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar atividade por id com sucesso.")
-    public void getByIdAtividadeLudicaTest(){
+    void getByIdAtividadeLudicaTest(){
 
 
         Response response = given()
@@ -172,7 +172,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar atividade por id.")
-    public void getByIdAtividadeLudicaValidationErrorTest(){
+    void getByIdAtividadeLudicaValidationErrorTest(){
 
 
         Response response = given()
@@ -189,7 +189,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as atividades com sucesso.")
-    public void getAllAtividadeLudicaTest(){
+    void getAllAtividadeLudicaTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -205,7 +205,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as atividades paginadas e ordenadas com sucesso.")
-    public void pageSortAtividadeLudicaTest(){
+    void pageSortAtividadeLudicaTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -221,7 +221,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as atividades.")
-    public void getAllAtividadeLudicaErrorTest() throws SQLException {
+    void getAllAtividadeLudicaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from ATIVIDADECONSULTARESIDENTE");
@@ -243,7 +243,7 @@ public class AtividadeResidenteConsultaTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as atividades paginadas e ordenadas.")
-    public void pageSortAtividadeLudicaErrorTest() throws SQLException {
+    void pageSortAtividadeLudicaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from ATIVIDADECONSULTARESIDENTE");

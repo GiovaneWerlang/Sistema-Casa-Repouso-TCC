@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UsuarioResourceTest {
+class UsuarioResourceTest {
 
     @TestHTTPResource("/usuario")
     URL apiURL;
@@ -42,7 +42,7 @@ public class UsuarioResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -51,7 +51,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar usuário com sucesso.")
-    public void createUsuarioTest() throws SQLException {
+    void createUsuarioTest() throws SQLException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin("Teste");
         usuarioDTO.setSenha("123456");
@@ -97,7 +97,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar usuario.")
-    public void createUsuarioValidationErrorTest(){
+    void createUsuarioValidationErrorTest(){
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin(null);
         usuarioDTO.setSenha(null);
@@ -119,7 +119,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar usuário com login já existente.")
-    public void createUsuarioLoginJaExisteTest() {
+    void createUsuarioLoginJaExisteTest() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin("Teste");
         usuarioDTO.setSenha("123456");
@@ -140,7 +140,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar usuario com sucesso.")
-    public void updateUsuarioTest(){
+    void updateUsuarioTest(){
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin("Teste");
@@ -162,7 +162,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar usuario.")
-    public void updateUsuarioValidationErrorTest(){
+    void updateUsuarioValidationErrorTest(){
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin(null);
@@ -186,7 +186,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar usuário com login já existente.")
-    public void updateUsuarioLoginJaExisteTest() {
+    void updateUsuarioLoginJaExisteTest() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin("Teste");
         usuarioDTO.setSenha("123456");
@@ -207,7 +207,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar usuario por id com sucesso.")
-    public void getByIdUsuarioTest(){
+    void getByIdUsuarioTest(){
 
 
         Response response = given()
@@ -224,7 +224,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar usuario por id.")
-    public void getByIdUsuarioValidationErrorTest(){
+    void getByIdUsuarioValidationErrorTest(){
 
 
         Response response = given()
@@ -241,7 +241,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os usuarios com sucesso.")
-    public void getAllUsuarioTest(){
+    void getAllUsuarioTest(){
 
 
         Response response = given()
@@ -258,7 +258,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os usuarios paginados e ordenados com sucesso.")
-    public void pageSortUsuarioTest(){
+    void pageSortUsuarioTest(){
 
 
         Response response = given()
@@ -275,7 +275,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a usuario com sucesso.")
-    public void deleteUsuarioTest(){
+    void deleteUsuarioTest(){
 
 
         Response response = given()
@@ -292,7 +292,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a usuario.")
-    public void deleteUsuarioErrorTest(){
+    void deleteUsuarioErrorTest(){
 
 
         Response response = given()
@@ -309,7 +309,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os usuarios.")
-    public void getAllUsuarioErrorTest() throws SQLException {
+    void getAllUsuarioErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from usuario");
@@ -331,7 +331,7 @@ public class UsuarioResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os usuarios paginados e ordenados.")
-    public void pageSortUsuarioErrorTest() throws SQLException {
+    void pageSortUsuarioErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from usuario");

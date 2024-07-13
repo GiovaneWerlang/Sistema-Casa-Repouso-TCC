@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EspecialidadeResourceTest {
+class EspecialidadeResourceTest {
 
     @TestHTTPResource("/especialidade")
     URL apiURL;
@@ -42,7 +42,7 @@ public class EspecialidadeResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -51,7 +51,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar especialidade com sucesso.")
-    public void createEspecialidadeTest(){
+    void createEspecialidadeTest(){
         EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
         especialidadeDTO.setNome("Infantil");
 
@@ -71,7 +71,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar especialidade.")
-    public void createEspecialidadeValidationErrorTest(){
+    void createEspecialidadeValidationErrorTest(){
         EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
         especialidadeDTO.setNome(null);
 
@@ -92,7 +92,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar especialidade com sucesso.")
-    public void updateEspecialidadeTest(){
+    void updateEspecialidadeTest(){
 
         EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
         especialidadeDTO.setNome("Juvenil");
@@ -113,7 +113,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar especialidade.")
-    public void updateEspecialidadeValidationErrorTest(){
+    void updateEspecialidadeValidationErrorTest(){
 
         EspecialidadeDTO especialidadeDTO = new EspecialidadeDTO();
         especialidadeDTO.setNome(null);
@@ -136,7 +136,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar especialidade por id com sucesso.")
-    public void getByIdEspecialidadeTest(){
+    void getByIdEspecialidadeTest(){
 
 
         Response response = given()
@@ -153,7 +153,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar especialidade por id.")
-    public void getByIdEspecialidadeValidationErrorTest(){
+    void getByIdEspecialidadeValidationErrorTest(){
 
 
         Response response = given()
@@ -170,7 +170,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as especialidades com sucesso.")
-    public void getAllEspecialidadeTest(){
+    void getAllEspecialidadeTest(){
 
 
         Response response = given()
@@ -187,7 +187,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as especialidades paginadas e ordenadas com sucesso.")
-    public void pageSortEspecialidadeTest(){
+    void pageSortEspecialidadeTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -203,7 +203,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a especialidade com sucesso.")
-    public void deleteEspecialidadeTest(){
+    void deleteEspecialidadeTest(){
 
 
         Response response = given()
@@ -220,7 +220,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a especialidade.")
-    public void deleteEspecialidadeErrorTest(){
+    void deleteEspecialidadeErrorTest(){
 
 
         Response response = given()
@@ -237,7 +237,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as especialidades.")
-    public void getAllEspecialidadeErrorTest() throws SQLException {
+    void getAllEspecialidadeErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from especialidade");
@@ -259,7 +259,7 @@ public class EspecialidadeResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as especialidades paginadas e ordenadas.")
-    public void pageSortEspecialidadeErrorTest() throws SQLException {
+    void pageSortEspecialidadeErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from especialidade");

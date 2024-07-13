@@ -5,7 +5,7 @@ import br.edu.utfpr.exame.ExameModel;
 import br.edu.utfpr.profissional.ProfissionalModel;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Entity

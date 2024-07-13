@@ -5,10 +5,10 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Set;
 

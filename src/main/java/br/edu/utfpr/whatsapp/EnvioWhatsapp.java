@@ -2,7 +2,7 @@ package br.edu.utfpr.whatsapp;
 
 import br.edu.utfpr.configuracaosistema.ConfiguracaoSistemaModel;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;

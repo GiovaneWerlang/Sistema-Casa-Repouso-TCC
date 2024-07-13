@@ -3,7 +3,7 @@ package br.edu.utfpr.medicamentoestoque;
 import br.edu.utfpr.crud.CrudRepository;
 import br.edu.utfpr.dashboard.DadoDTO;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.List;
 
 @ApplicationScoped

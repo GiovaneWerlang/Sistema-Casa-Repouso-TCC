@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ExameResourceTest {
+class ExameResourceTest {
 
     @TestHTTPResource("/exame")
     URL apiURL;
@@ -44,7 +44,7 @@ public class ExameResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -53,7 +53,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar exame com sucesso.")
-    public void createExameTest() throws SQLException {
+    void createExameTest() throws SQLException {
         ExameDTO exameDTO = new ExameDTO();
         exameDTO.setDescricao("Teste");
         exameDTO.setDataHora(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
@@ -144,7 +144,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar exame.")
-    public void createExameValidationErrorTest(){
+    void createExameValidationErrorTest(){
         ExameDTO exameDTO = new ExameDTO();
         exameDTO.setDescricao(null);
         exameDTO.setDataHora(null);
@@ -173,7 +173,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar exame com sucesso.")
-    public void updateExameTest() throws SQLException {
+    void updateExameTest() throws SQLException {
 
         ExameDTO exameDTO = new ExameDTO();
         exameDTO.setDescricao("Teste");
@@ -265,7 +265,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar exame.")
-    public void updateExameValidationErrorTest(){
+    void updateExameValidationErrorTest(){
 
         ExameDTO exameDTO = new ExameDTO();
         exameDTO.setDescricao(null);
@@ -293,7 +293,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar exame por id com sucesso.")
-    public void getByIdExameTest(){
+    void getByIdExameTest(){
 
 
         Response response = given()
@@ -310,7 +310,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar exame por id.")
-    public void getByIdExameValidationErrorTest(){
+    void getByIdExameValidationErrorTest(){
 
 
         Response response = given()
@@ -327,7 +327,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os exames com sucesso.")
-    public void getAllExameTest(){
+    void getAllExameTest(){
 
 
         Response response = given()
@@ -344,7 +344,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os exames paginados e ordenados com sucesso.")
-    public void pageSortExameTest(){
+    void pageSortExameTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -360,7 +360,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a exame com sucesso.")
-    public void deleteExameTest(){
+    void deleteExameTest(){
 
 
         Response response = given()
@@ -377,7 +377,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a exame.")
-    public void deleteExameErrorTest(){
+    void deleteExameErrorTest(){
 
 
         Response response = given()
@@ -394,7 +394,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os exames.")
-    public void getAllExameErrorTest() throws SQLException {
+    void getAllExameErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
 
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
@@ -423,7 +423,7 @@ public class ExameResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os exames paginados e ordenados.")
-    public void pageSortExameErrorTest() throws SQLException {
+    void pageSortExameErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
 
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");

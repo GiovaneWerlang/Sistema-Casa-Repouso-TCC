@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EnderecoResourceTest {
+class EnderecoResourceTest {
 
     @TestHTTPResource("/endereco")
     URL apiURL;
@@ -37,7 +37,7 @@ public class EnderecoResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -46,7 +46,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar endereco com sucesso.")
-    public void createEnderecoTest(){
+    void createEnderecoTest(){
         EnderecoDTO enderecoDTO = new EnderecoDTO();
         enderecoDTO.setLogradouro("Teste");
         enderecoDTO.setBairro("Teste");
@@ -72,7 +72,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar endereco.")
-    public void createEnderecoValidationErrorTest(){
+    void createEnderecoValidationErrorTest(){
         EnderecoDTO enderecoDTO = new EnderecoDTO();
         enderecoDTO.setLogradouro(null);
         enderecoDTO.setBairro(null);
@@ -99,7 +99,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar endereco com sucesso.")
-    public void updateEnderecoTest(){
+    void updateEnderecoTest(){
 
         EnderecoDTO enderecoDTO = new EnderecoDTO();
         enderecoDTO.setLogradouro("Teste");
@@ -126,7 +126,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar endereco.")
-    public void updateEnderecoValidationErrorTest(){
+    void updateEnderecoValidationErrorTest(){
 
         EnderecoDTO enderecoDTO = new EnderecoDTO();
         enderecoDTO.setLogradouro(null);
@@ -155,7 +155,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar endereco por id com sucesso.")
-    public void getByIdEnderecoTest(){
+    void getByIdEnderecoTest(){
 
 
         Response response = given()
@@ -172,7 +172,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar endereco por id.")
-    public void getByIdEnderecoValidationErrorTest(){
+    void getByIdEnderecoValidationErrorTest(){
 
 
         Response response = given()
@@ -189,7 +189,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as enderecos com sucesso.")
-    public void getAllEnderecoTest(){
+    void getAllEnderecoTest(){
 
 
         Response response = given()
@@ -206,7 +206,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a endereco com sucesso.")
-    public void deleteEnderecoTest(){
+    void deleteEnderecoTest(){
 
 
         Response response = given()
@@ -223,7 +223,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a endereco.")
-    public void deleteEnderecoErrorTest(){
+    void deleteEnderecoErrorTest(){
 
 
         Response response = given()
@@ -240,7 +240,7 @@ public class EnderecoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as enderecos.")
-    public void getAllEnderecoErrorTest() throws SQLException {
+    void getAllEnderecoErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from endereco");

@@ -2,7 +2,7 @@ package br.edu.utfpr.atividadesresidente.mensagemsubscription;
 
 import lombok.Data;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 @Data
 public class MensagemSubscriptionDTO {

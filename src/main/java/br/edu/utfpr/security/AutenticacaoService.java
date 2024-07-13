@@ -6,9 +6,9 @@ import br.edu.utfpr.usuario.UsuarioRepository;
 import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.elytron.security.common.BcryptUtil;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 

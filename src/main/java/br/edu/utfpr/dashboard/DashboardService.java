@@ -12,9 +12,9 @@ import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.residente.ResidenteRepository;
 import br.edu.utfpr.utils.ResponseUtils;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

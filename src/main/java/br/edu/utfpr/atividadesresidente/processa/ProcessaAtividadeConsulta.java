@@ -6,7 +6,7 @@ import br.edu.utfpr.configuracaosistema.ConfiguracaoSistemaModel;
 import br.edu.utfpr.email.EnvioEmail;
 import br.edu.utfpr.whatsapp.EnvioWhatsapp;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ProcessaAtividadeConsulta extends ProcessaAtividade<AtividadeConsultaResidenteModel, AtividadeConsultaResidenteRepository> {

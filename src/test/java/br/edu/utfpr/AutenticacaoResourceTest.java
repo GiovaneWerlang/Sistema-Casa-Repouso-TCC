@@ -8,7 +8,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AutenticacaoResourceTest {
+class AutenticacaoResourceTest {
 
     @TestHTTPResource("/autenticacao/login")
     URL loginURL;
@@ -30,7 +30,7 @@ public class AutenticacaoResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -38,7 +38,7 @@ public class AutenticacaoResourceTest {
     @Test
     @Order(1)
     @DisplayName("Deve logar usuário com sucesso.")
-    public void loginUsuarioTest() throws SQLException {
+    void loginUsuarioTest() throws SQLException {
 
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
@@ -92,7 +92,7 @@ public class AutenticacaoResourceTest {
     @Test
     @Order(2)
     @DisplayName("Deve falhar logar usuário com senha incorreta.")
-    public void loginUsuarioSenhaIncorretaTest() throws SQLException {
+    void loginUsuarioSenhaIncorretaTest() throws SQLException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin("Teste");
         usuarioDTO.setSenha("asdfghj");
@@ -111,7 +111,7 @@ public class AutenticacaoResourceTest {
     @Test
     @Order(3)
     @DisplayName("Deve falhar logar usuário não encontrado.")
-    public void loginUsuarioNaoEncontradoTest() throws SQLException {
+    void loginUsuarioNaoEncontradoTest() throws SQLException {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setLogin("asdfjj");
         usuarioDTO.setSenha("asdfghj");

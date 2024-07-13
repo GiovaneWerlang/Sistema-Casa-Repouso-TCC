@@ -6,7 +6,7 @@ import br.edu.utfpr.dashboard.DadoDTO;
 import br.edu.utfpr.enums.SituacaoAtividade;
 import io.quarkus.panache.common.Parameters;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 public class AtividadeExameResidenteRepository extends CrudRepositoryAtividade<AtividadeExameResidenteModel> {
 
     public AtividadeExameResidenteModel findByExameId(Long id){
-        return find("idexame", id).firstResult();
+        return find("exame.id", id).firstResult();
     }
 
     public List<DadoDTO> getDadosDash(LocalDateTime dataInicial, LocalDateTime dataFinal){

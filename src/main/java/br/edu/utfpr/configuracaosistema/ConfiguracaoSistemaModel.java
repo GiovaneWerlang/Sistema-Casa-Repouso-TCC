@@ -2,8 +2,8 @@ package br.edu.utfpr.configuracaosistema;
 
 import lombok.Data;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.persistence.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.*;
 
 @Data
 @Entity

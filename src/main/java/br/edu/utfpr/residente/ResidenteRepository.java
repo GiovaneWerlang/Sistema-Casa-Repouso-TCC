@@ -4,7 +4,7 @@ import br.edu.utfpr.crud.CrudRepository;
 import br.edu.utfpr.dashboard.DadoDTO;
 import io.quarkus.panache.common.Parameters;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -9,17 +9,15 @@ import br.edu.utfpr.erro.ResponseError;
 import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.especialidade.EspecialidadeRepository;
 import br.edu.utfpr.utils.Copy;
-import br.edu.utfpr.utils.PageDTO;
 import br.edu.utfpr.utils.ResponseUtils;
 import io.quarkus.panache.common.Sort;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import jakarta.ws.rs.core.Response;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 

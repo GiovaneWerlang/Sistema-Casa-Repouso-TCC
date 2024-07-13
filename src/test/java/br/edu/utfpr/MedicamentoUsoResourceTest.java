@@ -6,17 +6,16 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.security.TestSecurity;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import jakarta.inject.Inject;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 import static io.restassured.RestAssured.given;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MedicamentoUsoResourceTest {
+class MedicamentoUsoResourceTest {
 
     @TestHTTPResource("/medicamentouso")
     URL apiURL;
@@ -44,7 +43,7 @@ public class MedicamentoUsoResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -53,7 +52,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar medicamento uso com sucesso.")
-    public void createMedicamentoUsoTest() throws SQLException {
+    void createMedicamentoUsoTest() throws SQLException {
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
         medicamentousoDTO.setIntervalo(4);
         medicamentousoDTO.setQtdeVezesAoDia(3);
@@ -112,7 +111,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar medicamento uso.")
-    public void createMedicamentoUsoValidationErrorTest(){
+    void createMedicamentoUsoValidationErrorTest(){
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
         medicamentousoDTO.setIntervalo(null);
         medicamentousoDTO.setQtdeVezesAoDia(null);
@@ -139,7 +138,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar medicamento uso com sucesso.")
-    public void updateMedicamentoUsoTest(){
+    void updateMedicamentoUsoTest(){
 
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
         medicamentousoDTO.setIntervalo(4);
@@ -165,7 +164,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar medicamento uso.")
-    public void updateMedicamentoUsoValidationErrorTest(){
+    void updateMedicamentoUsoValidationErrorTest(){
 
         MedicamentoUsoDTO medicamentousoDTO = new MedicamentoUsoDTO();
         medicamentousoDTO.setIntervalo(null);
@@ -193,7 +192,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar medicamento uso por id com sucesso.")
-    public void getByIdMedicamentoUsoTest(){
+    void getByIdMedicamentoUsoTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -209,7 +208,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar medicamento uso por id.")
-    public void getByIdMedicamentoUsoValidationErrorTest(){
+    void getByIdMedicamentoUsoValidationErrorTest(){
 
 
         Response response = given()
@@ -226,7 +225,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os medicamento usos com sucesso.")
-    public void getAllMedicamentoUsoTest(){
+    void getAllMedicamentoUsoTest(){
 
 
         Response response = given()
@@ -243,7 +242,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os medicamento usos paginados e ordenados com sucesso.")
-    public void pageSortMedicamentoUsoTest(){
+    void pageSortMedicamentoUsoTest(){
 
 
         Response response = given()
@@ -260,7 +259,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id o medicamento uso com sucesso.")
-    public void deleteMedicamentoUsoTest(){
+    void deleteMedicamentoUsoTest(){
 
 
         Response response = given()
@@ -277,7 +276,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id o medicamento uso.")
-    public void deleteMedicamentoUsoErrorTest(){
+    void deleteMedicamentoUsoErrorTest(){
 
 
         Response response = given()
@@ -294,7 +293,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas os medicamento usos.")
-    public void getAllMedicamentoUsoErrorTest() throws SQLException {
+    void getAllMedicamentoUsoErrorTest() throws SQLException {
 
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
@@ -324,7 +323,7 @@ public class MedicamentoUsoResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os medicamento usos paginados e ordenados.")
-    public void pageSortMedicamentoUsoErrorTest() throws SQLException {
+    void pageSortMedicamentoUsoErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("DELETE FROM ATIVIDADEMEDICAMENTORESIDENTE");

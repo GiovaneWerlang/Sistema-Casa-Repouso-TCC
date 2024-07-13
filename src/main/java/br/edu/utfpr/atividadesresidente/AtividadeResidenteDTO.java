@@ -3,7 +3,7 @@ package br.edu.utfpr.atividadesresidente;
 import br.edu.utfpr.enums.SituacaoAtividade;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Data
 public class AtividadeResidenteDTO {

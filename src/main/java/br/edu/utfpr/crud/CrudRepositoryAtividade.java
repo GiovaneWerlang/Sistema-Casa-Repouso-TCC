@@ -10,11 +10,11 @@ import java.util.List;
 public abstract class CrudRepositoryAtividade<T> extends CrudRepository<T> implements PanacheRepository<T> {
 
     public List<T> findByTime(){
-        return find("datahora between ?1 and ?2 and situacao in ?3", LocalDateTime.now().withHour(5), LocalDateTime.now().plusDays(1).withHour(8), Arrays.asList(SituacaoAtividade.PENDENTE, SituacaoAtividade.ENVIADA)).list();
+        return find("dataHora between ?1 and ?2 and situacao in ?3", LocalDateTime.now().withHour(5), LocalDateTime.now().plusDays(1).withHour(8), Arrays.asList(SituacaoAtividade.PENDENTE, SituacaoAtividade.ENVIADA)).list();
     }
 
     public List<T> findToSendByDatahoraSituacao(){
-        return find("datahora between ?1 and ?2 and situacao = ?3", LocalDateTime.now(), LocalDateTime.now().plusHours(2), SituacaoAtividade.PENDENTE).list();
+        return find("dataHora between ?1 and ?2 and situacao = ?3", LocalDateTime.now(), LocalDateTime.now().plusHours(2), SituacaoAtividade.PENDENTE).list();
     }
 
     public int atualizarSituacaoEnviada(Long id){

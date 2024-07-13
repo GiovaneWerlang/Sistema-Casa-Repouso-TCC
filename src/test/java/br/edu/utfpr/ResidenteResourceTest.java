@@ -12,7 +12,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ResidenteResourceTest {
+class ResidenteResourceTest {
 
     @TestHTTPResource("/residente")
     URL apiURL;
@@ -47,7 +47,7 @@ public class ResidenteResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -56,7 +56,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar residente com sucesso.")
-    public void createResidenteTest(){
+    void createResidenteTest(){
         ResidenteDTO residenteDTO = new ResidenteDTO();
         residenteDTO.setNome("Teste");
         residenteDTO.setIdade(45);
@@ -92,7 +92,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar residente.")
-    public void createResidenteValidationErrorTest(){
+    void createResidenteValidationErrorTest(){
         ResidenteDTO residenteDTO = new ResidenteDTO();
         residenteDTO.setNome(null);
         residenteDTO.setIdade(-1);
@@ -130,7 +130,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar residente com sucesso.")
-    public void updateResidenteTest(){
+    void updateResidenteTest(){
 
         ResidenteDTO residenteDTO = new ResidenteDTO();
         residenteDTO.setNome("Teste");
@@ -168,7 +168,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar residente.")
-    public void updateResidenteValidationErrorTest(){
+    void updateResidenteValidationErrorTest(){
 
         ResidenteDTO residenteDTO = new ResidenteDTO();
         residenteDTO.setNome(null);
@@ -208,7 +208,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar residente por id com sucesso.")
-    public void getByIdResidenteTest(){
+    void getByIdResidenteTest(){
 
 
         Response response = given()
@@ -225,7 +225,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar residente por id.")
-    public void getByIdResidenteValidationErrorTest(){
+    void getByIdResidenteValidationErrorTest(){
 
 
         Response response = given()
@@ -242,7 +242,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os residentes com sucesso.")
-    public void getAllResidenteTest(){
+    void getAllResidenteTest(){
 
 
         Response response = given()
@@ -259,7 +259,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os residentes paginados e ordenados com sucesso.")
-    public void pageSortResidenteTest(){
+    void pageSortResidenteTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -275,7 +275,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a residente com sucesso.")
-    public void deleteResidenteTest(){
+    void deleteResidenteTest(){
 
 
         Response response = given()
@@ -292,7 +292,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a residente.")
-    public void deleteResidenteErrorTest(){
+    void deleteResidenteErrorTest(){
 
 
         Response response = given()
@@ -309,7 +309,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os residentes.")
-    public void getAllResidenteErrorTest() throws SQLException {
+    void getAllResidenteErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from residente");
@@ -331,7 +331,7 @@ public class ResidenteResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os residentes paginados e ordenados.")
-    public void pageSortResidenteErrorTest() throws SQLException {
+    void pageSortResidenteErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from residente");

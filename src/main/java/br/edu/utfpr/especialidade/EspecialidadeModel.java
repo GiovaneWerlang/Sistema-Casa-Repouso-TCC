@@ -2,7 +2,7 @@ package br.edu.utfpr.especialidade;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Entity

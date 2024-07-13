@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MovimentacaoEstoqueResourceTest {
+class MovimentacaoEstoqueResourceTest {
 
     @TestHTTPResource("/movimentacaoestoque")
     URL apiURL;
@@ -43,7 +43,7 @@ public class MovimentacaoEstoqueResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -52,7 +52,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar movimentação de estoque com sucesso.")
-    public void createMovimentacaoEstoqueTest() throws SQLException {
+    void createMovimentacaoEstoqueTest() throws SQLException {
 
         MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
         movimentacaoestoqueDTO.setQtde(1);
@@ -81,7 +81,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar movimentação de estoque.")
-    public void createMovimentacaoEstoqueValidationErrorTest(){
+    void createMovimentacaoEstoqueValidationErrorTest(){
 
         MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
         movimentacaoestoqueDTO.setTipo(null);
@@ -105,7 +105,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar movimentação de estoque com sucesso.")
-    public void updateMovimentacaoEstoqueTest(){
+    void updateMovimentacaoEstoqueTest(){
 
         MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
         movimentacaoestoqueDTO.setQtde(5);
@@ -127,7 +127,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar movimentação de estoque.")
-    public void updateMovimentacaoEstoqueValidationErrorTest(){
+    void updateMovimentacaoEstoqueValidationErrorTest(){
 
         MovimentacaoEstoqueDTO movimentacaoestoqueDTO = new MovimentacaoEstoqueDTO();
         movimentacaoestoqueDTO.setQtde(null);
@@ -151,7 +151,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar movimentação de estoque por id com sucesso.")
-    public void getByIdMovimentacaoEstoqueTest(){
+    void getByIdMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -167,7 +167,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar movimentação de estoque por id.")
-    public void getByIdMovimentacaoEstoqueValidationErrorTest(){
+    void getByIdMovimentacaoEstoqueValidationErrorTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -183,7 +183,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as movimentações de estoque com sucesso.")
-    public void getAllMovimentacaoEstoqueTest(){
+    void getAllMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -199,7 +199,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as movimentações de estoque paginadas e ordenadas com sucesso.")
-    public void pageSortMovimentacaoEstoqueTest(){
+    void pageSortMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -215,7 +215,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a movimentação de estoque com sucesso.")
-    public void deleteMovimentacaoEstoqueTest(){
+    void deleteMovimentacaoEstoqueTest(){
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -231,7 +231,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a movimentação de estoque.")
-    public void deleteMovimentacaoEstoqueErrorTest(){
+    void deleteMovimentacaoEstoqueErrorTest(){
 
 
         Response response = given()
@@ -248,7 +248,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas os movimentações de estoque.")
-    public void getAllMovimentacaoEstoqueErrorTest() throws SQLException {
+    void getAllMovimentacaoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from movimentacaoestoque");
@@ -270,7 +270,7 @@ public class MovimentacaoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as movimentações de estoque paginadas e ordenadas.")
-    public void pageSortMovimentacaoEstoqueErrorTest() throws SQLException {
+    void pageSortMovimentacaoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from movimentacaoestoque");

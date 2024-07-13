@@ -5,8 +5,8 @@ import br.edu.utfpr.atividadesresidente.atividadeexameresidente.AtividadeExameRe
 import br.edu.utfpr.atividadesresidente.atividademedicamentoresidente.AtividadeMedicamentoResidenteRepository;
 import br.edu.utfpr.dashboard.AtividadeDashDTO;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -10,17 +10,14 @@ import br.edu.utfpr.profissional.ProfissionalModel;
 import br.edu.utfpr.profissional.ProfissionalRepository;
 import br.edu.utfpr.residente.ResidenteModel;
 import br.edu.utfpr.residente.ResidenteRepository;
-import br.edu.utfpr.utils.PageDTO;
 import br.edu.utfpr.utils.ResponseUtils;
-import io.quarkus.panache.common.Sort;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import jakarta.ws.rs.core.Response;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @ApplicationScoped

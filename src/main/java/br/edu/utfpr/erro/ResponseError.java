@@ -1,12 +1,12 @@
 package br.edu.utfpr.erro;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import javax.validation.ConstraintViolation;
-import javax.ws.rs.core.Response;
+
 import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor

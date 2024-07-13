@@ -6,7 +6,7 @@ import br.edu.utfpr.especialidade.EspecialidadeModel;
 import br.edu.utfpr.pessoa.PessoaModel;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Data

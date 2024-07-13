@@ -2,7 +2,7 @@ package br.edu.utfpr.pessoa;
 
 import br.edu.utfpr.endereco.EnderecoModel;
 import lombok.Data;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @MappedSuperclass

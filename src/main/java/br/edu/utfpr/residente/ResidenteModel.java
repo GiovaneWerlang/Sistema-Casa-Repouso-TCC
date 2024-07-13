@@ -5,7 +5,7 @@ import br.edu.utfpr.enums.TipoEstadia;
 import br.edu.utfpr.pessoa.PessoaModel;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

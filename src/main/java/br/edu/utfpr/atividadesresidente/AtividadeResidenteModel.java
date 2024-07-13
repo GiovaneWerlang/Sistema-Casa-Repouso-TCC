@@ -3,7 +3,7 @@ package br.edu.utfpr.atividadesresidente;
 import br.edu.utfpr.enums.SituacaoAtividade;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

@@ -2,7 +2,7 @@ package br.edu.utfpr.configuracaosistema;
 
 import lombok.Data;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 @Data
 public class ConfiguracaoSistemaDTO {

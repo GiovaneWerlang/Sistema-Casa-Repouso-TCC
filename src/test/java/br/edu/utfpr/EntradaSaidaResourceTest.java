@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EntradaSaidaResourceTest {
+class EntradaSaidaResourceTest {
 
     @TestHTTPResource("/entradasaida")
     URL apiURL;
@@ -44,7 +44,7 @@ public class EntradaSaidaResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -53,7 +53,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar usuário com sucesso.")
-    public void createEntradaSaidaTest() throws SQLException {
+    void createEntradaSaidaTest() throws SQLException {
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
         entradasaidaDTO.setDataHoraEntrada(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
         entradasaidaDTO.setDataHoraSaida(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
@@ -102,7 +102,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar entradasaida.")
-    public void createEntradaSaidaValidationErrorTest(){
+    void createEntradaSaidaValidationErrorTest(){
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
         entradasaidaDTO.setDataHoraEntrada(null);
         entradasaidaDTO.setDataHoraSaida(null);
@@ -126,7 +126,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar entradasaida com sucesso.")
-    public void updateEntradaSaidaTest(){
+    void updateEntradaSaidaTest(){
 
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
         entradasaidaDTO.setDataHoraEntrada(LocalDateTime.parse("1980-04-09T08:20:45", DateTimeFormatter.ISO_DATE_TIME));
@@ -149,7 +149,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar entradasaida.")
-    public void updateEntradaSaidaValidationErrorTest(){
+    void updateEntradaSaidaValidationErrorTest(){
 
         EntradaSaidaDTO entradasaidaDTO = new EntradaSaidaDTO();
         entradasaidaDTO.setDataHoraEntrada(null);
@@ -174,7 +174,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar entradasaida por id com sucesso.")
-    public void getByIdEntradaSaidaTest(){
+    void getByIdEntradaSaidaTest(){
 
 
         Response response = given()
@@ -191,7 +191,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar entradasaida por id.")
-    public void getByIdEntradaSaidaValidationErrorTest(){
+    void getByIdEntradaSaidaValidationErrorTest(){
 
 
         Response response = given()
@@ -208,7 +208,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todas as entradasaidas com sucesso.")
-    public void getAllEntradaSaidaTest(){
+    void getAllEntradaSaidaTest(){
 
 
         Response response = given()
@@ -225,7 +225,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar as entradasaidas paginadas e ordenadas com sucesso.")
-    public void pageSortEntradaSaidaTest(){
+    void pageSortEntradaSaidaTest(){
 
 
         Response response = given()
@@ -242,7 +242,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id a entradasaida com sucesso.")
-    public void deleteEntradaSaidaTest(){
+    void deleteEntradaSaidaTest(){
 
 
         Response response = given()
@@ -259,7 +259,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id a entradasaida.")
-    public void deleteEntradaSaidaErrorTest(){
+    void deleteEntradaSaidaErrorTest(){
 
 
         Response response = given()
@@ -276,7 +276,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todas as entradasaidas.")
-    public void getAllEntradaSaidaErrorTest() throws SQLException {
+    void getAllEntradaSaidaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from entradasaida");
@@ -298,7 +298,7 @@ public class EntradaSaidaResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar as entradasaidas paginadas e ordenadas.")
-    public void pageSortEntradaSaidaErrorTest() throws SQLException {
+    void pageSortEntradaSaidaErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from entradasaida");

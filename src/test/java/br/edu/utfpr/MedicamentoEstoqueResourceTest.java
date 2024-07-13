@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @QuarkusTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MedicamentoEstoqueResourceTest {
+class MedicamentoEstoqueResourceTest {
 
     @TestHTTPResource("/medicamentoestoque")
     URL apiURL;
@@ -42,7 +42,7 @@ public class MedicamentoEstoqueResourceTest {
     Flyway flyway;
 
     @BeforeAll
-    public void cleanUp(){
+    void cleanUp(){
         flyway.clean();
         flyway.migrate();
     }
@@ -51,7 +51,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve criar medicamentoestoque com sucesso.")
-    public void createMedicamentoEstoqueTest(){
+    void createMedicamentoEstoqueTest(){
         MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
         medicamentoestoqueDTO.setNome("Teste");
         medicamentoestoqueDTO.setPrincipioAtivo("Teste");
@@ -72,7 +72,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao criar medicamentoestoque.")
-    public void createMedicamentoEstoqueValidationErrorTest(){
+    void createMedicamentoEstoqueValidationErrorTest(){
         MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
         medicamentoestoqueDTO.setNome(null);
         medicamentoestoqueDTO.setPrincipioAtivo(null);
@@ -95,7 +95,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve atualizar medicamentoestoque com sucesso.")
-    public void updateMedicamentoEstoqueTest(){
+    void updateMedicamentoEstoqueTest(){
 
         MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
         medicamentoestoqueDTO.setNome("Teste");
@@ -117,7 +117,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao atualizar medicamentoestoque.")
-    public void updateMedicamentoEstoqueValidationErrorTest(){
+    void updateMedicamentoEstoqueValidationErrorTest(){
 
         MedicamentoEstoqueDTO medicamentoestoqueDTO = new MedicamentoEstoqueDTO();
         medicamentoestoqueDTO.setNome(null);
@@ -141,7 +141,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar medicamentoestoque por id com sucesso.")
-    public void getByIdMedicamentoEstoqueTest(){
+    void getByIdMedicamentoEstoqueTest(){
 
 
         Response response = given()
@@ -158,7 +158,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar medicamentoestoque por id.")
-    public void getByIdMedicamentoEstoqueValidationErrorTest(){
+    void getByIdMedicamentoEstoqueValidationErrorTest(){
 
 
         Response response = given()
@@ -175,7 +175,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar todos os medicamentoestoques com sucesso.")
-    public void getAllMedicamentoEstoqueTest(){
+    void getAllMedicamentoEstoqueTest(){
 
 
         Response response = given()
@@ -192,7 +192,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve buscar os medicamentoestoques paginados e ordenados com sucesso.")
-    public void pageSortMedicamentoEstoqueTest(){
+    void pageSortMedicamentoEstoqueTest(){
 
 
         Response response = given()
@@ -209,7 +209,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve deletar por id o medicamentoestoque com sucesso.")
-    public void deleteMedicamentoEstoqueTest(){
+    void deleteMedicamentoEstoqueTest(){
 
 
         Response response = given()
@@ -226,7 +226,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao deletar por id o medicamentoestoque.")
-    public void deleteMedicamentoEstoqueErrorTest(){
+    void deleteMedicamentoEstoqueErrorTest(){
 
 
         Response response = given()
@@ -243,7 +243,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar todos os medicamentoestoques.")
-    public void getAllMedicamentoEstoqueErrorTest() throws SQLException {
+    void getAllMedicamentoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from medicamentoestoque");
@@ -265,7 +265,7 @@ public class MedicamentoEstoqueResourceTest {
     @Test
     @TestSecurity(user = "testUser", roles = {"ADMIN"})
     @DisplayName("Deve falhar ao buscar os medicamentoestoques paginados e ordenados.")
-    public void pageSortMedicamentoEstoqueErrorTest() throws SQLException {
+    void pageSortMedicamentoEstoqueErrorTest() throws SQLException {
         DriverManager.registerDriver(new org.h2.Driver());
         Connection c = DriverManager.getConnection("jdbc:h2:mem:db;IFEXISTS=TRUE", "sa", "sa");
         PreparedStatement stmt = c.prepareStatement("delete from medicamentoestoque");

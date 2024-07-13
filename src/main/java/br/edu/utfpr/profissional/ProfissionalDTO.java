@@ -6,7 +6,7 @@ import br.edu.utfpr.enums.Situacao;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
