@@ -6,7 +6,9 @@ import br.edu.utfpr.profissional.ProfissionalModel;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper=false)
 @Data
 @Entity
 @Table(name = "atividadeconsultaresidente")

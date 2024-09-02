@@ -6,8 +6,11 @@ import br.edu.utfpr.pessoa.PessoaModel;
 import lombok.Data;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper=false)
 @Data
 @Entity
 @Table(name = "residente")
