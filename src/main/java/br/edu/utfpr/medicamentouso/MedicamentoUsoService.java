@@ -87,7 +87,7 @@ public class MedicamentoUsoService extends CrudService<MedicamentoUsoModel, Medi
 
         MedicamentoEstoqueModel medicamentoEstoqueModel;
         Optional<MedicamentoEstoqueModel> optionalMedicamentoEstoque = medicamentoEstoqueRepository.findByIdOptional(medicamentoUsoDTO.getMedicamento());
-        if(optional.isPresent()){
+        if(optionalMedicamentoEstoque.isPresent()){
             medicamentoEstoqueModel = optionalMedicamentoEstoque.get();
         }else{
             return ResponseUtils.notFoundComMotivo(MENSAGEMMEDICAMENTO);
@@ -137,7 +137,7 @@ public class MedicamentoUsoService extends CrudService<MedicamentoUsoModel, Medi
 
             MedicamentoEstoqueModel medicamentoEstoqueModel;
             Optional<MedicamentoEstoqueModel> optionalMedicamentoEstoque = medicamentoEstoqueRepository.findByIdOptional(medicamentoUsoDTO.getMedicamento());
-            if(optional.isPresent()){
+            if(optionalMedicamentoEstoque.isPresent()){
                 medicamentoEstoqueModel = optionalMedicamentoEstoque.get();
             }else{
                 return ResponseUtils.notFoundComMotivo(MENSAGEMMEDICAMENTO);

@@ -27,7 +27,7 @@ public class GerarAtividadesMedicamentoUso {
                             " - Qtde: " + model.getQtdeMedicamento() +
                             " - Residente: " + model.getResidente().getNome());
             atividade.setDataHora(
-                    posicao == POSICAOINICIAL ? model.getDataHoraInicio() :  model.getDataHoraInicio().plusHours(horas * posicao)
+                    posicao == POSICAOINICIAL ? model.getDataHoraInicio() :  model.getDataHoraInicio().plusHours((long) horas * posicao)
             );
             atividade.setSituacao(SituacaoAtividade.PENDENTE);
             atividades.add(atividade);

@@ -115,7 +115,7 @@ public class MovimentacaoEstoqueService extends CrudService<MovimentacaoEstoqueM
             }
 
             if(!qtdeAnterior.equals(movimentacaoEstoqueDTO.getQtde())){
-                Integer valorAtualizado = -1;
+                int valorAtualizado = -1;
                 switch (model.getTipo()){
                     case ENTRADA:{
                         valorAtualizado = (geraValorAtualizar(medicamentoEstoqueModel.getQtde(), qtdeAnterior, model.getQtde(), true));
@@ -163,7 +163,7 @@ public class MovimentacaoEstoqueService extends CrudService<MovimentacaoEstoqueM
     }
 
     private Integer geraValorAtualizar(Integer qtdeEstoque, Integer valorAnterior, Integer valorNovo, boolean entrada){
-        Integer valor = -1;
+        int valor = -1;
         if(entrada){
             if(valorAumentou(valorAnterior,valorNovo)){
                 valor = qtdeEstoque + (valorNovo - valorAnterior);
